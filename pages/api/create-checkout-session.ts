@@ -19,9 +19,9 @@ export default async function handler(
   }
 
   try {
-    const { priceId } = req.body
+    const { priceId, customerEmail } = req.body
 
-    console.log('Creating checkout session for priceId:', priceId)
+    console.log('Creating checkout session for priceId:', priceId, 'customerEmail:', customerEmail)
 
     if (!priceId) {
       return res.status(400).json({ error: 'Price ID is required' })
@@ -39,8 +39,8 @@ export default async function handler(
     const mode = price.type === 'recurring' ? 'subscription' : 'payment'
     console.log('Setting mode to:', mode)
 
-    // Create Checkout Session
-    const session = await stripe.checkout.sessions.create({
+    // Create Checkout Session with customer email
+    const sessionConfig: any = {
       mode: mode,
       payment_method_types: ['card'],
       line_items: [
@@ -50,21 +50,32 @@ export default async function handler(
         },
       ],
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cancel`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/upgrade`,
       metadata: {
-        product: 'Notion Highlights Pro'
+        product: 'Notion Highlights Pro',
+        user_email: customerEmail || 'unknown'
       }
-    })
+    }
+
+    // Add customer email if provided
+    if (customerEmail && customerEmail.includes('@')) {
+      sessionConfig.customer_email = customerEmail
+      console.log('Setting customer email:', customerEmail)
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionConfig)
 
     console.log('Session created:', session.id)
     console.log('Checkout URL:', session.url)
+    console.log('Customer email set:', session.customer_email)
 
     // Return the checkout URL for direct redirection
     res.status(200).json({ 
       sessionId: session.id,
-      url: session.url, // This is the new way!
+      url: session.url,
       success: true,
-      mode: mode
+      mode: mode,
+      customerEmail: session.customer_email
     })
   } catch (err: any) {
     console.error('Error creating checkout session:', err)
