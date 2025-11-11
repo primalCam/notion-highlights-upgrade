@@ -1,12 +1,8 @@
 import Layout from '../components/Layout'
 import { useState, useEffect } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
-
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 export default function Upgrade() {
   const [loading, setLoading] = useState<string | null>(null)
-  const [userEmail, setUserEmail] = useState<string | null>(null)
 
   const pricingPlans = [
     {
@@ -53,69 +49,18 @@ export default function Upgrade() {
     }
   ]
 
-  // Get user email from URL parameters or prompt for it
-  useEffect(() => {
-    // Try to get email from URL parameters (if coming from extension)
-    const urlParams = new URLSearchParams(window.location.search)
-    const emailFromUrl = urlParams.get('email')
-    
-    if (emailFromUrl) {
-      setUserEmail(emailFromUrl)
-      console.log('Got email from URL:', emailFromUrl)
-    } else {
-      // If no email in URL, try to get from localStorage or prompt user
-      const savedEmail = localStorage.getItem('notionHighlightsUserEmail')
-      if (savedEmail) {
-        setUserEmail(savedEmail)
-        console.log('Got email from localStorage:', savedEmail)
-      } else {
-        // Prompt user for email if we don't have it
-        const email = prompt('Please enter your email address to upgrade:')
-        if (email && email.includes('@')) {
-          setUserEmail(email)
-          localStorage.setItem('notionHighlightsUserEmail', email)
-          console.log('Got email from prompt:', email)
-        } else if (email) {
-          alert('Please enter a valid email address.')
-        }
-      }
-    }
-  }, [])
-
-  // Debug: Log the price IDs on component mount
-  useEffect(() => {
-    console.log('Price IDs loaded:')
-    pricingPlans.forEach(plan => {
-      console.log(`${plan.name}: ${plan.priceId}`)
-    })
-  }, [])
-
   const handleUpgrade = async (priceId: string, planName: string) => {
-    if (!userEmail) {
-      alert('Please enter your email address to continue with the upgrade.')
-      const email = prompt('Please enter your email address:')
-      if (email && email.includes('@')) {
-        setUserEmail(email)
-        localStorage.setItem('notionHighlightsUserEmail', email)
-      } else {
-        return
-      }
-    }
-
-    console.log('Starting upgrade for:', planName, 'Price ID:', priceId, 'Email:', userEmail)
+    console.log('Starting upgrade for:', planName, 'Price ID:', priceId)
     setLoading(planName)
     
     try {
-      console.log('Calling API with priceId:', priceId, 'and email:', userEmail)
+      console.log('Calling API with priceId:', priceId)
       const response = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ 
-          priceId,
-          customerEmail: userEmail 
-        }),
+        body: JSON.stringify({ priceId }),
       })
 
       console.log('API Response status:', response.status)
@@ -126,7 +71,7 @@ export default function Upgrade() {
         throw new Error(result.error || 'API call failed')
       }
 
-      // NEW METHOD: Redirect directly to the Checkout URL
+      // Redirect directly to Stripe Checkout
       if (result.url) {
         console.log('Redirecting to Stripe Checkout URL')
         window.location.href = result.url
@@ -155,11 +100,6 @@ export default function Upgrade() {
             </h1>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Unlock unlimited highlights, advanced features, and priority support.
-              {userEmail && (
-                <span className="block mt-2 text-sm text-[#ffd700]">
-                  Upgrading as: {userEmail}
-                </span>
-              )}
             </p>
           </div>
 
@@ -198,27 +138,17 @@ export default function Upgrade() {
 
                   <button
                     onClick={() => handleUpgrade(plan.priceId, plan.name)}
-                    disabled={loading === plan.name || !userEmail}
+                    disabled={loading === plan.name}
                     className={`w-full ${
                       plan.popular ? 'gradient-button' : 'glass-button'
-                    } ${loading === plan.name || !userEmail ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    } ${loading === plan.name ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
-                    {!userEmail ? 'Enter Email First' : loading === plan.name ? 'Processing...' : 'Get Started'}
+                    {loading === plan.name ? 'Processing...' : 'Get Started'}
                   </button>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* Email Notice */}
-          {!userEmail && (
-            <div className="text-center mt-8 p-4 bg-yellow-500/20 rounded-lg max-w-2xl mx-auto">
-              <p className="text-yellow-200">
-                💡 <strong>Heads up:</strong> You'll need to enter your email address to upgrade. 
-                Make sure it's the same email you use with Notion Highlights!
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </Layout>

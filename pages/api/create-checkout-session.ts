@@ -19,9 +19,9 @@ export default async function handler(
   }
 
   try {
-    const { priceId, customerEmail } = req.body
+    const { priceId } = req.body
 
-    console.log('Creating checkout session for priceId:', priceId, 'customerEmail:', customerEmail)
+    console.log('Creating checkout session for priceId:', priceId)
 
     if (!priceId) {
       return res.status(400).json({ error: 'Price ID is required' })
@@ -39,7 +39,7 @@ export default async function handler(
     const mode = price.type === 'recurring' ? 'subscription' : 'payment'
     console.log('Setting mode to:', mode)
 
-    // Create Checkout Session with customer email
+    // Create Checkout Session - SIMPLIFIED: No email handling needed
     const sessionConfig: any = {
       mode: mode,
       payment_method_types: ['card'],
@@ -50,32 +50,23 @@ export default async function handler(
         },
       ],
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/upgrade`,
+      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/cancel`,
       metadata: {
-        product: 'Notion Highlights Pro',
-        user_email: customerEmail || 'unknown'
+        product: 'Notion Highlights Pro'
       }
-    }
-
-    // Add customer email if provided
-    if (customerEmail && customerEmail.includes('@')) {
-      sessionConfig.customer_email = customerEmail
-      console.log('Setting customer email:', customerEmail)
     }
 
     const session = await stripe.checkout.sessions.create(sessionConfig)
 
     console.log('Session created:', session.id)
     console.log('Checkout URL:', session.url)
-    console.log('Customer email set:', session.customer_email)
 
     // Return the checkout URL for direct redirection
     res.status(200).json({ 
       sessionId: session.id,
       url: session.url,
       success: true,
-      mode: mode,
-      customerEmail: session.customer_email
+      mode: mode
     })
   } catch (err: any) {
     console.error('Error creating checkout session:', err)
