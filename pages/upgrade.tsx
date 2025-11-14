@@ -103,6 +103,35 @@ export default function Upgrade() {
             </p>
           </div>
 
+          <div className="glass-card p-6 mb-8 text-center max-w-2xl mx-auto">
+            <h3 className="text-xl font-bold text-white mb-4">💡 Fair Purchase Policy</h3>
+            <p className="text-white/70 mb-4">
+              We believe in transparent pricing and immediate value. That's why we offer:
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="flex items-start">
+                <span className="text-[#ffd700] mr-2">✓</span>
+                <span className="text-white/70"><strong>30 free highlights</strong> to test everything</span>
+              </div>
+              <div className="flex items-start">
+                <span className="text-[#ffd700] mr-2">✓</span>
+                <span className="text-white/70"><strong>Instant access</strong> to all Pro features</span>
+              </div>
+              <div className="flex items-start">
+                <span className="text-[#ffd700] mr-2">✓</span>
+                <span className="text-white/70"><strong>No commitment</strong> - cancel anytime</span>
+              </div>
+              <div className="flex items-start">
+                <span className="text-[#ffd700] mr-2">✓</span>
+                <span className="text-white/70"><strong>Digital delivery</strong> - no waiting, no returns</span>
+              </div>
+            </div>
+            <p className="text-white/60 text-sm mt-4">
+              Since you get immediate access to digital features, all purchases are final. 
+              We encourage trying the free tier first to ensure it fits your workflow.
+            </p>
+          </div>
+
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {pricingPlans.map((plan) => (

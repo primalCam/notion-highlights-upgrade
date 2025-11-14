@@ -58,6 +58,26 @@ export default function Terms() {
                 <li>Chargebacks may result in service termination</li>
               </ul>
 
+              <h2 className="text-2xl font-bold text-white mb-4">Refund Policy</h2>
+              <p className="text-white/70 mb-4">
+                We stand by the value our Pro features provide and offer multiple ways to ensure satisfaction before purchase:
+              </p>
+              <ul className="text-white/70 mb-6 list-disc list-inside space-y-2">
+                <li><strong>Free Testing:</strong> 30 highlights per month to fully evaluate the extension</li>
+                <li><strong>Transparent Features:</strong> Clear documentation of all Pro capabilities</li>
+                <li><strong>Support Available:</strong> Ask questions before purchasing via live chat or email</li>
+                <li><strong>Instant Access:</strong> Immediate delivery of digital features upon payment</li>
+              </ul>
+              <p className="text-white/70 mb-6">
+                Due to the nature of digital software and immediate access to features, 
+                all sales are final. We encourage you to utilize our free tier to ensure 
+                Notion Highlights meets your research workflow needs.
+              </p>
+              <p className="text-white/70 mb-6">
+                In rare cases of technical issues that prevent core functionality, 
+                we will work diligently to resolve the problem rather than process refunds.
+              </p>
+
               <h2 className="text-2xl font-bold text-white mb-4">User Responsibilities</h2>
               <p className="text-white/70 mb-4">You agree to:</p>
               <ul className="text-white/70 mb-6 list-disc list-inside space-y-2">
