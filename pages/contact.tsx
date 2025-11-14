@@ -59,6 +59,20 @@ export default function Contact() {
             </p>
           </div>
 
+          {/* Knowledge Base CTA */}
+          <div className="glass-card p-6 mb-8 text-center">
+            <h3 className="text-xl font-bold text-white mb-3">💡 Check Our Help Center First</h3>
+            <p className="text-white/70 mb-4">
+              Many questions are already answered in our detailed knowledge base.
+            </p>
+            <button 
+              onClick={() => window.open('https://notionhighlightshelp.tawk.help/', '_blank')}
+              className="glass-button py-2 px-6"
+            >
+              Search Help Articles
+            </button>
+          </div>
+
           {/* Contact Methods */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {contactMethods.map((method, index) => (

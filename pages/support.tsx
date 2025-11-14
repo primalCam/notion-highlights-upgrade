@@ -85,6 +85,20 @@ export default function Support() {
             </p>
           </div>
 
+          {/* Knowledge Base CTA */}
+          <div className="text-center mb-12">
+            <h3 className="text-2xl font-bold text-white mb-4">📚 Self-Service Help Center</h3>
+            <p className="text-white/70 mb-6 max-w-2xl mx-auto">
+              Find instant answers to common questions in our comprehensive knowledge base.
+            </p>
+            <button 
+              onClick={() => window.open('https://notionhighlightshelp.tawk.help/', '_blank')}
+              className="gradient-button text-lg py-3 px-8"
+            >
+              Visit Help Center
+            </button>
+          </div>
+
           {/* Contact Methods */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {contactMethods.map((method, index) => (
