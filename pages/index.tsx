@@ -262,7 +262,7 @@ export default function Home() {
             </div>
             <div className="glass-card p-6 ring-2 ring-[#ffd700]">
               <h3 className="text-2xl font-bold text-white mb-4">Pro</h3>
-              <div className="text-4xl font-bold text-white mb-4">$12</div>
+              <div className="text-4xl font-bold text-white mb-4">$12/mo</div>
               <ul className="text-white/70 space-y-2 mb-6">
                 <li>Unlimited highlights</li>
                 <li>All free features</li>

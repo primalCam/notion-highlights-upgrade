@@ -1,7 +1,10 @@
 // pages/contact.tsx
 import Layout from '../components/Layout'
+import { useState } from 'react'
 
 export default function Contact() {
+  const [activeTab, setActiveTab] = useState<'contact' | 'feature'>('contact')
+
   const contactMethods = [
     {
       icon: "📧",
@@ -24,7 +27,7 @@ export default function Contact() {
       }
     },
     {
-      icon: "🐦",
+      icon: "🦋",
       title: "X (Twitter)",
       description: "Quick updates and announcements",
       details: "@NotionHighlight",
@@ -91,99 +94,232 @@ export default function Contact() {
             ))}
           </div>
 
-          {/* Contact Form */}
-          <div className="glass-card p-8 max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-6 text-center">
-              Send Us a Message
-            </h2>
-            
-            <form
-              action="https://formspree.io/f/xpwkqzao"
-              method="POST"
-              className="space-y-6"
+          {/* Tab Navigation */}
+          <div className="flex justify-center gap-4 mb-8">
+            <button
+              onClick={() => setActiveTab('contact')}
+              className={`px-8 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'contact'
+                  ? 'gradient-button'
+                  : 'glass-button'
+              }`}
             >
-              {/* Hidden fields for better Formspree handling */}
-              <input type="hidden" name="_subject" value="New Contact Form Submission - Notion Highlights" />
-              <input type="hidden" name="_format" value="plain" />
+              📧 Contact Us
+            </button>
+            <button
+              onClick={() => setActiveTab('feature')}
+              className={`px-8 py-3 rounded-lg font-semibold transition-all ${
+                activeTab === 'feature'
+                  ? 'gradient-button'
+                  : 'glass-button'
+              }`}
+            >
+              💡 Request Feature
+            </button>
+          </div>
+
+          {/* Contact Form */}
+          {activeTab === 'contact' && (
+            <div className="glass-card p-8 max-w-2xl mx-auto">
+              <h2 className="text-3xl font-bold text-white mb-6 text-center">
+                Send Us a Message
+              </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <form
+                action="https://formspree.io/f/xpwkqzao"
+                method="POST"
+                className="space-y-6"
+              >
+                {/* Hidden fields for better Formspree handling */}
+                <input type="hidden" name="_subject" value="New Contact Form Submission - Notion Highlights" />
+                <input type="hidden" name="_format" value="plain" />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-white/80 mb-2">
+                      Your Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent"
+                      placeholder="Enter your name"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="email" className="block text-white/80 mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <label htmlFor="name" className="block text-white/80 mb-2">
-                    Your Name *
+                  <label htmlFor="subject" className="block text-white/80 mb-2">
+                    Subject *
+                  </label>
+                  <select
+                    id="subject"
+                    name="subject"
+                    required
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent"
+                  >
+                    <option value="">Select a subject</option>
+                    {subjects.map((subject) => (
+                      <option key={subject} value={subject}>
+                        {subject}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-white/80 mb-2">
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={6}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent resize-vertical"
+                    placeholder="Tell us how we can help you..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full gradient-button py-4 text-lg hover:scale-105 transition-transform duration-200"
+                >
+                  Send Message
+                </button>
+              </form>
+
+              {/* Form Submission Note */}
+              <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
+                <p className="text-white/70 text-sm text-center">
+                  📧 After submitting, you'll be redirected to Formspree. We'll receive your message instantly and respond within 24 hours.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Feature Request Form */}
+          {activeTab === 'feature' && (
+            <div className="glass-card p-8 max-w-2xl mx-auto">
+              <h2 className="text-3xl font-bold text-white mb-6 text-center">
+                Request a New Feature
+              </h2>
+              <p className="text-white/70 text-center mb-8">
+                Have an idea to make Notion Highlights better? We'd love to hear it! Your feedback helps shape our roadmap.
+              </p>
+              
+              <form
+                action="https://formspree.io/f/xqawyllp"
+                method="POST"
+                className="space-y-6"
+              >
+                {/* Hidden fields for better Formspree handling */}
+                <input type="hidden" name="_subject" value="New Feature Request - Notion Highlights" />
+                <input type="hidden" name="_format" value="plain" />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="feature-name" className="block text-white/80 mb-2">
+                      Your Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="feature-name"
+                      name="name"
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent"
+                      placeholder="Enter your name"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="feature-email" className="block text-white/80 mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="feature-email"
+                      name="email"
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="feature-title" className="block text-white/80 mb-2">
+                    Feature Title *
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="feature-title"
+                    name="feature_title"
                     required
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent"
-                    placeholder="Enter your name"
+                    placeholder="e.g., Bulk export highlights, Dark mode, etc."
                   />
                 </div>
-                
+
                 <div>
-                  <label htmlFor="email" className="block text-white/80 mb-2">
-                    Email Address *
+                  <label htmlFor="feature-description" className="block text-white/80 mb-2">
+                    Feature Description *
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
+                  <textarea
+                    id="feature-description"
+                    name="feature_description"
                     required
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent"
-                    placeholder="your@email.com"
+                    rows={6}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent resize-vertical"
+                    placeholder="Describe the feature in detail. What problem does it solve? How would it work?"
                   />
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="subject" className="block text-white/80 mb-2">
-                  Subject *
-                </label>
-                <select
-                  id="subject"
-                  name="subject"
-                  required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent"
+                <div>
+                  <label htmlFor="feature-usecase" className="block text-white/80 mb-2">
+                    Use Case (Optional)
+                  </label>
+                  <textarea
+                    id="feature-usecase"
+                    name="use_case"
+                    rows={4}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent resize-vertical"
+                    placeholder="How would you use this feature in your workflow? Help us understand your scenario."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full gradient-button py-4 text-lg hover:scale-105 transition-transform duration-200"
                 >
-                  <option value="">Select a subject</option>
-                  {subjects.map((subject) => (
-                    <option key={subject} value={subject}>
-                      {subject}
-                    </option>
-                  ))}
-                </select>
+                  Submit Feature Request
+                </button>
+              </form>
+
+              {/* Form Submission Note */}
+              <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
+                <p className="text-white/70 text-sm text-center">
+                  💡 We review all feature requests and consider them for our roadmap. Thank you for helping us improve!
+                </p>
               </div>
-
-              <div>
-                <label htmlFor="message" className="block text-white/80 mb-2">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={6}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[#ffd700] focus:border-transparent resize-vertical"
-                  placeholder="Tell us how we can help you..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full gradient-button py-4 text-lg hover:scale-105 transition-transform duration-200"
-              >
-                Send Message
-              </button>
-            </form>
-
-            {/* Form Submission Note */}
-            <div className="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
-              <p className="text-white/70 text-sm text-center">
-                📧 After submitting, you'll be redirected to Formspree. We'll receive your message instantly and respond within 24 hours.
-              </p>
             </div>
-          </div>
+          )}
 
           {/* Response Time & Support Info */}
           <div className="text-center mt-12">

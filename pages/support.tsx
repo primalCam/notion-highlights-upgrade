@@ -8,7 +8,23 @@ export default function Support() {
   const faqs = [
     {
       question: "How do I get started?",
-      answer: "Just install the extension and connect your Notion account - that's it! No email signup, no credit card, no account with us required. You can start highlighting immediately with 30 free highlights per month."
+      answer: "Just install the extension and connect your Notion account - that's it! No email signup, no credit card, no account with us required. After connecting, open the extension popup and activate highlight mode to start using it. You can start highlighting immediately with 30 free highlights per month."
+    },
+    {
+      question: "Why isn't highlighting working after I connected to Notion?",
+      answer: "The highlight feature is off by default when you first connect. Simply open the extension popup and click to activate highlight mode. Once activated, you're ready to start highlighting!"
+    },
+    {
+      question: "How does cursor placement work?",
+      answer: "By default, the cursor is placed at the end of your Notion page, so all new highlights will append in descending order (newest at bottom). If you want highlights to appear in a different location, simply move your cursor to that position on the page - future highlights will append there. To keep all highlights in descending order, don't move the cursor."
+    },
+    {
+      question: "I upgraded to Pro but it's not working - what should I do?",
+      answer: "Make sure you're signed into the extension with the same email address you used to purchase Pro through Stripe. The system automatically creates an account for you when you purchase - no password needed, just use your email. The extension needs to verify your Pro status through your email. If you're still having issues, contact support."
+    },
+    {
+      question: "Can I sign in if I'm using the free plan?",
+      answer: "Sign-in is only available for Pro members. When you're on the free plan, you don't need to sign in - just connect to Notion and start using it! An account is only auto-created when you purchase a Pro plan through Stripe. Free users can enjoy all basic features without any account or sign-in process."
     },
     {
       question: "Is it really free? What's the catch?",
@@ -60,7 +76,7 @@ export default function Support() {
       onClick: () => window.location.href = 'mailto:support@notionhighlights.com'
     },
     {
-      icon: "🐦",
+      icon: "🦋",
       title: "X (Twitter)",
       description: "Quick updates and announcements",
       action: "Follow Us",
@@ -170,7 +186,13 @@ export default function Support() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div className="text-white/70">
-                • <strong>Right-click method:</strong> Select text → Right-click → "Save to Notion"
+                • <strong>Activate first:</strong> Open popup and turn on highlight mode after connecting
+              </div>
+              <div className="text-white/70">
+                • <strong>Cursor placement:</strong> Highlights append where cursor is positioned
+              </div>
+              <div className="text-white/70">
+                • <strong>Pro users:</strong> Sign in with your purchase email in the extension
               </div>
               <div className="text-white/70">
                 • <strong>Floating button:</strong> Drag it anywhere for optimal positioning
@@ -179,7 +201,7 @@ export default function Support() {
                 • <strong>Truly free:</strong> No account required, 30 highlights/month
               </div>
               <div className="text-white/70">
-                • <strong>Pro feature:</strong> Unlimited highlights for heavy researchers
+                • <strong>Right-click method:</strong> Select text → Right-click → "Save to Notion"
               </div>
             </div>
           </div>
