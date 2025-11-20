@@ -1,3 +1,4 @@
+// pages/upgrade.tsx
 import Layout from '../components/Layout'
 import { useState, useEffect } from 'react'
 

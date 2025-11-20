@@ -3,6 +3,7 @@ import Navigation from './Navigation'
 import Footer from './Footer'
 import { ReactNode } from 'react'
 import Script from 'next/script'
+import Head from 'next/head'
 
 interface LayoutProps {
   children: ReactNode
@@ -11,6 +12,16 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Global Head with Favicon */}
+      <Head>
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/icons/icon48.png" />
+        <link rel="icon" type="image/png" sizes="128x128" href="/icons/icon128.png" />
+        <title>Notion Highlights - Save web content directly to Notion</title>
+        <meta name="description" content="Right-click any web content - text, code, images - and save directly to Notion. Perfect for AI research and knowledge building." />
+      </Head>
+      
       {/* Tawk.to Script - Global for all pages */}
       <Script
         id="tawk-to"

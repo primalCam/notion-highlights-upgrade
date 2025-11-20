@@ -123,13 +123,13 @@ export default function About() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
-                onClick={() => window.location.href = 'https://chrome.google.com/webstore/detail/notion-highlights/your-extension-id'}
+                onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/addpdkeebbfpcgificcaojjkbpddjhka?authuser=0&hl=en'}
                 className="gradient-button text-lg py-3 px-8"
               >
                 Install Free Extension
               </button>
               <button 
-                onClick={() => window.location.href = '/support'}
+                onClick={() => window.location.href = '/contact'}
                 className="glass-button text-lg py-3 px-8"
               >
                 Send Feedback

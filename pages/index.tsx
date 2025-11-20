@@ -1,6 +1,7 @@
 // pages/index.tsx - LOGO WITH SHADOW ONLY
 import Layout from '../components/Layout'
 import Image from 'next/image'
+import Head from 'next/head'
 
 export default function Home() {
   const valueProps = [
@@ -93,6 +94,14 @@ export default function Home() {
 
   return (
     <Layout>
+      {/* Add Head with Favicon */}
+      <Head>
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/icons/icon48.png" />
+        <link rel="icon" type="image/png" sizes="128x128" href="/icons/icon128.png" />
+      </Head>
+
       {/* Hero Section with Logo Only */}
       <section className="min-h-screen flex items-center justify-center px-4 pt-16">
         <div className="text-center max-w-4xl">
@@ -107,6 +116,23 @@ export default function Home() {
                 className="object-contain"
               />
             </div>
+          </div>
+
+          {/* Product Hunt Badge */}
+          <div className="flex justify-center mb-8">
+            <a 
+              href="https://www.producthunt.com/posts/notion-highlights" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <img 
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1040420&theme=light&t=1763646160335" 
+                alt="Notion Highlights - Save web highlights to Notion instantly – smart & free 🔥 | Product Hunt" 
+                style={{ width: '250px', height: '54px' }} 
+                width="250" 
+                height="54" 
+              />
+            </a>
           </div>
 
           <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-8">
@@ -127,7 +153,7 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
             <button 
-              onClick={() => window.location.href = 'https://chrome.google.com/webstore/detail/notion-highlights/your-extension-id'}
+              onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/addpdkeebbfpcgificcaojjkbpddjhka?authuser=0&hl=en'}
               className="gradient-button text-lg py-4 px-12"
             >
               Install Free Extension
@@ -285,7 +311,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
-              onClick={() => window.location.href = 'https://chrome.google.com/webstore/detail/notion-highlights/your-extension-id'}
+              onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/addpdkeebbfpcgificcaojjkbpddjhka?authuser=0&hl=en'}
               className="gradient-button text-lg py-4 px-12"
             >
               Install Free Extension
