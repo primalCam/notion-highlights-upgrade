@@ -3,6 +3,24 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
+/**
+ * Interfaces
+ */
+export interface FrontMatter {
+  title: string;
+  date: string;
+  excerpt?: string;
+  description?: string;
+  keywords?: string;
+  image?: string;
+}
+
+export interface Post {
+  slug: string;
+  frontMatter: FrontMatter;
+  content: string;
+}
+
 // Folder where your .mdx blog posts live
 const postsDirectory = path.join(process.cwd(), "posts");
 
@@ -10,7 +28,7 @@ const postsDirectory = path.join(process.cwd(), "posts");
  * Get all posts from the /posts directory
  * Returns sorted list by date (newest first)
  */
-export function getAllPosts() {
+export function getAllPosts(): Post[] {
   // Check if posts directory exists
   if (!fs.existsSync(postsDirectory)) {
     console.warn("Posts directory not found:", postsDirectory);
@@ -19,29 +37,32 @@ export function getAllPosts() {
 
   const files = fs.readdirSync(postsDirectory);
 
-  const posts = files
+  const posts: Post[] = files
     .filter((file) => file.endsWith(".mdx"))
     .map((filename) => {
       const filePath = path.join(postsDirectory, filename);
       const fileContent = fs.readFileSync(filePath, "utf-8");
 
-      const { data: frontMatter } = matter(fileContent);
+      const { data: frontMatter, content } = matter(fileContent);
 
       return {
         slug: filename.replace(".mdx", ""),
-        frontMatter,
+        frontMatter: frontMatter as FrontMatter,
+        content,
       };
     });
 
   return posts.sort(
-    (a, b) => new Date(b.frontMatter.date).getTime() - new Date(a.frontMatter.date).getTime()
+    (a, b) =>
+      new Date(b.frontMatter.date).getTime() -
+      new Date(a.frontMatter.date).getTime()
   );
 }
 
 /**
  * Get the full content of a single post
  */
-export function getPostBySlug(slug: string) {
+export function getPostBySlug(slug: string): Post {
   const fullPath = path.join(postsDirectory, `${slug}.mdx`);
 
   if (!fs.existsSync(fullPath)) {
@@ -53,7 +74,7 @@ export function getPostBySlug(slug: string) {
 
   return {
     slug,
-    frontMatter,
+    frontMatter: frontMatter as FrontMatter,
     content,
   };
 }
@@ -61,8 +82,7 @@ export function getPostBySlug(slug: string) {
 /**
  * List all slugs for dynamic routing
  */
-export function getAllSlugs() {
-  // Check if posts directory exists
+export function getAllSlugs(): string[] {
   if (!fs.existsSync(postsDirectory)) {
     console.warn("Posts directory not found:", postsDirectory);
     return [];
