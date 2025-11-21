@@ -5,6 +5,24 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+
+        {/* --- Google Analytics (G-GXSSESL2BH) --- */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-GXSSESL2BH"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-GXSSESL2BH');
+            `,
+          }}
+        />
+
+        {/* --- Existing Favicons --- */}
         <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon32.png" />
         <link rel="icon" type="image/png" sizes="48x48" href="/icons/icon48.png" />
@@ -12,6 +30,7 @@ export default function Document() {
         <link rel="apple-touch-icon" href="/icons/icon128.png" />
         <meta name="theme-color" content="#ffd700" />
       </Head>
+
       <body>
         <Main />
         <NextScript />
