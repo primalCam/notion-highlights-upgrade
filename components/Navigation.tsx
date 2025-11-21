@@ -1,4 +1,3 @@
-// components/Navigation.tsx
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -37,30 +36,43 @@ export default function Navigation() {
             >
               Home
             </Link>
+
             <Link 
               href="/upgrade" 
               className={`nav-link ${router.pathname === '/upgrade' ? 'nav-link-active' : ''}`}
             >
               Upgrade
             </Link>
+
             <Link 
               href="/support" 
               className={`nav-link ${router.pathname === '/support' ? 'nav-link-active' : ''}`}
             >
               Support
             </Link>
+
             <Link 
               href="/about" 
               className={`nav-link ${router.pathname === '/about' ? 'nav-link-active' : ''}`}
             >
               About
             </Link>
+
             <Link 
               href="/contact" 
               className={`nav-link ${router.pathname === '/contact' ? 'nav-link-active' : ''}`}
             >
               Contact
             </Link>
+
+            {/* ⭐ NEW BLOG LINK */}
+            <Link 
+              href="/blog" 
+              className={`nav-link ${router.pathname.startsWith('/blog') ? 'nav-link-active' : ''}`}
+            >
+              Blog
+            </Link>
+
             {/* Legal Pages Dropdown */}
             <div className="relative group">
               <button className="nav-link flex items-center">
@@ -117,6 +129,7 @@ export default function Navigation() {
               >
                 Home
               </Link>
+
               <Link 
                 href="/upgrade" 
                 className={`nav-link-mobile ${router.pathname === '/upgrade' ? 'nav-link-active' : ''}`}
@@ -124,6 +137,7 @@ export default function Navigation() {
               >
                 Upgrade
               </Link>
+
               <Link 
                 href="/support" 
                 className={`nav-link-mobile ${router.pathname === '/support' ? 'nav-link-active' : ''}`}
@@ -131,6 +145,7 @@ export default function Navigation() {
               >
                 Support
               </Link>
+
               <Link 
                 href="/about" 
                 className={`nav-link-mobile ${router.pathname === '/about' ? 'nav-link-active' : ''}`}
@@ -138,12 +153,24 @@ export default function Navigation() {
               >
                 About
               </Link>
+
               <Link 
                 href="/contact" 
                 className={`nav-link-mobile ${router.pathname === '/contact' ? 'nav-link-active' : ''}`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Contact
+              </Link>
+
+              {/* ⭐ NEW BLOG LINK (MOBILE) */}
+              <Link
+                href="/blog"
+                className={`nav-link-mobile ${
+                  router.pathname.startsWith("/blog") ? "nav-link-active" : ""
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Blog
               </Link>
               
               {/* Mobile Legal Dropdown */}
