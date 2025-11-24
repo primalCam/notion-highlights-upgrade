@@ -216,7 +216,7 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
             <button 
-              onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/addpdkeebbfpcgificcaojjkbpddjhka?authuser=0&hl=en'}
+              onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1'}
               className="gradient-button text-lg py-4 px-12"
             >
               Install Free Extension
@@ -426,7 +426,7 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
-              onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/addpdkeebbfpcgificcaojjkbpddjhka?authuser=0&hl=en'}
+              onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1'}
               className="gradient-button text-lg py-4 px-12"
             >
               Install Free Extension
