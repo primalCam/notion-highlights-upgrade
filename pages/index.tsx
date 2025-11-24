@@ -92,6 +92,69 @@ export default function Home() {
     }
   ]
 
+  const platformDemos = [
+    {
+      platform: "ChatGPT",
+      videoId: "sRnW4xMOoUQ"
+    },
+    {
+      platform: "Amazon",
+      videoId: "sqBmN89nJWo"
+    },
+    {
+      platform: "4chan",
+      videoId: "lruK7EQN37Y"
+    },
+    {
+      platform: "Claude",
+      videoId: "bR_fz7OSOFo"
+    },
+    {
+      platform: "Deepseek",
+      videoId: "r_4sWgkbtnY"
+    },
+    {
+      platform: "Dribbble",
+      videoId: "Q8kbcpQWr14"
+    },
+    {
+      platform: "Gemini",
+      videoId: "co0PVKVuZe8"
+    },
+    {
+      platform: "Grok",
+      videoId: "LUsurpQr6As"
+    },
+    {
+      platform: "Perplexity",
+      videoId: "Lw6NrXrfOio"
+    },
+    {
+      platform: "Reddit",
+      videoId: "rz7XRBhDmDI"
+    },
+    {
+      platform: "X",
+      videoId: "VY-wrGBf4F0"
+    },
+    {
+      platform: "YouTube",
+      videoId: "SlJ5TQ6kZ2o"
+    },
+    {
+      platform: "Substack",
+      videoId: "9GJPADAVm10"
+    },
+    {
+      platform: "StackOverflow",
+      videoId: "yaRcKBkHPeU"
+    },
+    {
+      platform: "Love and Lemons",
+      videoId: "6WYP_hKIg-I"
+    }
+  ]
+
   return (
     <Layout>
       {/* Add Head with Favicon */}
@@ -178,7 +241,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Rest of the sections remain exactly the same */}
+      {/* How to Use - Full Tutorial Section */}
+      <section className="py-20 px-4 bg-white/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
+            See How It Works
+          </h2>
+          <p className="text-xl text-white/70 text-center mb-12 max-w-2xl mx-auto">
+            Watch this quick tutorial to learn everything about using Notion Highlights
+          </p>
+          
+          <div className="glass-card">
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                className="absolute top-0 left-0 w-full h-full rounded-lg"
+                src="https://www.youtube.com/embed/7TVs8m3-fTQ"
+                title="How to Use Notion Highlights"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Platform Demonstrations Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
+            Works Everywhere You Research
+          </h2>
+          <p className="text-xl text-white/70 text-center mb-16 max-w-2xl mx-auto">
+            From YouTube to ChatGPT, save content from any platform directly to Notion
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {platformDemos.map((demo, index) => (
+              <div key={index} className="glass-card">
+                <h3 className="text-lg font-bold text-white mb-4 text-center">{demo.platform}</h3>
+                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full rounded-lg"
+                    src={`https://www.youtube.com/embed/${demo.videoId}`}
+                    title={`${demo.platform} Demo`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Value Props Section */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
