@@ -1,10 +1,18 @@
 // pages/sitemap.xml.ts
-
 import fs from "fs";
 import path from "path";
 import { GetServerSideProps } from "next";
 
 const SITE_URL = "https://notionhighlights.com";
+
+// Basic slug sanitizer
+function cleanSlug(slug: string) {
+  return slug
+    .toLowerCase()
+    .replace(/[^a-z0-9\-]/g, "-") // replace invalid chars w/ dash
+    .replace(/-+/g, "-")          // collapse multiple dashes
+    .replace(/^-|-$/g, "");       // trim leading/trailing dash
+}
 
 function generateSiteMap(slugs: string[]) {
   const urls = slugs
@@ -18,7 +26,6 @@ function generateSiteMap(slugs: string[]) {
     )
     .join("");
 
-  // Add static pages too
   const staticPages = `
   <url>
     <loc>${SITE_URL}</loc>
@@ -48,28 +55,23 @@ function generateSiteMap(slugs: string[]) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  // Read all your blog posts from /posts folder
-  const postsDirectory = path.join(process.cwd(), "posts");
-  const files = fs.readdirSync(postsDirectory);
+  const postsDir = path.join(process.cwd(), "posts");
+  const files = fs.readdirSync(postsDir);
 
-  // Accept both .md and .mdx files
   const slugs = files
     .filter((file) => /\.(md|mdx)$/.test(file))
-    .map((file) => file.replace(/\.mdx?$/, ""));
+    .map((file) => file.replace(/\.mdx?$/, ""))
+    .map(cleanSlug); // 🔥 sanitize every slug
 
-  // Generate the XML sitemap
   const sitemap = generateSiteMap(slugs);
 
-  // Write sitemap to response
   res.setHeader("Content-Type", "text/xml");
   res.write(sitemap);
   res.end();
 
-  return {
-    props: {},
-  };
+  return { props: {} };
 };
 
 export default function SiteMap() {
-  return null; // Required by Next.js but never rendered
+  return null;
 }
