@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block useless system pages
+Disallow: /api/
+Disallow: /_next/
+Disallow: /server-sitemap.xml
+
+# Your sitemap
+Sitemap: https://notionhighlights.com/sitemap.xml
