@@ -11,9 +11,10 @@ const SITE_URL = "https://notionhighlights.com";
 type Props = {
   frontMatter: any;
   content: string;
+  slug: string; // ✅ Added slug
 };
 
-export default function BlogPost({ frontMatter, content }: Props) {
+export default function BlogPost({ frontMatter, content, slug }: Props) {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -40,7 +41,11 @@ export default function BlogPost({ frontMatter, content }: Props) {
     ? `${SITE_URL}${image}`
     : `${SITE_URL}/default-og.png`;
 
-  const canonicalUrl = `${SITE_URL}${router.asPath}`;
+  // ❌ OLD (broken for SEO):
+  // const canonicalUrl = `${SITE_URL}${router.asPath}`;
+
+  // ✅ NEW (clean, stable, Google-friendly):
+  const canonicalUrl = `${SITE_URL}/blog/${slug}`;
 
   return (
     <Layout>
@@ -154,6 +159,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         frontMatter: post.frontMatter,
         content: post.content,
+        slug, // ✅ Pass slug to the component
       },
     };
   } catch (error) {
