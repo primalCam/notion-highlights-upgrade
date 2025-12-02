@@ -1,9 +1,14 @@
 // pages/support.tsx
 import Layout from '../components/Layout'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { gaEvent } from '../lib/ga'
 
 export default function Support() {
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
+
+  useEffect(() => {
+    gaEvent('page_view', { page: 'support' })
+  }, [])
 
   const faqs = [
     {
@@ -63,6 +68,7 @@ export default function Support() {
       description: "Get instant help from our team",
       action: "Start Chat",
       onClick: () => {
+        gaEvent('contact_click', { method: 'live_chat' })
         if (typeof window !== 'undefined' && (window as any).Tawk_API) {
           (window as any).Tawk_API.maximize();
         }
@@ -73,14 +79,20 @@ export default function Support() {
       title: "Email Support",
       description: "We respond within 24 hours",
       action: "Send Email", 
-      onClick: () => window.location.href = 'mailto:support@notionhighlights.com'
+      onClick: () => {
+        gaEvent('contact_click', { method: 'email' })
+        window.location.href = 'mailto:support@notionhighlights.com'
+      }
     },
     {
       icon: "🦋",
       title: "X (Twitter)",
       description: "Quick updates and announcements",
       action: "Follow Us",
-      onClick: () => window.open('https://twitter.com/NotionHighlight', '_blank')
+      onClick: () => {
+        gaEvent('contact_click', { method: 'twitter' })
+        window.open('https://twitter.com/NotionHighlight', '_blank')
+      }
     }
   ]
 
@@ -108,7 +120,10 @@ export default function Support() {
               Find instant answers to common questions in our comprehensive knowledge base.
             </p>
             <button 
-              onClick={() => window.open('https://notionhighlightshelp.tawk.help/', '_blank')}
+              onClick={() => {
+                gaEvent('help_center_click')
+                window.open('https://notionhighlightshelp.tawk.help/', '_blank')
+              }}
               className="gradient-button text-lg py-3 px-8"
             >
               Visit Help Center
@@ -142,7 +157,12 @@ export default function Support() {
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-white/10 pb-4">
                   <button
-                    onClick={() => setActiveFAQ(activeFAQ === index ? null : index)}
+                    onClick={() => {
+                      if (activeFAQ !== index) {
+                        gaEvent('faq_opened', { question: faq.question.substring(0, 50) })
+                      }
+                      setActiveFAQ(activeFAQ === index ? null : index)
+                    }}
                     className="flex justify-between items-center w-full text-left"
                   >
                     <h3 className="text-lg font-semibold text-white pr-4">
@@ -172,7 +192,10 @@ export default function Support() {
               We're here to make sure you get the most out of Notion Highlights.
             </p>
             <button 
-              onClick={() => window.location.href = '/contact'}
+              onClick={() => {
+                gaEvent('contact_us_click')
+                window.location.href = '/contact'
+              }}
               className="gradient-button text-lg py-3 px-8"
             >
               Contact Us Directly

@@ -1,9 +1,14 @@
 // pages/upgrade.tsx
 import Layout from '../components/Layout'
 import { useState, useEffect } from 'react'
+import { gaEvent } from '../lib/ga'
 
 export default function Upgrade() {
   const [loading, setLoading] = useState<string | null>(null)
+
+  useEffect(() => {
+    gaEvent('page_view', { page: 'upgrade' })
+  }, [])
 
   const pricingPlans = [
     {
@@ -52,6 +57,7 @@ export default function Upgrade() {
 
   const handleUpgrade = async (priceId: string, planName: string) => {
     console.log('Starting upgrade for:', planName, 'Price ID:', priceId)
+    gaEvent('plan_selected', { plan: planName })
     setLoading(planName)
     
     try {
@@ -69,18 +75,21 @@ export default function Upgrade() {
       console.log('API Response:', result)
 
       if (!response.ok) {
+        gaEvent('checkout_error', { plan: planName, error: result.error })
         throw new Error(result.error || 'API call failed')
       }
 
       // Redirect directly to Stripe Checkout
       if (result.url) {
         console.log('Redirecting to Stripe Checkout URL')
+        gaEvent('checkout_started', { plan: planName })
         window.location.href = result.url
       } else {
         throw new Error('No checkout URL returned from server')
       }
     } catch (error: any) {
       console.error('Error:', error)
+      gaEvent('checkout_failed', { plan: planName, error: error.message })
       alert('Something went wrong: ' + error.message)
     } finally {
       setLoading(null)

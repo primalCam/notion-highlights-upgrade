@@ -3,6 +3,8 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout from "../../components/Layout";
 import { getAllPosts, Post } from "../../lib/posts";
+import { useEffect } from "react";
+import { gaEvent } from "../../lib/ga";
 
 const SITE_URL = "https://notionhighlights.com";
 
@@ -11,6 +13,10 @@ interface BlogIndexProps {
 }
 
 export default function BlogIndex({ posts = [] }: BlogIndexProps) {
+  useEffect(() => {
+    gaEvent('page_view', { page: 'blog', post_count: posts.length })
+  }, [posts.length])
+
   const pageTitle =
     "Notion Highlights Blog — Tutorials, Research, Productivity & AI Workflow Guides";
   const description =
@@ -62,7 +68,10 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
                 border border-white/10
               "
             >
-              <Link href={`/blog/${slug}`}>
+              <Link 
+                href={`/blog/${slug}`}
+                onClick={() => gaEvent('blog_post_click', { slug, title: frontMatter?.title?.substring(0, 50) })}
+              >
                 <h2 className="text-2xl font-bold text-white hover:text-blue-300 mb-3">
                   {frontMatter?.title || "Untitled Post"}
                 </h2>
@@ -81,6 +90,7 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
               <Link
                 href={`/blog/${slug}`}
                 className="text-blue-400 hover:text-blue-300 underline text-lg"
+                onClick={() => gaEvent('blog_post_click', { slug, title: frontMatter?.title?.substring(0, 50) })}
               >
                 Read Article →
               </Link>

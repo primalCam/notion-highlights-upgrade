@@ -2,8 +2,14 @@
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import Head from 'next/head'
+import { useEffect } from 'react'
+import { gaEvent } from '../lib/ga'
 
 export default function Home() {
+  useEffect(() => {
+    gaEvent('page_view', { page: 'home' })
+  }, [])
+
   const valueProps = [
     {
       icon: "⚡",
@@ -187,6 +193,7 @@ export default function Home() {
               href="https://www.producthunt.com/posts/notion-highlights" 
               target="_blank" 
               rel="noopener noreferrer"
+              onClick={() => gaEvent('product_hunt_click')}
             >
               <img 
                 src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1040420&theme=light&t=1763646160335" 
@@ -216,13 +223,19 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
             <button 
-              onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1'}
+              onClick={() => {
+                gaEvent('install_click', { location: 'hero' })
+                window.location.href = 'https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1'
+              }}
               className="gradient-button text-lg py-4 px-12"
             >
               Install Free Extension
             </button>
             <button 
-              onClick={() => window.location.href = '/upgrade'}
+              onClick={() => {
+                gaEvent('upgrade_click', { location: 'hero' })
+                window.location.href = '/upgrade'
+              }}
               className="glass-button text-lg py-4 px-12"
             >
               See Pro Features
@@ -426,13 +439,19 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button 
-              onClick={() => window.location.href = 'https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1'}
+              onClick={() => {
+                gaEvent('install_click', { location: 'bottom' })
+                window.location.href = 'https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1'
+              }}
               className="gradient-button text-lg py-4 px-12"
             >
               Install Free Extension
             </button>
             <button 
-              onClick={() => window.location.href = '/support'}
+              onClick={() => {
+                gaEvent('support_click', { location: 'bottom' })
+                window.location.href = '/support'
+              }}
               className="glass-button text-lg py-4 px-12"
             >
               See How It Works
