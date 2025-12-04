@@ -20,6 +20,18 @@ export default function Support() {
       answer: "The highlight feature is off by default when you first connect. Simply open the extension popup and click to activate highlight mode. Once activated, you're ready to start highlighting!"
     },
     {
+      question: "How does the new zero-OAuth mode work?",
+      answer: "Version 1.4.1 introduces a lightning-fast save mode that works without OAuth login! Here's how it works: 1) Open any Notion page in a tab, 2) Find your page in the extension dropdown, 3) Select it, 4) Turn on highlight mode, 5) Highlight and right-click. No login required for this mode - perfect for quick saves!"
+    },
+    {
+      question: "How do I save YouTube videos to Notion?",
+      answer: "YouTube video embedding works when highlight mode is ON and you're connected to Notion. Right-click any YouTube video on the web (not in fullscreen mode) and select 'Save YouTube Video to Notion' from the context menu. Use the Notion connected pages in your dropdown to select destinations for YouTube embedding. The video will embed directly into your chosen page."
+    },
+    {
+      question: "I'm having trouble setting up a destination page - what should I do?",
+      answer: "If you're having trouble setting up a destination page, try this: 1) Open the extension popup, 2) Deselect your current page from the dropdown, 3) Close and reopen the popup, 4) Reselect your desired page from the list. This rare issue is usually resolved by refreshing the page connection. Make sure you have edit access to the Notion page you're selecting."
+    },
+    {
       question: "How does cursor placement work?",
       answer: "By default, the cursor is placed at the end of your Notion page, so all new highlights will append in descending order (newest at bottom). If you want highlights to appear in a different location, simply move your cursor to that position on the page - future highlights will append there. To keep all highlights in descending order, don't move the cursor."
     },
@@ -33,23 +45,23 @@ export default function Support() {
     },
     {
       question: "Is it really free? What's the catch?",
-      answer: "Yes, completely free to start. No hidden costs, no trial periods, no credit card required. You get 30 highlights per month forever. We only ask for payment if you need unlimited highlights. Unlike other software, we believe you should get value first."
+      answer: "Yes, completely free to start. No hidden costs, no trial periods, no credit card required. You get 30 highlights per month forever. We only ask for payment if you need unlimited highlights. Unlike other software, we believe you should get value first. Version 1.4.1 adds YouTube video saving and zero-OAuth mode to the free plan!"
     },
     {
       question: "How does the free plan work?",
-      answer: "You get 30 highlights per month completely free. This resets on the 1st of each month. No credit card required. If you find yourself needing more, you can upgrade to Pro for unlimited highlights."
+      answer: "You get 30 highlights per month completely free. This resets on the 1st of each month. No credit card required. If you find yourself needing more, you can upgrade to Pro for unlimited highlights. All 1.4.1 features (YouTube saving, zero-OAuth mode, faster clipping) are available in the free plan."
     },
     {
       question: "What content can I save to Notion?",
-      answer: "You can save any selected content: text, code snippets, images, and even formatted content from AI chats like ChatGPT. Unlike other tools, we preserve the original formatting when possible."
+      answer: "You can save any selected content: text, code snippets, images, YouTube videos, and even formatted content from AI chats like ChatGPT. Unlike other tools, we preserve the original formatting when possible and now embed YouTube videos directly."
     },
     {
       question: "Can I choose where to save my highlights?",
-      answer: "Yes! During setup you select your default Notion page. You can also change this anytime by clicking the extension icon and selecting a different page."
+      answer: "Yes! During setup you select your default Notion page. You can also change this anytime by clicking the extension icon and selecting a different page. YouTube videos also use this same destination selection."
     },
     {
       question: "Is my data secure?",
-      answer: "Absolutely. We never store your highlights or personal data. Everything goes directly from your browser to your Notion workspace. We use secure OAuth authentication just like other trusted Notion integrations."
+      answer: "Absolutely. We never store your highlights or personal data. Everything goes directly from your browser to your Notion workspace. We use secure OAuth authentication just like other trusted Notion integrations. The new zero-OAuth mode works without sending any data to our servers - it goes directly from browser to Notion."
     },
     {
       question: "How do I move the highlight button?",
@@ -57,7 +69,11 @@ export default function Support() {
     },
     {
       question: "Do I need to create an account with you?",
-      answer: "No! We don't require you to create an account with us. You only need to connect your existing Notion account. We believe in minimizing friction and letting you get value immediately."
+      answer: "No! We don't require you to create an account with us. You only need to connect your existing Notion account. We believe in minimizing friction and letting you get value immediately. Even the new zero-OAuth mode works without creating any account."
+    },
+    {
+      question: "What's new in version 1.4.1?",
+      answer: "Version 1.4.1 adds: 1) YouTube video saving - right-click any YouTube video to embed it, 2) Zero-OAuth save mode - lightning-fast saving without login, 3) Improved highlight accuracy - cleaner selection detection, 4) Faster clipping pipeline - near-instant capture, 5) Better selection flow - more consistent text extraction. All available in the free plan!"
     }
   ]
 
@@ -109,7 +125,7 @@ export default function Support() {
               </span>
             </h1>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Get help with setup, troubleshooting, or anything else. We're committed to making your research workflow seamless.
+              Get help with setup, troubleshooting, or anything else. We're committed to making your research workflow seamless with our latest 1.4.1 features.
             </p>
           </div>
 
@@ -117,7 +133,7 @@ export default function Support() {
           <div className="text-center mb-12">
             <h3 className="text-2xl font-bold text-white mb-4">📚 Self-Service Help Center</h3>
             <p className="text-white/70 mb-6 max-w-2xl mx-auto">
-              Find instant answers to common questions in our comprehensive knowledge base.
+              Find instant answers to common questions about YouTube saving, zero-OAuth mode, and all new 1.4.1 features.
             </p>
             <button 
               onClick={() => {
@@ -189,7 +205,7 @@ export default function Support() {
               Still need help?
             </h3>
             <p className="text-white/70 mb-6">
-              We're here to make sure you get the most out of Notion Highlights.
+              We're here to make sure you get the most out of Notion Highlights 1.4.1.
             </p>
             <button 
               onClick={() => {
@@ -205,14 +221,26 @@ export default function Support() {
           {/* Quick Tips */}
           <div className="glass-card p-6 mt-12">
             <h3 className="text-xl font-bold text-white mb-4 text-center">
-              💡 Quick Tips
+              💡 Quick Tips for Version 1.4.1
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="text-white/70">
+                • <strong>YouTube saving:</strong> Right-click videos (not fullscreen) → "Save YouTube Video to Notion"
+              </div>
+              <div className="text-white/70">
+                • <strong>Zero-OAuth mode:</strong> Open Notion page → Find in dropdown → Select → Turn on highlight mode
+              </div>
               <div className="text-white/70">
                 • <strong>Activate first:</strong> Open popup and turn on highlight mode after connecting
               </div>
               <div className="text-white/70">
                 • <strong>Cursor placement:</strong> Highlights append where cursor is positioned
+              </div>
+              <div className="text-white/70">
+                • <strong>Page selection issues:</strong> Deselect and reselect page in dropdown
+              </div>
+              <div className="text-white/70">
+                • <strong>Faster clipping:</strong> New pipeline reduces wait times significantly
               </div>
               <div className="text-white/70">
                 • <strong>Pro users:</strong> Sign in with your purchase email in the extension
@@ -221,10 +249,16 @@ export default function Support() {
                 • <strong>Floating button:</strong> Drag it anywhere for optimal positioning
               </div>
               <div className="text-white/70">
-                • <strong>Truly free:</strong> No account required, 30 highlights/month
+                • <strong>All new features:</strong> YouTube saving & zero-OAuth mode available in free plan
               </div>
               <div className="text-white/70">
                 • <strong>Right-click method:</strong> Select text → Right-click → "Save to Notion"
+              </div>
+              <div className="text-white/70">
+                • <strong>Improved accuracy:</strong> Cleaner selection detection with tighter bounding boxes
+              </div>
+              <div className="text-white/70">
+                • <strong>Destination pages:</strong> YouTube videos use same dropdown as highlights
               </div>
             </div>
           </div>

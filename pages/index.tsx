@@ -80,6 +80,24 @@ export default function Home() {
     }
   ]
 
+  const newFeatures = [
+    {
+      icon: "🎬",
+      title: "Save YouTube Videos",
+      description: "Right-click any YouTube video online to embed it directly in Notion. Works alongside our core highlighting feature."
+    },
+    {
+      icon: "⚡",
+      title: "Zero-OAuth Lightning Mode",
+      description: "New save mode that works without login. Open any Notion page in a tab first, then highlight and save."
+    },
+    {
+      icon: "🚀",
+      title: "Faster & More Accurate",
+      description: "Improved selection detection and drastically faster clipping pipeline for near-instant saves."
+    }
+  ]
+
   const habitBenefits = [
     {
       icon: "🔄",
@@ -187,27 +205,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Product Hunt Badge */}
-          <div className="flex justify-center mb-8">
-            <a 
-              href="https://www.producthunt.com/posts/notion-highlights" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              onClick={() => gaEvent('product_hunt_click')}
-            >
-              <img 
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1040420&theme=light&t=1763646160335" 
-                alt="Notion Highlights - Save web highlights to Notion instantly – smart & free 🔥 | Product Hunt" 
-                style={{ width: '250px', height: '54px' }} 
-                width="250" 
-                height="54" 
-              />
-            </a>
-          </div>
-
           <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-8">
-            <span className="text-yellow-400">⚡</span>
-            <span className="text-white text-sm">Save any web content directly to Notion</span>
+            <span className="text-yellow-400">✨</span>
+            <span className="text-white text-sm">Version 1.4.1: Now with YouTube video saving & zero-OAuth mode</span>
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
@@ -261,7 +261,7 @@ export default function Home() {
             See How It Works
           </h2>
           <p className="text-xl text-white/70 text-center mb-12 max-w-2xl mx-auto">
-            Watch this quick tutorial to learn everything about using Notion Highlights
+            Watch how to save any web content directly to Notion without breaking your flow
           </p>
           
           <div className="glass-card">
@@ -274,35 +274,6 @@ export default function Home() {
                 allowFullScreen
               ></iframe>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Platform Demonstrations Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            Works Everywhere You Research
-          </h2>
-          <p className="text-xl text-white/70 text-center mb-16 max-w-2xl mx-auto">
-            From YouTube to ChatGPT, save content from any platform directly to Notion
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {platformDemos.map((demo, index) => (
-              <div key={index} className="glass-card">
-                <h3 className="text-lg font-bold text-white mb-4 text-center">{demo.platform}</h3>
-                <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full rounded-lg"
-                    src={`https://www.youtube.com/embed/${demo.videoId}`}
-                    title={`${demo.platform} Demo`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -329,8 +300,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Workflow Section */}
+      {/* New Features Section */}
       <section className="py-20 px-4 bg-white/5">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
+            What's New in Version 1.4.1
+          </h2>
+          <p className="text-xl text-white/70 text-center mb-16 max-w-2xl mx-auto">
+            Powerful additions to our core highlighting experience
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {newFeatures.map((feature, index) => (
+              <div key={index} className="glass-card p-6">
+                <div className="text-3xl mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                <p className="text-white/70">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Workflow Section */}
+      <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
             Natural Research Habits
@@ -354,7 +347,7 @@ export default function Home() {
       </section>
 
       {/* Content Types Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-white/5">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
             Save Any Content Type
@@ -376,7 +369,7 @@ export default function Home() {
       </section>
 
       {/* Habit Benefits Section */}
-      <section className="py-20 px-4 bg-white/5">
+      <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
             Research That Feels Effortless
@@ -395,7 +388,7 @@ export default function Home() {
       </section>
 
       {/* Pricing Teaser */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-white/5">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Free to Start, Pro When You Need It
@@ -412,6 +405,7 @@ export default function Home() {
                 <li>All content types</li>
                 <li>No account required</li>
                 <li>Drag & position button</li>
+                <li>All 1.4.1 updates included</li>
               </ul>
             </div>
             <div className="glass-card p-6 ring-2 ring-[#ffd700]">
@@ -429,7 +423,7 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 px-4 bg-white/5">
+      <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Start Building Better Research Habits
@@ -458,7 +452,7 @@ export default function Home() {
             </button>
           </div>
           <p className="text-white/50 text-sm mt-6">
-            No credit card • No account • 30 free highlights monthly
+            No credit card • No account • 30 free highlights monthly • Version 1.4.1 updates included
           </p>
         </div>
       </section>
