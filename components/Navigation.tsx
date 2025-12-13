@@ -1,4 +1,4 @@
-// components/Navigation.tsx - Updated with Focus Dock
+// components/Navigation.tsx - Updated with Apps dropdown
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -8,6 +8,7 @@ export default function Navigation() {
   const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLegalDropdownOpen, setIsLegalDropdownOpen] = useState(false)
+  const [isAppsDropdownOpen, setIsAppsDropdownOpen] = useState(false)
   
   return (
     <nav className="glass-nav fixed w-full top-0 z-50">
@@ -38,13 +39,41 @@ export default function Navigation() {
               Home
             </Link>
 
-            {/* ⭐ NEW FOCUS DOCK LINK */}
-            <Link 
-              href="/focus-dock" 
-              className={`nav-link ${router.pathname === '/focus-dock' ? 'nav-link-active' : ''}`}
-            >
-              Focus Dock
-            </Link>
+            {/* ⭐ APPS DROPDOWN */}
+            <div className="relative group">
+              <button className="nav-link flex items-center">
+                Apps
+                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div className="absolute top-full left-0 mt-2 w-48 bg-slate-800/95 backdrop-blur-lg rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-white/10">
+                <Link href="/" className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-[#ffd700] to-[#ffed4e] rounded-md flex items-center justify-center">
+                    <Image 
+                      src="/icons/icon48.png" 
+                      alt="Notion Highlights"
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span>Notion Highlights</span>
+                </Link>
+                <Link href="/focus-dock" className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors border-t border-white/10 flex items-center gap-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-red-500 to-red-600 rounded-md flex items-center justify-center">
+                    <Image 
+                      src="/icons/fd-icon128.png" 
+                      alt="Focus Dock"
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span>Focus Dock</span>
+                </Link>
+              </div>
+            </div>
 
             <Link 
               href="/upgrade" 
@@ -138,14 +167,59 @@ export default function Navigation() {
                 Home
               </Link>
 
-              {/* ⭐ NEW FOCUS DOCK LINK (MOBILE) */}
-              <Link 
-                href="/focus-dock" 
-                className={`nav-link-mobile ${router.pathname === '/focus-dock' ? 'nav-link-active' : ''}`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Focus Dock
-              </Link>
+              {/* ⭐ APPS DROPDOWN (MOBILE) */}
+              <div className="border-t border-white/10 pt-4">
+                <button 
+                  onClick={() => setIsAppsDropdownOpen(!isAppsDropdownOpen)}
+                  className="nav-link-mobile flex items-center justify-between w-full"
+                >
+                  <span>Our Apps</span>
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${isAppsDropdownOpen ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {isAppsDropdownOpen && (
+                  <div className="ml-4 mt-2 space-y-2 border-l border-white/10 pl-4">
+                    <Link 
+                      href="/" 
+                      className="flex items-center gap-3 text-white/70 hover:text-white transition-colors py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-6 h-6 bg-gradient-to-br from-[#ffd700] to-[#ffed4e] rounded-md flex items-center justify-center">
+                        <Image 
+                          src="/icons/icon48.png" 
+                          alt="Notion Highlights"
+                          width={16}
+                          height={16}
+                          className="object-contain"
+                        />
+                      </div>
+                      <span>Notion Highlights</span>
+                    </Link>
+                    <Link 
+                      href="/focus-dock" 
+                      className="flex items-center gap-3 text-white/70 hover:text-white transition-colors py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-6 h-6 bg-gradient-to-br from-red-500 to-red-600 rounded-md flex items-center justify-center">
+                        <Image 
+                          src="/icons/fd-icon128.png" 
+                          alt="Focus Dock"
+                          width={16}
+                          height={16}
+                          className="object-contain"
+                        />
+                      </div>
+                      <span>Focus Dock</span>
+                    </Link>
+                  </div>
+                )}
+              </div>
 
               <Link 
                 href="/upgrade" 
