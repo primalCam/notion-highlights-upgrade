@@ -5,14 +5,55 @@ import { gaEvent } from '../lib/ga'
 
 export default function Support() {
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<'notion-highlights' | 'focus-dock'>('notion-highlights')
+  const [activeSection, setActiveSection] = useState<'faq' | 'contact'>('faq')
 
   useEffect(() => {
     gaEvent('page_view', { page: 'support' })
   }, [])
 
-  const faqs = [
+  // Common contact methods
+  const contactMethods = [
     {
-      question: "How do I get started?",
+      icon: "📧",
+      title: "Email Support",
+      description: "We respond within 24 hours",
+      action: "Send Email", 
+      onClick: () => {
+        gaEvent('contact_click', { method: 'email', product: selectedProduct })
+        const email = selectedProduct === 'notion-highlights' ? 'support@notionhighlights.com' : 'focusdock@notionhighlights.com'
+        window.location.href = `mailto:${email}`
+      }
+    },
+    {
+      icon: "💬",
+      title: "Live Chat",
+      description: "Get instant help from our team",
+      action: "Start Chat",
+      onClick: () => {
+        gaEvent('contact_click', { method: 'live_chat', product: selectedProduct })
+        if (typeof window !== 'undefined' && (window as any).Tawk_API) {
+          (window as any).Tawk_API.maximize();
+        }
+      }
+    },
+    {
+      icon: "🦋",
+      title: "X (Twitter)",
+      description: "Quick updates and announcements",
+      action: "Follow Us",
+      onClick: () => {
+        gaEvent('contact_click', { method: 'twitter', product: selectedProduct })
+        const handle = selectedProduct === 'notion-highlights' ? 'NotionHighlight' : 'FocusDockApp'
+        window.open(`https://twitter.com/${handle}`, '_blank')
+      }
+    }
+  ]
+
+  // Notion Highlights FAQs
+  const notionHighlightsFAQs = [
+    {
+      question: "How do I get started with Notion Highlights?",
       answer: "Just install the extension and connect your Notion account - that's it! No email signup, no credit card, no account with us required. After connecting, open the extension popup and activate highlight mode to start using it. You can start highlighting immediately with 30 free highlights per month."
     },
     {
@@ -77,193 +118,367 @@ export default function Support() {
     }
   ]
 
-  const contactMethods = [
+  // Focus Dock FAQs
+  const focusDockFAQs = [
     {
-      icon: "💬",
-      title: "Live Chat",
-      description: "Get instant help from our team",
-      action: "Start Chat",
-      onClick: () => {
-        gaEvent('contact_click', { method: 'live_chat' })
-        if (typeof window !== 'undefined' && (window as any).Tawk_API) {
-          (window as any).Tawk_API.maximize();
-        }
-      }
+      question: "How do I get started with Focus Dock?",
+      answer: "Install the extension from Chrome Web Store and press ⌘+. (Cmd+Period) to open the launcher. No setup required! You can immediately search tabs, bookmarks, history, and notes. For quick notes, just type /note followed by your text."
     },
     {
-      icon: "📧",
-      title: "Email Support",
-      description: "We respond within 24 hours",
-      action: "Send Email", 
-      onClick: () => {
-        gaEvent('contact_click', { method: 'email' })
-        window.location.href = 'mailto:support@notionhighlights.com'
-      }
+      question: "What keyboard shortcuts are available?",
+      answer: "• ⌘+. (Cmd+Period) - Open Focus Dock launcher\n• /note [text] - Save quick notes\n• /notes - View all notes\n• /read - View reading list\n• /groups - Manage tab groups\n• Arrow keys - Navigate results\n• Enter - Open selected item\n• Tab - Show actions for selected item\n• Esc - Close launcher"
     },
     {
-      icon: "🦋",
-      title: "X (Twitter)",
-      description: "Quick updates and announcements",
-      action: "Follow Us",
-      onClick: () => {
-        gaEvent('contact_click', { method: 'twitter' })
-        window.open('https://twitter.com/NotionHighlight', '_blank')
-      }
+      question: "How do I use tab groups?",
+      answer: "Focus Dock automatically organizes your tabs into smart groups. You can also create custom groups: 1) Type /groups to see existing groups, 2) Type /group [Name] to create a new group from current window tabs, 3) Use /autogroup to automatically group tabs by domain (Pro feature)"
+    },
+    {
+      question: "What can I search with Focus Dock?",
+      answer: "Focus Dock searches everything: open tabs, bookmarks, browser history, quick notes, reading list, clipboard history, and saved workspaces. Just start typing to search across all sources."
+    },
+    {
+      question: "How do I save pages to read later?",
+      answer: "Press ⌘+Shift+S on any webpage to save it to your reading list. Then type /read to access your saved articles. Free users get 10 slots, Pro users get unlimited."
+    },
+    {
+      question: "How do quick notes work?",
+      answer: "Type /note followed by your note text to save it instantly. You can add due dates like /note @today Call mom or /note @tomorrow Submit report. Type /notes to view all your notes."
+    },
+    {
+      question: "What's the difference between Free and Pro?",
+      answer: "Free includes all core features with limits: 5 notes, 1 workspace, 10 reading list items, 3 clipboard items. Pro removes all limits and adds: unlimited notes/workspaces/reading list, 100 clipboard items, auto-grouping by domain, tab thumbnails, and priority support."
+    },
+    {
+      question: "How do I use workspaces?",
+      answer: "Save your current tabs as a workspace: Type /save [WorkspaceName]. Restore it later by typing /[WorkspaceName] or /workspaces to see all saved workspaces. Workspaces save tabs from your current window."
+    },
+    {
+      question: "How does multi-select work?",
+      answer: "Click the checkbox next to any tab result to select it. Use Shift+Arrow keys to select ranges. Once selected, press Enter to see bulk actions: close all, bookmark all, move to new window, or group together."
+    },
+    {
+      question: "How do I search tabs from a specific domain?",
+      answer: "Type /domain.com to see all tabs from that domain. You'll get options to close or bookmark all tabs from that domain at once."
+    },
+    {
+      question: "What are tab thumbnails?",
+      answer: "Pro users get visual previews of tabs as thumbnail images. Hover over any tab result to see a preview. Free users see the first 3 thumbnails, Pro users get unlimited thumbnails."
+    },
+    {
+      question: "How does clipboard history work?",
+      answer: "Focus Dock automatically saves your clipboard history. Type /clip to see recent copies. Click any item to copy it again. Free: 3 items, Pro: 100 items."
+    },
+    {
+      question: "How do I create custom keyboard shortcuts?",
+      answer: "Go to chrome://extensions/shortcuts to customize Focus Dock shortcuts. The default launcher shortcut is ⌘+. (Cmd+Period)."
+    },
+    {
+      question: "Is my data stored locally or in the cloud?",
+      answer: "All your data (notes, reading list, workspaces, clipboard) is stored locally in your browser. Nothing is sent to our servers. Your data stays private and works offline."
+    },
+    {
+      question: "How do I upgrade to Pro?",
+      answer: "Click the 'Upgrade to Pro' button in the launcher or visit focusdock.app/pro. Pro is $4.99/month with a 30-day money-back guarantee."
     }
   ]
+
+  const currentFAQs = selectedProduct === 'notion-highlights' ? notionHighlightsFAQs : focusDockFAQs
+  const productInfo = {
+    'notion-highlights': {
+      name: 'Notion Highlights',
+      description: 'Highlight & save web content directly to Notion',
+      color: 'from-[#ffd700] to-[#ffed4e]',
+      icon: '✨'
+    },
+    'focus-dock': {
+      name: 'Focus Dock',
+      description: 'Universal Chrome launcher for tabs, notes, and bookmarks',
+      color: 'from-red-400 to-red-300',
+      icon: '⚡'
+    }
+  }
+
+  const productTips = {
+    'notion-highlights': [
+      "• YouTube saving: Right-click videos (not fullscreen) → 'Save YouTube Video to Notion'",
+      "• Zero-OAuth mode: Open Notion page → Find in dropdown → Select → Turn on highlight mode",
+      "• Activate first: Open popup and turn on highlight mode after connecting",
+      "• Cursor placement: Highlights append where cursor is positioned",
+      "• Page selection issues: Deselect and reselect page in dropdown",
+      "• Faster clipping: New pipeline reduces wait times significantly",
+      "• Pro users: Sign in with your purchase email in the extension",
+      "• Floating button: Drag it anywhere for optimal positioning",
+      "• All new features: YouTube saving & zero-OAuth mode available in free plan",
+      "• Right-click method: Select text → Right-click → 'Save to Notion'",
+      "• Improved accuracy: Cleaner selection detection with tighter bounding boxes",
+      "• Destination pages: YouTube videos use same dropdown as highlights"
+    ],
+    'focus-dock': [
+      "• Quick launcher: Press ⌘+. (Cmd+Period) from anywhere",
+      "• Quick notes: Type /note followed by your text",
+      "• Due dates: Use /note @today Call mom or /note @tomorrow Submit report",
+      "• Reading list: Press ⌘+Shift+S on any page to save for later",
+      "• Tab groups: Type /groups to manage or /group ProjectName to create",
+      "• Multi-select: Click checkboxes next to tabs, then press Enter for bulk actions",
+      "• Workspaces: Type /save ProjectName then /ProjectName to restore",
+      "• Domain search: Type /github.com to see all GitHub tabs",
+      "• Clipboard: Type /clip to see recent copies",
+      "• Fuzzy search: Works even with typos and partial matches",
+      "• Keyboard navigation: Use ↑↓ arrows, Tab for actions, Enter to execute",
+      "• Free limits: 5 notes, 1 workspace, 10 reading list items, 3 clipboard items"
+    ]
+  }
 
   return (
     <Layout>
       <div className="min-h-screen py-20 px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-16">
+          {/* Header with Product Selector */}
+          <div className="text-center mb-12">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              We're Here to
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffd700] to-[#ffed4e] block">
-                Help You
+              Support for
+              <span className={`text-transparent bg-clip-text bg-gradient-to-r ${productInfo[selectedProduct].color} block`}>
+                {productInfo[selectedProduct].name}
               </span>
             </h1>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Get help with setup, troubleshooting, or anything else. We're committed to making your research workflow seamless with our latest 1.4.1 features.
+            <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
+              {productInfo[selectedProduct].description}
             </p>
-          </div>
-
-          {/* Knowledge Base CTA */}
-          <div className="text-center mb-12">
-            <h3 className="text-2xl font-bold text-white mb-4">📚 Self-Service Help Center</h3>
-            <p className="text-white/70 mb-6 max-w-2xl mx-auto">
-              Find instant answers to common questions about YouTube saving, zero-OAuth mode, and all new 1.4.1 features.
-            </p>
-            <button 
-              onClick={() => {
-                gaEvent('help_center_click')
-                window.open('https://notionhighlightshelp.tawk.help/', '_blank')
-              }}
-              className="gradient-button text-lg py-3 px-8"
-            >
-              Visit Help Center
-            </button>
-          </div>
-
-          {/* Contact Methods */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {contactMethods.map((method, index) => (
-              <div key={index} className="glass-card p-6 text-center">
-                <div className="text-3xl mb-4">{method.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-2">{method.title}</h3>
-                <p className="text-white/70 mb-4">{method.description}</p>
-                <button 
-                  onClick={method.onClick}
-                  className="gradient-button w-full py-2"
+            
+            {/* Product Selector */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+              <div className="glass-card p-2 flex rounded-xl">
+                <button
+                  onClick={() => setSelectedProduct('notion-highlights')}
+                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'notion-highlights' 
+                    ? 'bg-gradient-to-r from-[#ffd700]/20 to-[#ffed4e]/20 text-white border border-[#ffd700]/30' 
+                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
+                  }`}
                 >
-                  {method.action}
+                  <div className="flex items-center gap-2">
+                    <span>✨</span>
+                    <span>Notion Highlights</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setSelectedProduct('focus-dock')}
+                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'focus-dock' 
+                    ? 'bg-gradient-to-r from-red-500/20 to-red-400/20 text-white border border-red-500/30' 
+                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span>⚡</span>
+                    <span>Focus Dock</span>
+                  </div>
                 </button>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* Navigation Tabs */}
+          <div className="flex justify-center mb-12">
+            <div className="glass-card p-1 flex rounded-xl">
+              <button
+                onClick={() => setActiveSection('faq')}
+                className={`px-8 py-3 rounded-lg transition-all ${activeSection === 'faq' 
+                  ? 'bg-gradient-to-r from-red-500 to-red-600 text-white' 
+                  : 'text-white/60 hover:text-white/90'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span>❓</span>
+                  <span>FAQs & Help</span>
+                </div>
+              </button>
+              <button
+                onClick={() => setActiveSection('contact')}
+                className={`px-8 py-3 rounded-lg transition-all ${activeSection === 'contact' 
+                  ? 'bg-gradient-to-r from-red-500 to-red-600 text-white' 
+                  : 'text-white/60 hover:text-white/90'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <span>📧</span>
+                  <span>Contact Support</span>
+                </div>
+              </button>
+            </div>
           </div>
 
           {/* FAQ Section */}
-          <div className="glass-card p-8">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">
-              Frequently Asked Questions
-            </h2>
-            
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="border-b border-white/10 pb-4">
-                  <button
-                    onClick={() => {
-                      if (activeFAQ !== index) {
-                        gaEvent('faq_opened', { question: faq.question.substring(0, 50) })
-                      }
-                      setActiveFAQ(activeFAQ === index ? null : index)
-                    }}
-                    className="flex justify-between items-center w-full text-left"
-                  >
-                    <h3 className="text-lg font-semibold text-white pr-4">
-                      {faq.question}
-                    </h3>
-                    <span className="text-[#ffd700] text-xl flex-shrink-0">
-                      {activeFAQ === index ? '−' : '+'}
-                    </span>
-                  </button>
-                  
-                  {activeFAQ === index && (
-                    <div className="mt-3 text-white/70">
-                      {faq.answer}
+          {activeSection === 'faq' && (
+            <>
+              {/* Knowledge Base CTA */}
+              <div className="text-center mb-12">
+                <h3 className="text-2xl font-bold text-white mb-4">📚 Self-Service Help Center</h3>
+                <p className="text-white/70 mb-6 max-w-2xl mx-auto">
+                  Find detailed guides, tutorials, and troubleshooting tips for {productInfo[selectedProduct].name}.
+                </p>
+                <button 
+                  onClick={() => {
+                    gaEvent('help_center_click', { product: selectedProduct })
+                    const helpUrl = selectedProduct === 'notion-highlights' 
+                      ? 'https://notionhighlightshelp.tawk.help/' 
+                      : 'https://focusdock.help/'
+                    window.open(helpUrl, '_blank')
+                  }}
+                  className="gradient-button text-lg py-3 px-8"
+                >
+                  Visit {productInfo[selectedProduct].name} Help Center
+                </button>
+              </div>
+
+              {/* FAQ Section */}
+              <div className="glass-card p-8 mb-12">
+                <h2 className="text-3xl font-bold text-white mb-8 text-center">
+                  Frequently Asked Questions
+                </h2>
+                
+                <div className="space-y-4">
+                  {currentFAQs.map((faq, index) => (
+                    <div key={index} className="border-b border-white/10 pb-4">
+                      <button
+                        onClick={() => {
+                          if (activeFAQ !== index) {
+                            gaEvent('faq_opened', { 
+                              product: selectedProduct, 
+                              question: faq.question.substring(0, 50) 
+                            })
+                          }
+                          setActiveFAQ(activeFAQ === index ? null : index)
+                        }}
+                        className="flex justify-between items-center w-full text-left"
+                      >
+                        <h3 className="text-lg font-semibold text-white pr-4">
+                          {faq.question}
+                        </h3>
+                        <span className={`text-xl flex-shrink-0 ${selectedProduct === 'notion-highlights' ? 'text-[#ffd700]' : 'text-red-400'}`}>
+                          {activeFAQ === index ? '−' : '+'}
+                        </span>
+                      </button>
+                      
+                      {activeFAQ === index && (
+                        <div className="mt-3 text-white/70 whitespace-pre-line">
+                          {faq.answer}
+                        </div>
+                      )}
                     </div>
-                  )}
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
 
-          {/* Still Need Help */}
-          <div className="text-center mt-12">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Still need help?
-            </h3>
-            <p className="text-white/70 mb-6">
-              We're here to make sure you get the most out of Notion Highlights 1.4.1.
+              {/* Quick Tips */}
+              <div className="glass-card p-6">
+                <h3 className="text-xl font-bold text-white mb-4 text-center">
+                  💡 Quick Tips for {productInfo[selectedProduct].name}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  {productTips[selectedProduct].map((tip, index) => (
+                    <div key={index} className="text-white/70">
+                      {tip}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Contact Section */}
+          {activeSection === 'contact' && (
+            <>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold text-white mb-4">
+                  Contact {productInfo[selectedProduct].name} Support
+                </h2>
+                <p className="text-white/70 max-w-2xl mx-auto">
+                  Our team is here to help you with {selectedProduct === 'notion-highlights' ? 'highlighting and saving to Notion' : 'launcher setup and features'}.
+                  We typically respond within 24 hours.
+                </p>
+              </div>
+
+              {/* Contact Methods */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                {contactMethods.map((method, index) => (
+                  <div key={index} className="glass-card p-6 text-center">
+                    <div className="text-3xl mb-4">{method.icon}</div>
+                    <h3 className="text-xl font-bold text-white mb-2">{method.title}</h3>
+                    <p className="text-white/70 mb-4">{method.description}</p>
+                    <button 
+                      onClick={method.onClick}
+                      className="gradient-button w-full py-2"
+                    >
+                      {method.action}
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* Support Email Display */}
+              <div className="glass-card p-6 text-center mb-12">
+                <h3 className="text-xl font-bold text-white mb-4">Direct Email</h3>
+                <p className="text-white/70 mb-4">
+                  For {selectedProduct === 'notion-highlights' ? 'Notion Highlights' : 'Focus Dock'} support, email us at:
+                </p>
+                <a 
+                  href={`mailto:${selectedProduct === 'notion-highlights' ? 'support@notionhighlights.com' : 'focusdock@notionhighlights.com'}`}
+                  className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-300 hover:from-red-300 hover:to-red-200 transition-all"
+                >
+                  {selectedProduct === 'notion-highlights' ? 'support@notionhighlights.com' : 'focusdock@notionhighlights.com'}
+                </a>
+              </div>
+
+              {/* Response Time Notice */}
+              <div className="bg-gradient-to-r from-red-900/20 to-red-800/10 border border-red-500/20 rounded-xl p-6 text-center">
+                <h3 className="text-lg font-bold text-white mb-2">📅 Response Time</h3>
+                <p className="text-white/70">
+                  We strive to respond to all emails within <strong>24 hours</strong> on weekdays.
+                  For faster responses, use the live chat during business hours (9AM-5PM EST).
+                </p>
+              </div>
+            </>
+          )}
+
+          {/* Switch Product Notice */}
+          <div className="text-center mt-12 p-6 border border-white/10 rounded-xl">
+            <p className="text-white/70 mb-4">
+              Need help with {selectedProduct === 'notion-highlights' ? 'Focus Dock' : 'Notion Highlights'} instead?
             </p>
-            <button 
+            <button
               onClick={() => {
-                gaEvent('contact_us_click')
-                window.location.href = '/contact'
+                setSelectedProduct(selectedProduct === 'notion-highlights' ? 'focus-dock' : 'notion-highlights')
+                setActiveFAQ(null)
               }}
-              className="gradient-button text-lg py-3 px-8"
+              className="text-white hover:text-red-300 font-semibold transition-colors"
             >
-              Contact Us Directly
+              Switch to {selectedProduct === 'notion-highlights' ? 'Focus Dock' : 'Notion Highlights'} support →
             </button>
-          </div>
-
-          {/* Quick Tips */}
-          <div className="glass-card p-6 mt-12">
-            <h3 className="text-xl font-bold text-white mb-4 text-center">
-              💡 Quick Tips for Version 1.4.1
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="text-white/70">
-                • <strong>YouTube saving:</strong> Right-click videos (not fullscreen) → "Save YouTube Video to Notion"
-              </div>
-              <div className="text-white/70">
-                • <strong>Zero-OAuth mode:</strong> Open Notion page → Find in dropdown → Select → Turn on highlight mode
-              </div>
-              <div className="text-white/70">
-                • <strong>Activate first:</strong> Open popup and turn on highlight mode after connecting
-              </div>
-              <div className="text-white/70">
-                • <strong>Cursor placement:</strong> Highlights append where cursor is positioned
-              </div>
-              <div className="text-white/70">
-                • <strong>Page selection issues:</strong> Deselect and reselect page in dropdown
-              </div>
-              <div className="text-white/70">
-                • <strong>Faster clipping:</strong> New pipeline reduces wait times significantly
-              </div>
-              <div className="text-white/70">
-                • <strong>Pro users:</strong> Sign in with your purchase email in the extension
-              </div>
-              <div className="text-white/70">
-                • <strong>Floating button:</strong> Drag it anywhere for optimal positioning
-              </div>
-              <div className="text-white/70">
-                • <strong>All new features:</strong> YouTube saving & zero-OAuth mode available in free plan
-              </div>
-              <div className="text-white/70">
-                • <strong>Right-click method:</strong> Select text → Right-click → "Save to Notion"
-              </div>
-              <div className="text-white/70">
-                • <strong>Improved accuracy:</strong> Cleaner selection detection with tighter bounding boxes
-              </div>
-              <div className="text-white/70">
-                • <strong>Destination pages:</strong> YouTube videos use same dropdown as highlights
-              </div>
-            </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .gradient-button {
+          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+          color: white;
+          border: none;
+          border-radius: 10px;
+          padding: 12px 24px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .gradient-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+        }
+        .glass-card {
+          background: rgba(30, 41, 59, 0.5);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
+        }
+      `}</style>
     </Layout>
   )
 }
