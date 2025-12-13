@@ -110,9 +110,42 @@ export default function Upgrade() {
             </h1>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Unlock unlimited highlights, advanced features, and priority support.
+              <span className="block mt-2 text-lg font-semibold text-[#ffd700]">
+                ✅ 30-Day Money-Back Guarantee - Risk Free!
+              </span>
             </p>
           </div>
 
+          {/* 30-Day Guarantee Banner */}
+          <div className="glass-card p-6 mb-8 text-center max-w-4xl mx-auto bg-gradient-to-r from-green-900/20 to-emerald-900/20 border border-green-500/30">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-4">
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-emerald-500">
+                <span className="text-2xl">✅</span>
+              </div>
+              <div className="text-left">
+                <h3 className="text-2xl font-bold text-white mb-2">30-Day Money-Back Guarantee</h3>
+                <p className="text-white/80">
+                  Try Pro risk-free. If you're not satisfied for any reason, contact us within 30 days for a full refund, no questions asked. Applies to all plans.
+                </p>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mt-6">
+              <div className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <span className="text-white/80"><strong>Full Refund</strong> - Get 100% of your money back</span>
+              </div>
+              <div className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <span className="text-white/80"><strong>No Questions Asked</strong> - No explanation required</span>
+              </div>
+              <div className="flex items-start">
+                <span className="text-green-400 mr-2">✓</span>
+                <span className="text-white/80"><strong>Quick Processing</strong> - Refunds within 3 business days</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Fair Purchase Policy */}
           <div className="glass-card p-6 mb-8 text-center max-w-2xl mx-auto">
             <h3 className="text-xl font-bold text-white mb-4">💡 Fair Purchase Policy</h3>
             <p className="text-white/70 mb-4">
@@ -129,16 +162,16 @@ export default function Upgrade() {
               </div>
               <div className="flex items-start">
                 <span className="text-[#ffd700] mr-2">✓</span>
-                <span className="text-white/70"><strong>No commitment</strong> - cancel anytime</span>
+                <span className="text-white/70"><strong>30-day guarantee</strong> - full refund if not satisfied</span>
               </div>
               <div className="flex items-start">
                 <span className="text-[#ffd700] mr-2">✓</span>
-                <span className="text-white/70"><strong>Digital delivery</strong> - no waiting, no returns</span>
+                <span className="text-white/70"><strong>Digital delivery</strong> - no waiting, immediate access</span>
               </div>
             </div>
             <p className="text-white/60 text-sm mt-4">
-              Since you get immediate access to digital features, all purchases are final. 
-              We encourage trying the free tier first to ensure it fits your workflow.
+              Our 30-day guarantee means you can try Pro completely risk-free. 
+              We encourage trying the free tier first, then upgrade with confidence.
             </p>
           </div>
 
@@ -175,6 +208,14 @@ export default function Upgrade() {
                     ))}
                   </ul>
 
+                  {/* Guarantee Badge */}
+                  <div className="mb-4">
+                    <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
+                      <span className="text-green-400 text-sm">✅</span>
+                      <span className="text-white/80 text-sm">30-Day Guarantee</span>
+                    </div>
+                  </div>
+
                   <button
                     onClick={() => handleUpgrade(plan.priceId, plan.name)}
                     disabled={loading === plan.name}
@@ -182,11 +223,69 @@ export default function Upgrade() {
                       plan.popular ? 'gradient-button' : 'glass-button'
                     } ${loading === plan.name ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
-                    {loading === plan.name ? 'Processing...' : 'Get Started'}
+                    {loading === plan.name ? 'Processing...' : 'Get Started Risk-Free'}
                   </button>
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mt-16 max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white text-center mb-8">Frequently Asked Questions</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="glass-card p-6">
+                <h3 className="text-xl font-bold text-white mb-3">How does the 30-day guarantee work?</h3>
+                <p className="text-white/70">
+                  If you're not satisfied with Pro for any reason, contact us within 30 days of purchase for a full refund. No questions asked. Refunds are processed within 3 business days.
+                </p>
+              </div>
+              
+              <div className="glass-card p-6">
+                <h3 className="text-xl font-bold text-white mb-3">Can I switch between plans?</h3>
+                <p className="text-white/70">
+                  Yes! You can upgrade or downgrade at any time. If you upgrade mid-cycle, we'll prorate your payment. Downgrades take effect at the end of your billing cycle.
+                </p>
+              </div>
+              
+              <div className="glass-card p-6">
+                <h3 className="text-xl font-bold text-white mb-3">What happens after the 30 days?</h3>
+                <p className="text-white/70">
+                  After 30 days, our regular refund policy applies. You can still cancel anytime and your subscription will remain active until the end of the billing period.
+                </p>
+              </div>
+              
+              <div className="glass-card p-6">
+                <h3 className="text-xl font-bold text-white mb-3">How do I request a refund?</h3>
+                <p className="text-white/70">
+                  Email support@notionhighlights.com with your purchase details. Include your email address and the date of purchase. We'll process your refund within 3 business days.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Final CTA */}
+          <div className="text-center mt-12">
+            <p className="text-white/70 mb-6">
+              Still have questions? Try the free tier first or contact our support team.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="https://chromewebstore.google.com/detail/notion-highlights/cbhehgcjfigjnnpejhalofljofdpcabg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-button px-8 py-3"
+              >
+                Try Free Version
+              </a>
+              <a 
+                href="/support"
+                className="gradient-button px-8 py-3"
+              >
+                Contact Support
+              </a>
+            </div>
           </div>
         </div>
       </div>
