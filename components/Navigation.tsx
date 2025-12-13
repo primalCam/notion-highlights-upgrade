@@ -1,3 +1,4 @@
+// components/Navigation.tsx - Updated with Focus Dock
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -37,6 +38,14 @@ export default function Navigation() {
               Home
             </Link>
 
+            {/* ⭐ NEW FOCUS DOCK LINK */}
+            <Link 
+              href="/focus-dock" 
+              className={`nav-link ${router.pathname === '/focus-dock' ? 'nav-link-active' : ''}`}
+            >
+              Focus Dock
+            </Link>
+
             <Link 
               href="/upgrade" 
               className={`nav-link ${router.pathname === '/upgrade' ? 'nav-link-active' : ''}`}
@@ -65,7 +74,6 @@ export default function Navigation() {
               Contact
             </Link>
 
-            {/* ⭐ NEW BLOG LINK */}
             <Link 
               href="/blog" 
               className={`nav-link ${router.pathname.startsWith('/blog') ? 'nav-link-active' : ''}`}
@@ -130,6 +138,15 @@ export default function Navigation() {
                 Home
               </Link>
 
+              {/* ⭐ NEW FOCUS DOCK LINK (MOBILE) */}
+              <Link 
+                href="/focus-dock" 
+                className={`nav-link-mobile ${router.pathname === '/focus-dock' ? 'nav-link-active' : ''}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Focus Dock
+              </Link>
+
               <Link 
                 href="/upgrade" 
                 className={`nav-link-mobile ${router.pathname === '/upgrade' ? 'nav-link-active' : ''}`}
@@ -162,7 +179,6 @@ export default function Navigation() {
                 Contact
               </Link>
 
-              {/* ⭐ NEW BLOG LINK (MOBILE) */}
               <Link
                 href="/blog"
                 className={`nav-link-mobile ${
