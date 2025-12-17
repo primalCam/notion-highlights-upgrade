@@ -1,4 +1,4 @@
-// components/Navigation.tsx - Updated with Apps dropdown
+// components/Navigation.tsx - Updated with CleanRead in Apps dropdown
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -71,6 +71,19 @@ export default function Navigation() {
                     />
                   </div>
                   <span>Focus Dock</span>
+                </Link>
+                {/* NEW: CleanRead added as 3rd app */}
+                <Link href="/clean-read" className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors border-t border-white/10 flex items-center gap-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-md flex items-center justify-center border border-yellow-500/30">
+                    <Image 
+                      src="/icons/cr-icon128.png" 
+                      alt="CleanRead"
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span>CleanRead</span>
                 </Link>
               </div>
             </div>
@@ -216,6 +229,23 @@ export default function Navigation() {
                         />
                       </div>
                       <span>Focus Dock</span>
+                    </Link>
+                    {/* NEW: CleanRead in mobile menu */}
+                    <Link 
+                      href="/clean-read" 
+                      className="flex items-center gap-3 text-white/70 hover:text-white transition-colors py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-6 h-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-md flex items-center justify-center border border-yellow-500/30">
+                        <Image 
+                          src="/icons/cr-icon128.png" 
+                          alt="CleanRead"
+                          width={16}
+                          height={16}
+                          className="object-contain"
+                        />
+                      </div>
+                      <span>CleanRead</span>
                     </Link>
                   </div>
                 )}

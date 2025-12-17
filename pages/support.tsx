@@ -5,7 +5,7 @@ import { gaEvent } from '../lib/ga'
 
 export default function Support() {
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
-  const [selectedProduct, setSelectedProduct] = useState<'notion-highlights' | 'focus-dock'>('notion-highlights')
+  const [selectedProduct, setSelectedProduct] = useState<'notion-highlights' | 'focus-dock' | 'clean-read'>('notion-highlights')
   const [activeSection, setActiveSection] = useState<'faq' | 'contact'>('faq')
 
   useEffect(() => {
@@ -21,7 +21,11 @@ export default function Support() {
       action: "Send Email", 
       onClick: () => {
         gaEvent('contact_click', { method: 'email', product: selectedProduct })
-        const email = selectedProduct === 'notion-highlights' ? 'support@notionhighlights.com' : 'focusdock@notionhighlights.com'
+        const email = selectedProduct === 'notion-highlights' 
+          ? 'support@notionhighlights.com' 
+          : selectedProduct === 'focus-dock' 
+          ? 'focusdock@notionhighlights.com'
+          : 'cleanread@notionhighlights.com'
         window.location.href = `mailto:${email}`
       }
     },
@@ -44,7 +48,11 @@ export default function Support() {
       action: "Follow Us",
       onClick: () => {
         gaEvent('contact_click', { method: 'twitter', product: selectedProduct })
-        const handle = selectedProduct === 'notion-highlights' ? 'NotionHighlight' : 'FocusDockApp'
+        const handle = selectedProduct === 'notion-highlights' 
+          ? 'NotionHighlight' 
+          : selectedProduct === 'focus-dock'
+          ? 'FocusDockApp'
+          : 'CleanReadApp'
         window.open(`https://twitter.com/${handle}`, '_blank')
       }
     }
@@ -182,19 +190,101 @@ export default function Support() {
     }
   ]
 
-  const currentFAQs = selectedProduct === 'notion-highlights' ? notionHighlightsFAQs : focusDockFAQs
+  // CleanRead FAQs
+  const cleanReadFAQs = [
+    {
+      question: "How do I activate CleanRead on a webpage?",
+      answer: "Click the CleanRead extension icon in your Chrome toolbar, or use the keyboard shortcut Cmd/Ctrl+R. CleanRead will instantly extract the article content and open it in a distraction-free reader view."
+    },
+    {
+      question: "What websites does CleanRead work with?",
+      answer: "CleanRead works with: • All news sites and blogs • Social media: Twitter/X, Facebook, LinkedIn, Reddit • AI chats: ChatGPT, Claude, Gemini • Documents: Notion, Google Docs • Plus thousands of other content websites"
+    },
+    {
+      question: "How do I change the theme or appearance?",
+      answer: "Click the theme buttons in the reader toolbar to switch between Dark, Gold, and custom themes. You can also adjust font size, column width, and enable features like Vision Mode or Focus Mode."
+    },
+    {
+      question: "What's the difference between Free and Pro?",
+      answer: "Free includes: Clean reading on any site, dark/gold themes, adjustable fonts, focus mode, save 3 articles. Pro adds: Unlimited saved articles, custom themes, PDF export, auto-scroll, vision accessibility mode, hover zoom, and priority features."
+    },
+    {
+      question: "How do I save articles to read later?",
+      answer: "In reader mode, click the bookmark icon. Free users can save up to 3 articles. Pro users get unlimited saves. Saved articles sync across your Chrome browser."
+    },
+    {
+      question: "How do I export articles as PDF?",
+      answer: "PDF export is a Pro feature. In reader mode, click the export button and select 'PDF'. This creates a clean, printable version of the article with the CleanRead branding."
+    },
+    {
+      question: "What is Vision Mode?",
+      answer: "Vision Mode is a Pro feature designed for accessibility and enhanced readability. It provides high contrast, increased line spacing, and optimized typography for readers with visual impairments or those who prefer maximum readability."
+    },
+    {
+      question: "Does CleanRead work on AI chat platforms like ChatGPT?",
+      answer: "Yes! CleanRead extracts the last AI response from ChatGPT, Claude, and Gemini conversations, presenting them in a clean, readable format perfect for saving or sharing."
+    },
+    {
+      question: "How do I remove CleanRead's floating notification?",
+      answer: "The notification automatically disappears after 8 seconds. You can also click it to immediately activate CleanRead on that page."
+    },
+    {
+      question: "Is my reading data tracked or stored?",
+      answer: "CleanRead operates locally on your browser. We don't track what you read, and saved articles are stored only in your Chrome browser's local storage, not on our servers."
+    },
+    {
+      question: "How do I enable auto-activation on supported sites?",
+      answer: "Auto-activation can be enabled in the settings. When enabled, CleanRead will automatically open reader mode on article pages and supported platforms. (This feature is off by default.)"
+    },
+    {
+      question: "What keyboard shortcuts are available?",
+      answer: "• Cmd/Ctrl+R - Activate CleanRead • Cmd/Ctrl+J - Alternative shortcut • In reader mode: +/- to adjust font size, T for themes, F for focus mode, V for vision mode (Pro)"
+    },
+    {
+      question: "How do I access my saved articles?",
+      answer: "Click 'View Saved' in the reader toolbar or open the CleanRead saved articles page from the extension menu. Your saved articles are organized by date with quick access to re-read them."
+    },
+    {
+      question: "Can I edit articles in CleanRead?",
+      answer: "Yes! Enable Edit Mode from the reader toolbar to make content editable. You can add bold, italics, headings, lists, and links. Click Save to keep your edited version."
+    },
+    {
+      question: "What's auto-scroll mode?",
+      answer: "Auto-scroll (Pro feature) automatically scrolls through articles at your preferred speed. Great for long reads or when you want hands-free reading. Click the auto-scroll button to start/stop."
+    },
+    {
+      question: "How do I share articles from CleanRead?",
+      answer: "Use the share button to copy a clean reading link to the clipboard, or export as PDF/HTML to share formatted versions. Shared articles maintain the clean reading experience."
+    }
+  ]
+
+  const currentFAQs = selectedProduct === 'notion-highlights' 
+    ? notionHighlightsFAQs 
+    : selectedProduct === 'focus-dock'
+    ? focusDockFAQs
+    : cleanReadFAQs
+
   const productInfo = {
     'notion-highlights': {
       name: 'Notion Highlights',
       description: 'Highlight & save web content directly to Notion',
       color: 'from-[#ffd700] to-[#ffed4e]',
-      icon: '✨'
+      icon: '✨',
+      helpUrl: 'https://notionhighlightshelp.tawk.help/'
     },
     'focus-dock': {
       name: 'Focus Dock',
       description: 'Universal Chrome launcher for tabs, notes, and bookmarks',
       color: 'from-red-400 to-red-300',
-      icon: '⚡'
+      icon: '⚡',
+      helpUrl: 'https://focusdock.help/'
+    },
+    'clean-read': {
+      name: 'CleanRead',
+      description: 'Distraction-free reading for any webpage',
+      color: 'from-yellow-400 to-yellow-300',
+      icon: '📖',
+      helpUrl: 'https://cleanread.help/'
     }
   }
 
@@ -226,6 +316,20 @@ export default function Support() {
       "• Fuzzy search: Works even with typos and partial matches",
       "• Keyboard navigation: Use ↑↓ arrows, Tab for actions, Enter to execute",
       "• Free limits: 5 notes, 1 workspace, 10 reading list items, 3 clipboard items"
+    ],
+    'clean-read': [
+      "• Activate: Click extension icon or press Cmd/Ctrl+R",
+      "• Social media: Works on Twitter, Facebook, LinkedIn, Reddit",
+      "• AI chats: Extracts last response from ChatGPT, Claude, Gemini",
+      "• Documents: Clean reading for Notion and Google Docs",
+      "• Vision Mode: High contrast, enhanced readability (Pro feature)",
+      "• Auto-scroll: Hands-free reading at adjustable speed (Pro feature)",
+      "• Save articles: Bookmark icon in reader (Free: 3, Pro: unlimited)",
+      "• PDF export: Export clean versions to share (Pro feature)",
+      "• Edit mode: Make articles editable with formatting toolbar",
+      "• Themes: Dark, Gold, or create custom color themes",
+      "• Font size: Adjust from 14px to 28px for comfortable reading",
+      "• Column width: Choose narrow, normal, wide, or full width"
     ]
   }
 
@@ -247,7 +351,7 @@ export default function Support() {
             
             {/* Product Selector */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <div className="glass-card p-2 flex rounded-xl">
+              <div className="glass-card p-2 flex flex-wrap justify-center gap-2 rounded-xl">
                 <button
                   onClick={() => setSelectedProduct('notion-highlights')}
                   className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'notion-highlights' 
@@ -270,6 +374,18 @@ export default function Support() {
                   <div className="flex items-center gap-2">
                     <span>⚡</span>
                     <span>Focus Dock</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setSelectedProduct('clean-read')}
+                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'clean-read' 
+                    ? 'bg-gradient-to-r from-yellow-500/20 to-yellow-400/20 text-white border border-yellow-500/30' 
+                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span>📖</span>
+                    <span>CleanRead</span>
                   </div>
                 </button>
               </div>
@@ -318,9 +434,7 @@ export default function Support() {
                 <button 
                   onClick={() => {
                     gaEvent('help_center_click', { product: selectedProduct })
-                    const helpUrl = selectedProduct === 'notion-highlights' 
-                      ? 'https://notionhighlightshelp.tawk.help/' 
-                      : 'https://focusdock.help/'
+                    const helpUrl = productInfo[selectedProduct].helpUrl
                     window.open(helpUrl, '_blank')
                   }}
                   className="gradient-button text-lg py-3 px-8"
@@ -353,7 +467,7 @@ export default function Support() {
                         <h3 className="text-lg font-semibold text-white pr-4">
                           {faq.question}
                         </h3>
-                        <span className={`text-xl flex-shrink-0 ${selectedProduct === 'notion-highlights' ? 'text-[#ffd700]' : 'text-red-400'}`}>
+                        <span className={`text-xl flex-shrink-0 ${selectedProduct === 'notion-highlights' ? 'text-[#ffd700]' : selectedProduct === 'focus-dock' ? 'text-red-400' : 'text-yellow-400'}`}>
                           {activeFAQ === index ? '−' : '+'}
                         </span>
                       </button>
@@ -392,8 +506,13 @@ export default function Support() {
                   Contact {productInfo[selectedProduct].name} Support
                 </h2>
                 <p className="text-white/70 max-w-2xl mx-auto">
-                  Our team is here to help you with {selectedProduct === 'notion-highlights' ? 'highlighting and saving to Notion' : 'launcher setup and features'}.
-                  We typically respond within 24 hours.
+                  Our team is here to help you with {
+                    selectedProduct === 'notion-highlights' 
+                      ? 'highlighting and saving to Notion'
+                      : selectedProduct === 'focus-dock'
+                      ? 'launcher setup and features'
+                      : 'clean reading and article management'
+                  }. We typically respond within 24 hours.
                 </p>
               </div>
 
@@ -418,13 +537,23 @@ export default function Support() {
               <div className="glass-card p-6 text-center mb-12">
                 <h3 className="text-xl font-bold text-white mb-4">Direct Email</h3>
                 <p className="text-white/70 mb-4">
-                  For {selectedProduct === 'notion-highlights' ? 'Notion Highlights' : 'Focus Dock'} support, email us at:
+                  For {productInfo[selectedProduct].name} support, email us at:
                 </p>
                 <a 
-                  href={`mailto:${selectedProduct === 'notion-highlights' ? 'support@notionhighlights.com' : 'focusdock@notionhighlights.com'}`}
+                  href={`mailto:${selectedProduct === 'notion-highlights' 
+                    ? 'support@notionhighlights.com' 
+                    : selectedProduct === 'focus-dock'
+                    ? 'focusdock@notionhighlights.com'
+                    : 'cleanread@notionhighlights.com'
+                  }`}
                   className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-300 hover:from-red-300 hover:to-red-200 transition-all"
                 >
-                  {selectedProduct === 'notion-highlights' ? 'support@notionhighlights.com' : 'focusdock@notionhighlights.com'}
+                  {selectedProduct === 'notion-highlights' 
+                    ? 'support@notionhighlights.com' 
+                    : selectedProduct === 'focus-dock'
+                    ? 'focusdock@notionhighlights.com'
+                    : 'cleanread@notionhighlights.com'
+                  }
                 </a>
               </div>
 
@@ -442,17 +571,25 @@ export default function Support() {
           {/* Switch Product Notice */}
           <div className="text-center mt-12 p-6 border border-white/10 rounded-xl">
             <p className="text-white/70 mb-4">
-              Need help with {selectedProduct === 'notion-highlights' ? 'Focus Dock' : 'Notion Highlights'} instead?
+              Need help with a different extension?
             </p>
-            <button
-              onClick={() => {
-                setSelectedProduct(selectedProduct === 'notion-highlights' ? 'focus-dock' : 'notion-highlights')
-                setActiveFAQ(null)
-              }}
-              className="text-white hover:text-red-300 font-semibold transition-colors"
-            >
-              Switch to {selectedProduct === 'notion-highlights' ? 'Focus Dock' : 'Notion Highlights'} support →
-            </button>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {Object.entries(productInfo).map(([key, info]) => {
+                if (key === selectedProduct) return null;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => {
+                      setSelectedProduct(key as any)
+                      setActiveFAQ(null)
+                    }}
+                    className="text-white/70 hover:text-white font-semibold transition-colors flex items-center gap-1"
+                  >
+                    {info.icon} {info.name}
+                  </button>
+                );
+              }).filter(Boolean)}
+            </div>
           </div>
         </div>
       </div>
