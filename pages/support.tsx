@@ -5,7 +5,7 @@ import { gaEvent } from '../lib/ga'
 
 export default function Support() {
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
-  const [selectedProduct, setSelectedProduct] = useState<'notion-highlights' | 'focus-dock' | 'clean-read'>('notion-highlights')
+  const [selectedProduct, setSelectedProduct] = useState<'sightline' | 'notion-highlights' | 'focus-dock' | 'clean-read'>('sightline')
   const [activeSection, setActiveSection] = useState<'faq' | 'contact'>('faq')
 
   useEffect(() => {
@@ -21,7 +21,9 @@ export default function Support() {
       action: "Send Email", 
       onClick: () => {
         gaEvent('contact_click', { method: 'email', product: selectedProduct })
-        const email = selectedProduct === 'notion-highlights' 
+        const email = selectedProduct === 'sightline' 
+          ? 'support@sightline.app' 
+          : selectedProduct === 'notion-highlights' 
           ? 'support@notionhighlights.com' 
           : selectedProduct === 'focus-dock' 
           ? 'focusdock@notionhighlights.com'
@@ -48,7 +50,9 @@ export default function Support() {
       action: "Follow Us",
       onClick: () => {
         gaEvent('contact_click', { method: 'twitter', product: selectedProduct })
-        const handle = selectedProduct === 'notion-highlights' 
+        const handle = selectedProduct === 'sightline'
+          ? 'SightlineApp'
+          : selectedProduct === 'notion-highlights' 
           ? 'NotionHighlight' 
           : selectedProduct === 'focus-dock'
           ? 'FocusDockApp'
@@ -58,7 +62,67 @@ export default function Support() {
     }
   ]
 
-  // Notion Highlights FAQs
+  // Sightline FAQs
+  const sightlineFAQs = [
+    {
+      question: "How many free screenshots do I get?",
+      answer: "You get 20 free screenshots per month on the free plan. This resets on the 1st of each month. No credit card required. If you need more, upgrade to Pro for unlimited screenshots."
+    },
+    {
+      question: "What's the difference between Free and Pro?",
+      answer: "Free: 20 screenshots/month, watermark on exports, all basic editing tools. Pro: Unlimited screenshots, no watermark, priority support, advanced features, and future Pro-only tools."
+    },
+    {
+      question: "How do I capture a screenshot?",
+      answer: "Three ways: 1) Click the extension icon and select 'Capture Visible', 2) Use keyboard shortcut ⌘+.S (Mac) or Alt+Shift+S (Windows), 3) Right-click on any webpage and select 'Capture with Sightline' from the context menu."
+    },
+    {
+      question: "How do I select a region to capture?",
+      answer: "Click the extension icon and select 'Select Region', or use keyboard shortcut ⌘+.R. Drag to select any area on the page. Press Enter or click the capture button when ready."
+    },
+    {
+      question: "How does the crop tool work?",
+      answer: "Click the extension icon and select 'Crop Tool', or use ⌘+.C. This captures the visible tab and immediately opens the crop tool. Drag the handles to adjust, then click Apply."
+    },
+    {
+      question: "What editing tools are available?",
+      answer: "Arrow tool, rectangle tool, text tool, numbered steps, blur tool, and crop tool. All available in free version. Pro adds more colors, stroke options, and advanced features."
+    },
+    {
+      question: "How do I copy a screenshot to clipboard?",
+      answer: "In the editor, click the Copy button (or use the Copy button in export modal). The annotated screenshot will be copied to your clipboard, ready to paste anywhere."
+    },
+    {
+      question: "What export formats are supported?",
+      answer: "PNG (lossless quality) and JPEG (smaller file size). You can choose quality settings for JPEG. Free version adds a watermark, Pro exports are clean."
+    },
+    {
+      question: "Are my screenshots stored on your servers?",
+      answer: "No. All processing happens locally in your browser. We never upload your screenshots to our servers. The only data we store is your Pro subscription status."
+    },
+    {
+      question: "How do keyboard shortcuts work?",
+      answer: "Default shortcuts: ⌘+.S (Capture Visible), ⌘+.R (Select Region), ⌘+.C (Crop Tool). In editor: V=Select, A=Arrow, R=Rectangle, T=Text, N=Step, B=Blur, X=Crop, ⌘Z=Undo, ⌘⇧Z=Redo."
+    },
+    {
+      question: "How do I upgrade to Pro?",
+      answer: "Click 'Upgrade to Pro' in the extension popup or visit our website. Pro is $4.99/month or $39.99/year (save 33%). All payments are processed securely through Stripe."
+    },
+    {
+      question: "What happens if I reach my free quota?",
+      answer: "You'll see a notification when you have 5 screenshots left. Once you reach 20, you'll need to wait until the next month or upgrade to Pro for unlimited screenshots."
+    },
+    {
+      question: "Can I use Sightline on multiple computers?",
+      answer: "Yes! The extension works on any Chrome browser where you're signed in. Pro subscription is tied to your Google account, so it works across all your devices."
+    },
+    {
+      question: "How do I change the keyboard shortcuts?",
+      answer: "Go to chrome://extensions/shortcuts in your browser to customize Sightline shortcuts. You can change the default ⌘+. combinations to whatever you prefer."
+    }
+  ]
+
+  // Notion Highlights FAQs - ALL ORIGINAL FAQs RESTORED
   const notionHighlightsFAQs = [
     {
       question: "How do I get started with Notion Highlights?",
@@ -126,7 +190,7 @@ export default function Support() {
     }
   ]
 
-  // Focus Dock FAQs
+  // Focus Dock FAQs - ALL ORIGINAL FAQs RESTORED
   const focusDockFAQs = [
     {
       question: "How do I get started with Focus Dock?",
@@ -190,7 +254,7 @@ export default function Support() {
     }
   ]
 
-  // CleanRead FAQs
+  // CleanRead FAQs - ALL ORIGINAL FAQs RESTORED
   const cleanReadFAQs = [
     {
       question: "How do I activate CleanRead on a webpage?",
@@ -258,13 +322,22 @@ export default function Support() {
     }
   ]
 
-  const currentFAQs = selectedProduct === 'notion-highlights' 
+  const currentFAQs = selectedProduct === 'sightline'
+    ? sightlineFAQs 
+    : selectedProduct === 'notion-highlights' 
     ? notionHighlightsFAQs 
     : selectedProduct === 'focus-dock'
     ? focusDockFAQs
     : cleanReadFAQs
 
   const productInfo = {
+    'sightline': {
+      name: 'Sightline',
+      description: 'Smart screenshot capture & annotation tool',
+      color: 'from-emerald-400 to-[#00FF95]',
+      icon: '📸',
+      helpUrl: 'https://sightline.help/'
+    },
     'notion-highlights': {
       name: 'Notion Highlights',
       description: 'Highlight & save web content directly to Notion',
@@ -289,6 +362,20 @@ export default function Support() {
   }
 
   const productTips = {
+    'sightline': [
+      "• Visible capture: Click extension icon → 'Capture Visible' or use ⌘+.S",
+      "• Region select: Click extension icon → 'Select Region' or use ⌘+.R",
+      "• Crop tool: Click extension icon → 'Crop Tool' or use ⌘+.C",
+      "• Editor shortcuts: V=Select, A=Arrow, R=Rectangle, T=Text, N=Step, B=Blur, X=Crop",
+      "• Quick copy: After editing, click Copy button to copy to clipboard",
+      "• Undo/Redo: ⌘Z to undo, ⌘⇧Z to redo any action",
+      "• Free quota: 20 screenshots/month, resets on 1st of each month",
+      "• Pro benefits: Unlimited screenshots, no watermark, priority support",
+      "• Color picker: Click color button to choose from 10 preset colors",
+      "• Stroke width: Adjust from thin (2px) to thick (6px)",
+      "• Export options: PNG (lossless) or JPEG (compressed)",
+      "• Watermark: Free version adds watermark, Pro exports clean"
+    ],
     'notion-highlights': [
       "• YouTube saving: Right-click videos (not fullscreen) → 'Save YouTube Video to Notion'",
       "• Zero-OAuth mode: Open Notion page → Find in dropdown → Select → Turn on highlight mode",
@@ -352,6 +439,18 @@ export default function Support() {
             {/* Product Selector */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <div className="glass-card p-2 flex flex-wrap justify-center gap-2 rounded-xl">
+                <button
+                  onClick={() => setSelectedProduct('sightline')}
+                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'sightline' 
+                    ? 'bg-gradient-to-r from-emerald-500/20 to-[#00FF95]/20 text-white border border-emerald-500/30' 
+                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span>📸</span>
+                    <span>Sightline</span>
+                  </div>
+                </button>
                 <button
                   onClick={() => setSelectedProduct('notion-highlights')}
                   className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'notion-highlights' 
@@ -467,7 +566,12 @@ export default function Support() {
                         <h3 className="text-lg font-semibold text-white pr-4">
                           {faq.question}
                         </h3>
-                        <span className={`text-xl flex-shrink-0 ${selectedProduct === 'notion-highlights' ? 'text-[#ffd700]' : selectedProduct === 'focus-dock' ? 'text-red-400' : 'text-yellow-400'}`}>
+                        <span className={`text-xl flex-shrink-0 ${
+                          selectedProduct === 'sightline' ? 'text-emerald-400' : 
+                          selectedProduct === 'notion-highlights' ? 'text-[#ffd700]' : 
+                          selectedProduct === 'focus-dock' ? 'text-red-400' : 
+                          'text-yellow-400'
+                        }`}>
                           {activeFAQ === index ? '−' : '+'}
                         </span>
                       </button>
@@ -507,7 +611,9 @@ export default function Support() {
                 </h2>
                 <p className="text-white/70 max-w-2xl mx-auto">
                   Our team is here to help you with {
-                    selectedProduct === 'notion-highlights' 
+                    selectedProduct === 'sightline'
+                      ? 'screenshot capture and editing'
+                      : selectedProduct === 'notion-highlights' 
                       ? 'highlighting and saving to Notion'
                       : selectedProduct === 'focus-dock'
                       ? 'launcher setup and features'
@@ -540,7 +646,9 @@ export default function Support() {
                   For {productInfo[selectedProduct].name} support, email us at:
                 </p>
                 <a 
-                  href={`mailto:${selectedProduct === 'notion-highlights' 
+                  href={`mailto:${selectedProduct === 'sightline' 
+                    ? 'support@sightline.app' 
+                    : selectedProduct === 'notion-highlights' 
                     ? 'support@notionhighlights.com' 
                     : selectedProduct === 'focus-dock'
                     ? 'focusdock@notionhighlights.com'
@@ -548,7 +656,9 @@ export default function Support() {
                   }`}
                   className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-300 hover:from-red-300 hover:to-red-200 transition-all"
                 >
-                  {selectedProduct === 'notion-highlights' 
+                  {selectedProduct === 'sightline' 
+                    ? 'support@sightline.app' 
+                    : selectedProduct === 'notion-highlights' 
                     ? 'support@notionhighlights.com' 
                     : selectedProduct === 'focus-dock'
                     ? 'focusdock@notionhighlights.com'

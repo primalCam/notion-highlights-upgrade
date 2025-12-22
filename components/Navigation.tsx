@@ -1,4 +1,4 @@
-// components/Navigation.tsx - Updated with CleanRead in Apps dropdown
+// components/Navigation.tsx - Updated with Sightline in Apps dropdown
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -14,7 +14,7 @@ export default function Navigation() {
     <nav className="glass-nav fixed w-full top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Logo - RESTORED TO ORIGINAL */}
           <Link href="/" className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-br from-[#ffd700] to-[#ffed4e] rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
               <Image 
@@ -39,7 +39,7 @@ export default function Navigation() {
               Home
             </Link>
 
-            {/* ⭐ APPS DROPDOWN */}
+            {/* APPS DROPDOWN - Updated with Sightline */}
             <div className="relative group">
               <button className="nav-link flex items-center">
                 Apps
@@ -60,6 +60,18 @@ export default function Navigation() {
                   </div>
                   <span>Notion Highlights</span>
                 </Link>
+                <Link href="/sightline" className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors border-t border-white/10 flex items-center gap-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 to-[#00FF95] rounded-md flex items-center justify-center">
+                    <Image 
+                      src="/icons/sl-icon128.png" 
+                      alt="Sightline"
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span>Sightline</span>
+                </Link>
                 <Link href="/focus-dock" className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors border-t border-white/10 flex items-center gap-2">
                   <div className="w-6 h-6 bg-gradient-to-br from-red-500 to-red-600 rounded-md flex items-center justify-center">
                     <Image 
@@ -72,7 +84,6 @@ export default function Navigation() {
                   </div>
                   <span>Focus Dock</span>
                 </Link>
-                {/* NEW: CleanRead added as 3rd app */}
                 <Link href="/clean-read" className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors border-t border-white/10 flex items-center gap-2">
                   <div className="w-6 h-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-md flex items-center justify-center border border-yellow-500/30">
                     <Image 
@@ -180,7 +191,7 @@ export default function Navigation() {
                 Home
               </Link>
 
-              {/* ⭐ APPS DROPDOWN (MOBILE) */}
+              {/* APPS DROPDOWN (MOBILE) - Updated with Sightline */}
               <div className="border-t border-white/10 pt-4">
                 <button 
                   onClick={() => setIsAppsDropdownOpen(!isAppsDropdownOpen)}
@@ -215,6 +226,22 @@ export default function Navigation() {
                       <span>Notion Highlights</span>
                     </Link>
                     <Link 
+                      href="/sightline" 
+                      className="flex items-center gap-3 text-white/70 hover:text-white transition-colors py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 to-[#00FF95] rounded-md flex items-center justify-center">
+                        <Image 
+                          src="/icons/sl-icon128.png" 
+                          alt="Sightline"
+                          width={16}
+                          height={16}
+                          className="object-contain"
+                        />
+                      </div>
+                      <span>Sightline</span>
+                    </Link>
+                    <Link 
                       href="/focus-dock" 
                       className="flex items-center gap-3 text-white/70 hover:text-white transition-colors py-2"
                       onClick={() => setIsMobileMenuOpen(false)}
@@ -230,7 +257,6 @@ export default function Navigation() {
                       </div>
                       <span>Focus Dock</span>
                     </Link>
-                    {/* NEW: CleanRead in mobile menu */}
                     <Link 
                       href="/clean-read" 
                       className="flex items-center gap-3 text-white/70 hover:text-white transition-colors py-2"
