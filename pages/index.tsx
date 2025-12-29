@@ -1,461 +1,228 @@
-// pages/index.tsx - LOGO WITH SHADOW ONLY
+// pages/index.tsx
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { gaEvent } from '../lib/ga'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 export default function Home() {
+  const { scrollYProgress } = useScroll()
+  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.1], [1, 0.98])
+
   useEffect(() => {
     gaEvent('page_view', { page: 'home' })
   }, [])
 
-  const valueProps = [
-    {
-      icon: "⚡",
-      title: "One-Click to Notion",
-      description: "Right-click any web content and save directly to your chosen Notion page. No formatting mess, no disruptions."
-    },
-    {
-      icon: "🎯", 
-      title: "Stay in Flow State",
-      description: "Never leave your current tab. Save content to Notion without breaking your research rhythm."
-    },
-    {
-      icon: "📸",
-      title: "Save Any Content", 
-      description: "Text, code snippets, images - capture everything. Most tools only handle plain text."
-    },
-    {
-      icon: "🔧",
-      title: "Total Control",
-      description: "Drag the highlight button anywhere on screen. Turn it on/off as needed for different workflows."
-    }
-  ]
+  const NOTION_HIGHLIGHTS_URL = "https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1";
 
-  const trustSignals = [
-    { number: "Free", text: "30 Highlights/Month" },
-    { number: "2-Click", text: "Setup Process" },
-    { number: "0", text: "Accounts Required" }
-  ]
-
-  const workflowSteps = [
-    {
-      step: "1",
-      title: "Install & Connect",
-      description: "Install extension, connect Notion, choose your default page"
+  const suite = [
+    { 
+      name: "Notion Highlights", 
+      tagline: "Flagship Researcher", 
+      desc: "One-click web to Notion sync.", 
+      icon: "/icons/icon128.png", 
+      url: "/notion-highlights",
+      color: "from-yellow-400 to-yellow-600"
     },
-    {
-      step: "2", 
-      title: "Select & Right-Click",
-      description: "Highlight any web content - text, code, images - and right-click"
+    { 
+      name: "AutoFlow", 
+      tagline: "Automation Pro", 
+      desc: "Think → Text → Instantly.", 
+      icon: "/icons/af-icon128.png", 
+      url: "/autoflow",
+      color: "from-blue-500 to-blue-700"
     },
-    {
-      step: "3",
-      title: "Auto-Save & Continue", 
-      description: "Content saves instantly to your Notion page. Continue researching without interruption"
-    }
-  ]
-
-  const contentTypes = [
-    {
-      icon: "📝",
-      title: "Text & Articles",
-      description: "Capture key insights from blogs, news, and research papers"
+    { 
+      name: "Sightline", 
+      tagline: "Visual Capture", 
+      desc: "Precision screenshot & annotation.", 
+      icon: "/icons/sl-icon128.png", 
+      url: "/sightline",
+      color: "from-emerald-500 to-[#00FF95]"
     },
-    {
-      icon: "💻",
-      title: "Code Snippets", 
-      description: "Save code examples, API responses, and technical solutions"
+    { 
+      name: "Focus Dock", 
+      tagline: "Tab Command", 
+      desc: "Keyboard-first tab & note management.", 
+      icon: "/icons/fd-icon128.png", 
+      url: "/focus-dock",
+      color: "from-red-500 to-red-600"
     },
-    {
-      icon: "🖼️",
-      title: "Images & Screenshots",
-      description: "Preserve visual content, diagrams, and UI examples"
-    },
-    {
-      icon: "🤖",
-      title: "AI Conversations",
-      description: "Save ChatGPT responses, AI insights, and model outputs"
-    }
-  ]
-
-  const newFeatures = [
-    {
-      icon: "🎬",
-      title: "Save YouTube Videos",
-      description: "Right-click any YouTube video online to embed it directly in Notion. Works alongside our core highlighting feature."
-    },
-    {
-      icon: "⚡",
-      title: "Zero-OAuth Lightning Mode",
-      description: "New save mode that works without login. Open any Notion page in a tab first, then highlight and save."
-    },
-    {
-      icon: "🚀",
-      title: "Faster & More Accurate",
-      description: "Improved selection detection and drastically faster clipping pipeline for near-instant saves."
-    }
-  ]
-
-  const habitBenefits = [
-    {
-      icon: "🔄",
-      title: "Seamless Workflow",
-      description: "Right-click → Save → Continue. The most natural research habit you'll build."
-    },
-    {
-      icon: "🎛️",
-      title: "Flexible Interface", 
-      description: "Drag the highlight button anywhere. Show/hide it based on your current task."
-    },
-    {
-      icon: "📚",
-      title: "Growing Knowledge Base",
-      description: "Watch your personal library grow effortlessly with every research session."
-    }
-  ]
-
-  const platformDemos = [
-    {
-      platform: "ChatGPT",
-      videoId: "sRnW4xMOoUQ"
-    },
-    {
-      platform: "Amazon",
-      videoId: "sqBmN89nJWo"
-    },
-    {
-      platform: "4chan",
-      videoId: "lruK7EQN37Y"
-    },
-    {
-      platform: "Claude",
-      videoId: "bR_fz7OSOFo"
-    },
-    {
-      platform: "Deepseek",
-      videoId: "r_4sWgkbtnY"
-    },
-    {
-      platform: "Dribbble",
-      videoId: "Q8kbcpQWr14"
-    },
-    {
-      platform: "Gemini",
-      videoId: "co0PVKVuZe8"
-    },
-    {
-      platform: "Grok",
-      videoId: "LUsurpQr6As"
-    },
-    {
-      platform: "Perplexity",
-      videoId: "Lw6NrXrfOio"
-    },
-    {
-      platform: "Reddit",
-      videoId: "rz7XRBhDmDI"
-    },
-    {
-      platform: "X",
-      videoId: "VY-wrGBf4F0"
-    },
-    {
-      platform: "YouTube",
-      videoId: "SlJ5TQ6kZ2o"
-    },
-    {
-      platform: "Substack",
-      videoId: "9GJPADAVm10"
-    },
-    {
-      platform: "StackOverflow",
-      videoId: "yaRcKBkHPeU"
-    },
-    {
-      platform: "Love and Lemons",
-      videoId: "6WYP_hKIg-I"
+    { 
+      name: "Clean Read", 
+      tagline: "Distraction Zero", 
+      desc: "Remove ads & popups with one click.", 
+      icon: "/icons/cr-icon128.png", 
+      url: "/clean-read",
+      color: "from-yellow-500 to-yellow-600"
     }
   ]
 
   return (
     <Layout>
-      {/* Add Head with Favicon */}
       <Head>
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon32.png" />
-        <link rel="icon" type="image/png" sizes="48x48" href="/icons/icon48.png" />
-        <link rel="icon" type="image/png" sizes="128x128" href="/icons/icon128.png" />
+        <title>The Suite | Notion Highlights & Power Tools</title>
       </Head>
 
-      {/* Hero Section with Logo Only */}
-      <section className="min-h-screen flex items-center justify-center px-4 pt-16">
-        <div className="text-center max-w-4xl">
-          {/* Logo with Shadow Only - No Container */}
-          <div className="flex justify-center mb-8">
-            <div className="drop-shadow-2xl drop-shadow-[#ffd700]/30">
-              <Image 
-                src="/icons/icon128.png" 
-                alt="Notion Highlights Logo"
-                width={96}
-                height={96}
-                className="object-contain"
-              />
-            </div>
-          </div>
+      <div className="fixed inset-0 -z-10 bg-[#030303] overflow-hidden pointer-events-none">
+        <div className="absolute top-[-25%] left-[-10%] w-[80%] h-[80%] bg-yellow-500/10 rounded-full blur-[160px] animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[140px]" />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 contrast-150 mix-blend-overlay" />
+      </div>
 
-          <div className="inline-flex items-center gap-2 bg-white/10 rounded-full px-4 py-2 mb-8">
-            <span className="text-yellow-400">✨</span>
-            <span className="text-white text-sm">Version 1.4.1: Now with YouTube video saving & zero-OAuth mode</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Research Without
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffd700] to-[#ffed4e] block mt-2">
-              Breaking Flow
-            </span>
+      {/* --- HERO --- */}
+      <motion.section style={{ opacity, scale }} className="min-h-screen flex flex-col items-center justify-center px-6 pt-20">
+        <div className="text-center max-w-6xl">
+          <motion.div 
+            initial={{ y: 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="inline-flex items-center gap-3 bg-white/5 border border-white/10 backdrop-blur-2xl rounded-full px-5 py-2 mb-12 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
+          >
+            <span className="flex h-2 w-2 rounded-full bg-yellow-500 animate-ping" />
+            <span className="text-white/80 text-[10px] font-black uppercase tracking-[0.3em]">2026 Liquid Metal Collection</span>
+          </motion.div>
+
+          <h1 className="text-7xl md:text-[10rem] font-black text-white mb-8 tracking-tighter leading-[0.8] mix-blend-exclusion">
+            Chrome <br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-slate-200 to-slate-500">Reinforced.</span>
           </h1>
-          
-          <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto">
-            Right-click any content - text, code, images - and save directly to Notion. Perfect for AI research and knowledge building.
+
+          <p className="text-xl md:text-3xl text-white/40 mb-16 max-w-3xl mx-auto font-light leading-snug">
+            Five powerful extensions. One seamless workflow. Built for those who live in the <span className="text-white">flow state</span>.
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-20">
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <button 
-              onClick={() => {
-                gaEvent('install_click', { location: 'hero' })
-                window.location.href = 'https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1'
-              }}
-              className="gradient-button text-lg py-4 px-12"
+              onClick={() => window.location.href = NOTION_HIGHLIGHTS_URL}
+              className="relative group overflow-hidden bg-white text-black font-black py-7 px-16 rounded-2xl shadow-[0_30px_60px_rgba(255,255,255,0.1)] hover:scale-105 transition-all"
             >
-              Install Free Extension
+              <span className="relative z-10">Get Notion Highlights</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-200/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </button>
             <button 
-              onClick={() => {
-                gaEvent('upgrade_click', { location: 'hero' })
-                window.location.href = '/upgrade'
-              }}
-              className="glass-button text-lg py-4 px-12"
+              onClick={() => document.getElementById('suite-grid')?.scrollIntoView({ behavior: 'smooth' })}
+              className="glass-card-chrome text-white font-bold py-7 px-16 rounded-2xl border border-white/10 hover:bg-white/10 transition-all"
             >
-              See Pro Features
+              View Full Suite
             </button>
           </div>
-
-          {/* Trust Signals */}
-          <div className="flex flex-wrap justify-center gap-8 opacity-70 mb-20">
-            {trustSignals.map((signal, index) => (
-              <div key={index} className="text-center">
-                <div className="text-2xl font-bold text-white">{signal.number}</div>
-                <div className="text-white/60 text-sm">{signal.text}</div>
-              </div>
-            ))}
-          </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* How to Use - Full Tutorial Section */}
-      <section className="py-20 px-4 bg-white/5">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            See How It Works
-          </h2>
-          <p className="text-xl text-white/70 text-center mb-12 max-w-2xl mx-auto">
-            Watch how to save any web content directly to Notion without breaking your flow
-          </p>
-          
-          <div className="glass-card">
-            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-              <iframe
-                className="absolute top-0 left-0 w-full h-full rounded-lg"
-                src="https://www.youtube.com/embed/7TVs8m3-fTQ"
-                title="How to Use Notion Highlights"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Value Props Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            Capture Everything, Interrupt Nothing
-          </h2>
-          <p className="text-xl text-white/70 text-center mb-16 max-w-2xl mx-auto">
-            Built for researchers who need to save content without breaking concentration
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {valueProps.map((prop, index) => (
-              <div key={index} className="glass-card p-6">
-                <div className="text-3xl mb-4">{prop.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-3">{prop.title}</h3>
-                <p className="text-white/70">{prop.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* New Features Section */}
-      <section className="py-20 px-4 bg-white/5">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            What's New in Version 1.4.1
-          </h2>
-          <p className="text-xl text-white/70 text-center mb-16 max-w-2xl mx-auto">
-            Powerful additions to our core highlighting experience
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {newFeatures.map((feature, index) => (
-              <div key={index} className="glass-card p-6">
-                <div className="text-3xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-white/70">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Workflow Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            Natural Research Habits
-          </h2>
-          <p className="text-xl text-white/70 text-center mb-16 max-w-2xl mx-auto">
-            The workflow that feels like second nature
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {workflowSteps.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-[#ffd700] to-[#ffed4e] rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-black font-bold text-xl">{step.step}</span>
+      {/* --- THE 5-PRODUCT GRID --- */}
+      <section id="suite-grid" className="py-40 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {suite.map((ext, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ y: -10, transition: { duration: 0.2 } }}
+                onClick={() => window.location.href = ext.url}
+                className="group relative cursor-pointer glass-card-chrome p-8 rounded-[2.5rem] border border-white/5 flex flex-col items-center text-center hover:border-white/20 transition-all"
+              >
+                <div className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${ext.color} p-4 mb-6 shadow-2xl group-hover:scale-110 transition-transform duration-500`}>
+                  <Image src={ext.icon} alt={ext.name} width={60} height={60} className="object-contain" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
-                <p className="text-white/70">{step.description}</p>
-              </div>
+                <h3 className="text-white font-black text-xl mb-1">{ext.name}</h3>
+                <p className="text-yellow-500/80 text-[10px] uppercase font-bold tracking-widest mb-4">{ext.tagline}</p>
+                <p className="text-white/40 text-xs leading-relaxed">{ext.desc}</p>
+                
+                <div className="mt-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                   <span className="text-white text-xs font-bold flex items-center gap-2">Learn More <span>→</span></span>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Content Types Section */}
-      <section className="py-20 px-4 bg-white/5">
+      {/* --- NEW HIGH-CONVERSION CONTEXT SECTION --- */}
+      <section className="py-40 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            Save Any Content Type
-          </h2>
-          <p className="text-xl text-white/70 text-center mb-16 max-w-2xl mx-auto">
-            Unlike text-only tools, capture everything that matters
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {contentTypes.map((type, index) => (
-              <div key={index} className="glass-card p-6 text-center">
-                <div className="text-4xl mb-4">{type.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-3">{type.title}</h3>
-                <p className="text-white/70">{type.description}</p>
+          <div className="glass-card-chrome p-1 md:p-12 rounded-[4rem] border border-white/5 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-yellow-500/5 via-transparent to-blue-500/5 pointer-events-none" />
+            
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-8 leading-tight">
+                  One Stack.<br/> 
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-500">Infinite Output.</span>
+                </h2>
+                <p className="text-white/50 text-lg mb-8 leading-relaxed">
+                  Individually, they are tools. Together, they are a <span className="text-white font-bold">productivity engine</span>. By installing the full suite, you eliminate the friction between capturing, processing, and organizing your digital life.
+                </p>
+                <button 
+                  onClick={() => window.location.href = NOTION_HIGHLIGHTS_URL}
+                  className="bg-white text-black font-black py-4 px-10 rounded-xl hover:scale-105 transition-transform"
+                >
+                  Start Your Collection
+                </button>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Habit Benefits Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            Research That Feels Effortless
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {habitBenefits.map((benefit, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl mb-4">{benefit.icon}</div>
-                <h3 className="text-xl font-bold text-white mb-3">{benefit.title}</h3>
-                <p className="text-white/70">{benefit.description}</p>
+              <div className="grid grid-cols-1 gap-6">
+                {[
+                  {
+                    title: "Seamless Data Continuity",
+                    desc: "Capture with Sightline, Clean with Clean Read, and Sync with Notion Highlights—without ever losing your cursor position.",
+                    icon: "🔄"
+                  },
+                  {
+                    title: "Exponential Speed",
+                    desc: "Combine AutoFlow’s automation with Focus Dock’s command center to reduce 10-minute tasks into 3-second shortcuts.",
+                    icon: "🚀"
+                  },
+                  {
+                    title: "Total Context Awareness",
+                    desc: "Every extension is built on the same core architecture, ensuring they work in harmony across any website or web-app.",
+                    icon: "🧠"
+                  },
+                  {
+                    title: "Workflow Autonomy",
+                    desc: "Don't adapt to your browser. Make your browser adapt to you with keyboard-first navigation and visual precision.",
+                    icon: "🛡️"
+                  }
+                ].map((item, i) => (
+                  <div key={i} className="flex gap-5 p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-colors group">
+                    <div className="text-3xl grayscale group-hover:grayscale-0 transition-all">{item.icon}</div>
+                    <div>
+                      <h4 className="text-white font-bold mb-1">{item.title}</h4>
+                      <p className="text-white/40 text-sm leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Teaser */}
-      <section className="py-20 px-4 bg-white/5">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Free to Start, Pro When You Need It
-          </h2>
-          <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
-            Start with 30 free highlights per month. Upgrade to unlimited when you're hooked.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            <div className="glass-card p-6">
-              <h3 className="text-2xl font-bold text-white mb-4">Free</h3>
-              <div className="text-4xl font-bold text-white mb-4">$0</div>
-              <ul className="text-white/70 space-y-2 mb-6">
-                <li>30 highlights/month</li>
-                <li>All content types</li>
-                <li>No account required</li>
-                <li>Drag & position button</li>
-                <li>All 1.4.1 updates included</li>
-              </ul>
-            </div>
-            <div className="glass-card p-6 ring-2 ring-[#ffd700]">
-              <h3 className="text-2xl font-bold text-white mb-4">Pro</h3>
-              <div className="text-4xl font-bold text-white mb-4">$12/mo</div>
-              <ul className="text-white/70 space-y-2 mb-6">
-                <li>Unlimited highlights</li>
-                <li>All free features</li>
-                <li>Priority support</li>
-                <li>Future features</li>
-              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Start Building Better Research Habits
-          </h2>
-          <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
-            Join researchers who capture insights effortlessly while staying in flow
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => {
-                gaEvent('install_click', { location: 'bottom' })
-                window.location.href = 'https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1'
-              }}
-              className="gradient-button text-lg py-4 px-12"
-            >
-              Install Free Extension
-            </button>
-            <button 
-              onClick={() => {
-                gaEvent('support_click', { location: 'bottom' })
-                window.location.href = '/support'
-              }}
-              className="glass-button text-lg py-4 px-12"
-            >
-              See How It Works
-            </button>
-          </div>
-          <p className="text-white/50 text-sm mt-6">
-            No credit card • No account • 30 free highlights monthly • Version 1.4.1 updates included
-          </p>
+      {/* --- REFINED CTA --- */}
+      <section className="py-60 px-6 text-center relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-yellow-500/5 blur-[160px] rounded-full" />
+        <div className="relative z-10">
+          <h2 className="text-6xl md:text-9xl font-black text-white mb-12 tracking-tighter leading-none">Stay in Flow.</h2>
+          <button 
+            onClick={() => window.location.href = NOTION_HIGHLIGHTS_URL}
+            className="bg-white text-black font-black py-8 px-24 rounded-full text-2xl shadow-[0_0_80px_rgba(255,255,255,0.2)] hover:scale-110 active:scale-95 transition-all"
+          >
+            Install Suite Flagship
+          </button>
+          <p className="mt-12 text-white/20 text-xs font-bold uppercase tracking-[0.4em]">Designed for Power Users • 2026 Edition</p>
         </div>
       </section>
+
+      <style jsx global>{`
+        body { background: #030303; color: white; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+        .glass-card-chrome {
+          background: rgba(255, 255, 255, 0.01);
+          backdrop-filter: blur(40px) saturate(200%);
+          -webkit-backdrop-filter: blur(40px) saturate(200%);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+        }
+      `}</style>
     </Layout>
   )
 }
