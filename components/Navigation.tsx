@@ -1,4 +1,4 @@
-// components/Navigation.tsx - Updated with Sightline in Apps dropdown
+// components/Navigation.tsx - Updated with AutoFlow in Apps dropdown
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -39,7 +39,7 @@ export default function Navigation() {
               Home
             </Link>
 
-            {/* APPS DROPDOWN - Updated with Sightline */}
+            {/* APPS DROPDOWN - Updated with AutoFlow */}
             <div className="relative group">
               <button className="nav-link flex items-center">
                 Apps
@@ -59,6 +59,18 @@ export default function Navigation() {
                     />
                   </div>
                   <span>Notion Highlights</span>
+                </Link>
+                <Link href="/autoflow" className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors border-t border-white/10 flex items-center gap-2">
+                  <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-md flex items-center justify-center">
+                    <Image 
+                      src="/icons/af-icon128.png" 
+                      alt="AutoFlow"
+                      width={16}
+                      height={16}
+                      className="object-contain"
+                    />
+                  </div>
+                  <span>AutoFlow</span>
                 </Link>
                 <Link href="/sightline" className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors border-t border-white/10 flex items-center gap-2">
                   <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 to-[#00FF95] rounded-md flex items-center justify-center">
@@ -191,7 +203,7 @@ export default function Navigation() {
                 Home
               </Link>
 
-              {/* APPS DROPDOWN (MOBILE) - Updated with Sightline */}
+              {/* APPS DROPDOWN (MOBILE) - Updated with AutoFlow */}
               <div className="border-t border-white/10 pt-4">
                 <button 
                   onClick={() => setIsAppsDropdownOpen(!isAppsDropdownOpen)}
@@ -224,6 +236,22 @@ export default function Navigation() {
                         />
                       </div>
                       <span>Notion Highlights</span>
+                    </Link>
+                    <Link 
+                      href="/autoflow" 
+                      className="flex items-center gap-3 text-white/70 hover:text-white transition-colors py-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-md flex items-center justify-center">
+                        <Image 
+                          src="/icons/af-icon128.png" 
+                          alt="AutoFlow"
+                          width={16}
+                          height={16}
+                          className="object-contain"
+                        />
+                      </div>
+                      <span>AutoFlow</span>
                     </Link>
                     <Link 
                       href="/sightline" 

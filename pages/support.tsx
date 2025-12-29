@@ -5,7 +5,7 @@ import { gaEvent } from '../lib/ga'
 
 export default function Support() {
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
-  const [selectedProduct, setSelectedProduct] = useState<'sightline' | 'notion-highlights' | 'focus-dock' | 'clean-read'>('sightline')
+  const [selectedProduct, setSelectedProduct] = useState<'sightline' | 'notion-highlights' | 'focus-dock' | 'clean-read' | 'autoflow'>('autoflow')
   const [activeSection, setActiveSection] = useState<'faq' | 'contact'>('faq')
 
   useEffect(() => {
@@ -27,7 +27,9 @@ export default function Support() {
           ? 'support@notionhighlights.com' 
           : selectedProduct === 'focus-dock' 
           ? 'focusdock@notionhighlights.com'
-          : 'cleanread@notionhighlights.com'
+          : selectedProduct === 'clean-read'
+          ? 'cleanread@notionhighlights.com'
+          : 'autoflow@notionhighlights.com'
         window.location.href = `mailto:${email}`
       }
     },
@@ -56,7 +58,9 @@ export default function Support() {
           ? 'NotionHighlight' 
           : selectedProduct === 'focus-dock'
           ? 'FocusDockApp'
-          : 'CleanReadApp'
+          : selectedProduct === 'clean-read'
+          ? 'CleanReadApp'
+          : 'AutoflowApp'
         window.open(`https://twitter.com/${handle}`, '_blank')
       }
     }
@@ -322,13 +326,83 @@ export default function Support() {
     }
   ]
 
+  // AutoFlow FAQs
+const autoflowFAQs = [
+  {
+    question: "How do I get started with AutoFlow?",
+    answer: "Install the extension and click the extension icon to open the manager. You'll see 3 starter snippets ready to use. Press Ctrl/Cmd+Shift+Space anywhere you can type to open the snippet menu. No setup required!"
+  },
+  {
+    question: "What keyboard shortcuts are available?",
+    answer: "• Ctrl/Cmd+Shift+Space - Open snippet menu anywhere (primary shortcut)\n• Ctrl/Cmd+K - Alternative shortcut\n• Arrow keys - Navigate snippets in menu\n• Enter - Insert selected snippet\n• Esc - Close menu\n• Tab - Navigate between results"
+  },
+  {
+    question: "How do I insert a snippet?",
+    answer: "Press Ctrl/Cmd+Shift+Space anywhere you can type to open the snippet menu, search for your snippet using keywords, then press Enter. The snippet will be inserted at your cursor position. You can also click the extension icon, select your snippet, and click 'Insert'."
+  },
+  {
+    question: "What's the difference between Free and Pro?",
+    answer: "Free: 5 snippets limit, 50 insertions/month, 10 clipboard items, basic variables. Pro: Unlimited snippets and insertions, 100 clipboard items, custom variables, categories, priority support, and advanced features."
+  },
+  {
+    question: "How do variables work in snippets?",
+    answer: "Use {{variable}} in your snippets. Built-in variables: {{name}}, {{email}}, {{company}}, {{date}}. Variables are filled from your profile or you can set custom values in the Variables tab of the extension."
+  },
+  {
+    question: "How do I create custom variables?",
+    answer: "Custom variables are a Pro feature. Go to Variables tab, click 'Add Custom Variable', give it a name and default value. Use {{variable_name}} in snippets. Perfect for project names, roles, URLs, etc."
+  },
+  {
+    question: "How do categories work?",
+    answer: "Categories help organize snippets. Free: 1 category (General). Pro: Unlimited categories. Create categories like 'Email', 'Code', 'Social', etc. Assign snippets to categories for better organization."
+  },
+  {
+    question: "How does clipboard history work?",
+    answer: "AutoFlow automatically saves text you copy. Go to Clipboard tab to see history. Click any item to copy it again. Free: 10 items, Pro: 100 items. Great for reusing text across sessions."
+  },
+  {
+    question: "Can I use AutoFlow in AI chats like ChatGPT?",
+    answer: "Yes! AutoFlow works anywhere you can type, including ChatGPT, Claude, Gemini, and all other AI chat interfaces. Press Ctrl/Cmd+Shift+Space to open the menu at your cursor position."
+  },
+  {
+    question: "How do I save text as a snippet quickly?",
+    answer: "Select text on any page, right-click and choose 'Save Selection as Snippet'. Or copy text, open AutoFlow, and click 'Save from Clipboard'. You can also use the keyboard shortcut after selecting text."
+  },
+  {
+    question: "What happens if I reach my free monthly limit?",
+    answer: "Free users get 50 snippet insertions per month. Once reached, you'll see a notification. Upgrade to Pro for unlimited usage. Usage resets on the 1st of each month."
+  },
+  {
+    question: "Are my snippets stored locally or in the cloud?",
+    answer: "All your data is stored locally in your browser by default. If you sign in with an account (Pro feature), your data syncs across devices through our secure cloud."
+  },
+  {
+    question: "How do I organize my snippets?",
+    answer: "Use categories, tags, and search. Free: Add tags to snippets. Pro: Create unlimited categories, use advanced search with filters, and sort by usage frequency."
+  },
+  {
+    question: "How do I export/import my snippets?",
+    answer: "Go to Settings tab, click 'Export Data' to download all snippets as JSON. To import, click 'Import Data' and select your JSON file. Great for backups or migrating to a new computer."
+  },
+  {
+    question: "How do I search for snippets quickly?",
+    answer: "Press Ctrl/Cmd+Shift+Space to open the menu, then start typing to search through your snippets. Results update in real-time. You can search by snippet name, content, or tags."
+  },
+  {
+    question: "How do I upgrade to Pro?",
+    answer: "Click 'Upgrade to Pro' in the extension popup or visit autoflow.app/upgrade. Pro is $9/month or $79/year. All payments are processed securely through Stripe."
+  }
+]
+
   const currentFAQs = selectedProduct === 'sightline'
     ? sightlineFAQs 
     : selectedProduct === 'notion-highlights' 
     ? notionHighlightsFAQs 
     : selectedProduct === 'focus-dock'
     ? focusDockFAQs
-    : cleanReadFAQs
+    : selectedProduct === 'clean-read'
+    ? cleanReadFAQs
+    : autoflowFAQs
 
   const productInfo = {
     'sightline': {
@@ -358,6 +432,13 @@ export default function Support() {
       color: 'from-yellow-400 to-yellow-300',
       icon: '📖',
       helpUrl: 'https://cleanread.help/'
+    },
+    'autoflow': {
+      name: 'AutoFlow',
+      description: 'Think → Text → Instantly. Text automation for power users',
+      color: 'from-blue-400 to-blue-300',
+      icon: '⚡',
+      helpUrl: 'https://autoflow.help/'
     }
   }
 
@@ -417,7 +498,21 @@ export default function Support() {
       "• Themes: Dark, Gold, or create custom color themes",
       "• Font size: Adjust from 14px to 28px for comfortable reading",
       "• Column width: Choose narrow, normal, wide, or full width"
-    ]
+    ],
+   'autoflow': [
+    "• Main shortcut: Press Ctrl/Cmd+Shift+Space anywhere to open snippet menu",
+    "• Variables: Use {{name}}, {{email}}, {{company}}, {{date}} in snippets",
+    "• AI chats: Works perfectly in ChatGPT, Claude, Gemini, and all AI interfaces",
+    "• Quick save: Select text → Right-click → 'Save Selection as Snippet'",
+    "• Categories: Organize snippets by purpose (Email, Code, Social, etc.)",
+    "• Quick search: Type in menu to filter snippets in real-time",
+    "• Clipboard history: Reuse recently copied text (Free: 10, Pro: 100 items)",
+    "• Usage stats: See which snippets you use most frequently",
+    "• Import/export: Backup all snippets as JSON file",
+    "• Sync: Pro users get cross-device sync through secure cloud",
+    "• Custom variables: Create your own {{variables}} (Pro feature)",
+    "• Keyboard shortcuts: Customize in chrome://extensions/shortcuts"
+  ]
   }
 
   return (
@@ -485,6 +580,18 @@ export default function Support() {
                   <div className="flex items-center gap-2">
                     <span>📖</span>
                     <span>CleanRead</span>
+                  </div>
+                </button>
+                <button
+                  onClick={() => setSelectedProduct('autoflow')}
+                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'autoflow' 
+                    ? 'bg-gradient-to-r from-blue-500/20 to-blue-400/20 text-white border border-blue-500/30' 
+                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span>⚡</span>
+                    <span>AutoFlow</span>
                   </div>
                 </button>
               </div>
@@ -570,7 +677,8 @@ export default function Support() {
                           selectedProduct === 'sightline' ? 'text-emerald-400' : 
                           selectedProduct === 'notion-highlights' ? 'text-[#ffd700]' : 
                           selectedProduct === 'focus-dock' ? 'text-red-400' : 
-                          'text-yellow-400'
+                          selectedProduct === 'clean-read' ? 'text-yellow-400' :
+                          'text-blue-400'
                         }`}>
                           {activeFAQ === index ? '−' : '+'}
                         </span>
@@ -617,7 +725,9 @@ export default function Support() {
                       ? 'highlighting and saving to Notion'
                       : selectedProduct === 'focus-dock'
                       ? 'launcher setup and features'
-                      : 'clean reading and article management'
+                      : selectedProduct === 'clean-read'
+                      ? 'clean reading and article management'
+                      : 'text automation and snippet management'
                   }. We typically respond within 24 hours.
                 </p>
               </div>
@@ -652,7 +762,9 @@ export default function Support() {
                     ? 'support@notionhighlights.com' 
                     : selectedProduct === 'focus-dock'
                     ? 'focusdock@notionhighlights.com'
-                    : 'cleanread@notionhighlights.com'
+                    : selectedProduct === 'clean-read'
+                    ? 'cleanread@notionhighlights.com'
+                    : 'autoflow@notionhighlights.com'
                   }`}
                   className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-300 hover:from-red-300 hover:to-red-200 transition-all"
                 >
@@ -662,7 +774,9 @@ export default function Support() {
                     ? 'support@notionhighlights.com' 
                     : selectedProduct === 'focus-dock'
                     ? 'focusdock@notionhighlights.com'
-                    : 'cleanread@notionhighlights.com'
+                    : selectedProduct === 'clean-read'
+                    ? 'cleanread@notionhighlights.com'
+                    : 'autoflow@notionhighlights.com'
                   }
                 </a>
               </div>
