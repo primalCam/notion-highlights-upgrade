@@ -541,9 +541,9 @@ export default function Upgrade() {
                       handleUpgrade(popularPlan.priceId, popularPlan.name)
                     }
                   }}
-                  disabled={loading && loading.includes(selectedProduct)}
+                  disabled={loading !== null && loading.includes(selectedProduct)}
                   className={`relative group overflow-hidden bg-white text-black font-black py-6 px-12 rounded-2xl text-lg shadow-[0_20px_40px_rgba(255,255,255,0.1)] hover:scale-105 transition-all ${
-                    loading && loading.includes(selectedProduct) ? 'opacity-50 cursor-not-allowed' : ''
+                    loading !== null && loading.includes(selectedProduct) ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 >
                   <span className="relative z-10">Get {selectedProductData.name} Pro</span>
