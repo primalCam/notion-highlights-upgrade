@@ -66,7 +66,7 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
   const pageTitle =
     "Notion Highlights Blog — Tutorials, Research, Productivity & AI Workflow Guides";
   const description =
-    "Read high-quality guides on Notion productivity, web clipping, AI workflows, research automation, and creator tools.";
+    "Read high-quality guides on Notion productivity, productivity hacks, web clipping, AI workflows, research automation, and creator tools.";
   const canonicalUrl = `${SITE_URL}/blog`;
   const ogImage = `${SITE_URL}/default-og.png`;
 
