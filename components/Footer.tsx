@@ -15,15 +15,6 @@ export default function Footer() {
             
             {/* Center - Navigation Links */}
             <div className="flex items-center gap-8">
-              <a 
-                href="https://notionhighlightshelp.tawk.help/" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/60 hover:text-white transition-colors text-sm font-bold tracking-widest uppercase hover:scale-105"
-              >
-                Help Center
-              </a>
-              <div className="h-4 w-px bg-white/20"></div>
               <Link 
                 href="/privacy" 
                 className="text-white/60 hover:text-white transition-colors text-sm font-bold tracking-widest uppercase hover:scale-105"
@@ -39,16 +30,21 @@ export default function Footer() {
               </Link>
             </div>
             
-            {/* Right side - Logo/Brand */}
+            {/* Right side - Logo/Brand with slogan */}
             <div className="flex items-center space-x-3">
               <div className="w-6 h-6 bg-gradient-to-br from-[#ffd700] to-[#ffed4e] rounded-md flex items-center justify-center shadow-[0_0_10px_rgba(255,255,255,0.2)]">
                 <svg className="w-3 h-3 text-black" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-white/80 font-black text-sm tracking-tighter">
-                The Suite
-              </span>
+              <div className="flex flex-col">
+                <span className="text-white/80 font-black text-sm tracking-tighter">
+                  The Suite
+                </span>
+                <span className="text-white/40 text-xs font-bold tracking-widest uppercase">
+                  5 Tools. 1 Workflow.
+                </span>
+              </div>
             </div>
           </div>
         </div>
