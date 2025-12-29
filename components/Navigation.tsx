@@ -25,12 +25,37 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLegalDropdownOpen, setIsLegalDropdownOpen] = useState(false)
   const [isAppsDropdownOpen, setIsAppsDropdownOpen] = useState(false)
+  const [currentAppName, setCurrentAppName] = useState("Notion Highlights")
   
   // Close dropdown on route change
   useEffect(() => {
     setIsAppsDropdownOpen(false)
     setIsMobileMenuOpen(false)
     setIsLegalDropdownOpen(false)
+  }, [router.asPath])
+
+  // Map routes to app names
+  const appRoutes = {
+    '/': 'Notion Highlights',
+    '/notion-highlights': 'Notion Highlights',
+    '/autoflow': 'AutoFlow',
+    '/sightline': 'Sightline',
+    '/focus-dock': 'Focus Dock',
+    '/clean-read': 'CleanRead',
+    '/support': 'Notion Highlights',
+    '/about': 'Notion Highlights',
+    '/contact': 'Notion Highlights',
+    '/blog': 'Notion Highlights',
+    '/upgrade': 'Notion Highlights',
+    '/privacy': 'Notion Highlights',
+    '/terms': 'Notion Highlights',
+  }
+
+  // Update current app name based on route
+  useEffect(() => {
+    const currentRoute = router.asPath.split('?')[0] // Remove query params
+    const appName = appRoutes[currentRoute as keyof typeof appRoutes] || 'Notion Highlights'
+    setCurrentAppName(appName)
   }, [router.asPath])
 
   const apps = [
@@ -46,12 +71,18 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto">
         <div className="glass-nav-chrome rounded-2xl border border-white/10 px-6 h-16 flex items-center justify-between backdrop-blur-3xl shadow-2xl">
           
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-9 h-9 bg-gradient-to-br from-[#ffd700] to-[#ffed4e] rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.3)] group-hover:scale-110 transition-transform overflow-hidden">
-              <Image src="/icons/icon48.png" alt="Notion Highlights Logo" width={24} height={24} className="object-contain" />
-            </div>
-            <span className="text-white font-black text-lg tracking-tighter">Notion Highlights</span>
+          {/* Logo - Dynamic Text with Animation */}
+          <Link href="/" className="group">
+            <motion.span 
+              key={currentAppName}
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 5 }}
+              transition={{ duration: 0.2 }}
+              className="text-white font-black text-lg tracking-tighter inline-block"
+            >
+              {currentAppName}
+            </motion.span>
           </Link>
           
           {/* Desktop Navigation Links */}
@@ -98,12 +129,7 @@ export default function Navigation() {
               </AnimatePresence>
             </div>
 
-            <Link 
-              href="/upgrade" 
-              className="text-white/60 hover:text-white font-bold text-sm tracking-widest uppercase transition-colors"
-            >
-              Upgrade
-            </Link>
+            {/* REMOVED UPGRADE TAB FROM NAVIGATION - Keeping only CTA button */}
 
             <Link 
               href="/support" 
@@ -148,7 +174,7 @@ export default function Navigation() {
               </div>
             </div>
             
-            {/* CTA Button - Modern UI */}
+            {/* CTA Button - Modern UI (Keeping this as it's different from the tab) */}
             <Link 
               href="/upgrade" 
               className="bg-white text-black font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-[0_5px_15px_rgba(255,255,255,0.2)]"
@@ -221,18 +247,7 @@ export default function Navigation() {
               <div className="border-t border-white/10 pt-4">
                 <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.3em] mb-4">Company</p>
                 
-                <Link 
-                  href="/upgrade" 
-                  className="flex items-center gap-4 text-white/60 hover:text-white py-3"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <div className="w-6 h-6 rounded-lg bg-white/5 p-1 border border-white/5">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
-                  </div>
-                  <span>Upgrade</span>
-                </Link>
+                {/* REMOVED UPGRADE TAB FROM MOBILE MENU - Keeping only CTA button */}
 
                 <Link 
                   href="/support" 
@@ -306,7 +321,7 @@ export default function Navigation() {
                 </Link>
               </div>
 
-              {/* Mobile CTA Button */}
+              {/* Mobile CTA Button (Keeping this as it's the main action) */}
               <Link 
                 href="/upgrade" 
                 className="bg-white text-black font-black px-6 py-3.5 rounded-xl text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-[0_5px_15px_rgba(255,255,255,0.2)] block text-center mt-6"

@@ -2,15 +2,24 @@
 import Layout from '../components/Layout'
 import { useState, useEffect } from 'react'
 import { gaEvent } from '../lib/ga'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Support() {
+  const [selectedProduct, setSelectedProduct] = useState<'notion-highlights' | 'autoflow' | 'sightline' | 'focus-dock' | 'clean-read'>('notion-highlights')
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
-  const [selectedProduct, setSelectedProduct] = useState<'sightline' | 'notion-highlights' | 'focus-dock' | 'clean-read' | 'autoflow'>('autoflow')
-  const [activeSection, setActiveSection] = useState<'faq' | 'contact'>('faq')
 
   useEffect(() => {
     gaEvent('page_view', { page: 'support' })
   }, [])
+
+  // Colors synced exactly with index.tsx suite array
+  const products = {
+    'notion-highlights': { name: "Notion Highlights", color: "from-yellow-400/20 to-yellow-600/10", accent: "bg-yellow-500", icon: "✨" },
+    'autoflow': { name: "AutoFlow", color: "from-blue-500/20 to-blue-700/10", accent: "bg-blue-500", icon: "⚡" },
+    'sightline': { name: "Sightline", color: "from-emerald-400/20 to-emerald-600/10", accent: "bg-emerald-500", icon: "📸" },
+    'focus-dock': { name: "Focus Dock", color: "from-red-400/20 to-red-600/10", accent: "bg-red-500", icon: "🎯" },
+    'clean-read': { name: "Clean Read", color: "from-amber-400/20 to-amber-600/10", accent: "bg-amber-500", icon: "📖" },
+  }
 
   // Common contact methods
   const contactMethods = [
@@ -22,7 +31,7 @@ export default function Support() {
       onClick: () => {
         gaEvent('contact_click', { method: 'email', product: selectedProduct })
         const email = selectedProduct === 'sightline' 
-          ? 'support@sightline.app' 
+          ? 'sightline@notionhighlights.com' 
           : selectedProduct === 'notion-highlights' 
           ? 'support@notionhighlights.com' 
           : selectedProduct === 'focus-dock' 
@@ -327,72 +336,72 @@ export default function Support() {
   ]
 
   // AutoFlow FAQs
-const autoflowFAQs = [
-  {
-    question: "How do I get started with AutoFlow?",
-    answer: "Install the extension and click the extension icon to open the manager. You'll see 3 starter snippets ready to use. Press Ctrl/Cmd+Shift+Space anywhere you can type to open the snippet menu. No setup required!"
-  },
-  {
-    question: "What keyboard shortcuts are available?",
-    answer: "• Ctrl/Cmd+Shift+Space - Open snippet menu anywhere (primary shortcut)\n• Ctrl/Cmd+K - Alternative shortcut\n• Arrow keys - Navigate snippets in menu\n• Enter - Insert selected snippet\n• Esc - Close menu\n• Tab - Navigate between results"
-  },
-  {
-    question: "How do I insert a snippet?",
-    answer: "Press Ctrl/Cmd+Shift+Space anywhere you can type to open the snippet menu, search for your snippet using keywords, then press Enter. The snippet will be inserted at your cursor position. You can also click the extension icon, select your snippet, and click 'Insert'."
-  },
-  {
-    question: "What's the difference between Free and Pro?",
-    answer: "Free: 5 snippets limit, 50 insertions/month, 10 clipboard items, basic variables. Pro: Unlimited snippets and insertions, 100 clipboard items, custom variables, categories, priority support, and advanced features."
-  },
-  {
-    question: "How do variables work in snippets?",
-    answer: "Use {{variable}} in your snippets. Built-in variables: {{name}}, {{email}}, {{company}}, {{date}}. Variables are filled from your profile or you can set custom values in the Variables tab of the extension."
-  },
-  {
-    question: "How do I create custom variables?",
-    answer: "Custom variables are a Pro feature. Go to Variables tab, click 'Add Custom Variable', give it a name and default value. Use {{variable_name}} in snippets. Perfect for project names, roles, URLs, etc."
-  },
-  {
-    question: "How do categories work?",
-    answer: "Categories help organize snippets. Free: 1 category (General). Pro: Unlimited categories. Create categories like 'Email', 'Code', 'Social', etc. Assign snippets to categories for better organization."
-  },
-  {
-    question: "How does clipboard history work?",
-    answer: "AutoFlow automatically saves text you copy. Go to Clipboard tab to see history. Click any item to copy it again. Free: 10 items, Pro: 100 items. Great for reusing text across sessions."
-  },
-  {
-    question: "Can I use AutoFlow in AI chats like ChatGPT?",
-    answer: "Yes! AutoFlow works anywhere you can type, including ChatGPT, Claude, Gemini, and all other AI chat interfaces. Press Ctrl/Cmd+Shift+Space to open the menu at your cursor position."
-  },
-  {
-    question: "How do I save text as a snippet quickly?",
-    answer: "Select text on any page, right-click and choose 'Save Selection as Snippet'. Or copy text, open AutoFlow, and click 'Save from Clipboard'. You can also use the keyboard shortcut after selecting text."
-  },
-  {
-    question: "What happens if I reach my free monthly limit?",
-    answer: "Free users get 50 snippet insertions per month. Once reached, you'll see a notification. Upgrade to Pro for unlimited usage. Usage resets on the 1st of each month."
-  },
-  {
-    question: "Are my snippets stored locally or in the cloud?",
-    answer: "All your data is stored locally in your browser by default. If you sign in with an account (Pro feature), your data syncs across devices through our secure cloud."
-  },
-  {
-    question: "How do I organize my snippets?",
-    answer: "Use categories, tags, and search. Free: Add tags to snippets. Pro: Create unlimited categories, use advanced search with filters, and sort by usage frequency."
-  },
-  {
-    question: "How do I export/import my snippets?",
-    answer: "Go to Settings tab, click 'Export Data' to download all snippets as JSON. To import, click 'Import Data' and select your JSON file. Great for backups or migrating to a new computer."
-  },
-  {
-    question: "How do I search for snippets quickly?",
-    answer: "Press Ctrl/Cmd+Shift+Space to open the menu, then start typing to search through your snippets. Results update in real-time. You can search by snippet name, content, or tags."
-  },
-  {
-    question: "How do I upgrade to Pro?",
-    answer: "Click 'Upgrade to Pro' in the extension popup or visit autoflow.app/upgrade. Pro is $9/month or $79/year. All payments are processed securely through Stripe."
-  }
-]
+  const autoflowFAQs = [
+    {
+      question: "How do I get started with AutoFlow?",
+      answer: "Install the extension and click the extension icon to open the manager. You'll see 3 starter snippets ready to use. Press Ctrl/Cmd+Shift+Space anywhere you can type to open the snippet menu. No setup required!"
+    },
+    {
+      question: "What keyboard shortcuts are available?",
+      answer: "• Ctrl/Cmd+Shift+Space - Open snippet menu anywhere (primary shortcut)\n• Ctrl/Cmd+K - Alternative shortcut\n• Arrow keys - Navigate snippets in menu\n• Enter - Insert selected snippet\n• Esc - Close menu\n• Tab - Navigate between results"
+    },
+    {
+      question: "How do I insert a snippet?",
+      answer: "Press Ctrl/Cmd+Shift+Space anywhere you can type to open the snippet menu, search for your snippet using keywords, then press Enter. The snippet will be inserted at your cursor position. You can also click the extension icon, select your snippet, and click 'Insert'."
+    },
+    {
+      question: "What's the difference between Free and Pro?",
+      answer: "Free: 5 snippets limit, 50 insertions/month, 10 clipboard items, basic variables. Pro: Unlimited snippets and insertions, 100 clipboard items, custom variables, categories, priority support, and advanced features."
+    },
+    {
+      question: "How do variables work in snippets?",
+      answer: "Use {{variable}} in your snippets. Built-in variables: {{name}}, {{email}}, {{company}}, {{date}}. Variables are filled from your profile or you can set custom values in the Variables tab of the extension."
+    },
+    {
+      question: "How do I create custom variables?",
+      answer: "Custom variables are a Pro feature. Go to Variables tab, click 'Add Custom Variable', give it a name and default value. Use {{variable_name}} in snippets. Perfect for project names, roles, URLs, etc."
+    },
+    {
+      question: "How do categories work?",
+      answer: "Categories help organize snippets. Free: 1 category (General). Pro: Unlimited categories. Create categories like 'Email', 'Code', 'Social', etc. Assign snippets to categories for better organization."
+    },
+    {
+      question: "How does clipboard history work?",
+      answer: "AutoFlow automatically saves text you copy. Go to Clipboard tab to see history. Click any item to copy it again. Free: 10 items, Pro: 100 items. Great for reusing text across sessions."
+    },
+    {
+      question: "Can I use AutoFlow in AI chats like ChatGPT?",
+      answer: "Yes! AutoFlow works anywhere you can type, including ChatGPT, Claude, Gemini, and all other AI chat interfaces. Press Ctrl/Cmd+Shift+Space to open the menu at your cursor position."
+    },
+    {
+      question: "How do I save text as a snippet quickly?",
+      answer: "Select text on any page, right-click and choose 'Save Selection as Snippet'. Or copy text, open AutoFlow, and click 'Save from Clipboard'. You can also use the keyboard shortcut after selecting text."
+    },
+    {
+      question: "What happens if I reach my free monthly limit?",
+      answer: "Free users get 50 snippet insertions per month. Once reached, you'll see a notification. Upgrade to Pro for unlimited usage. Usage resets on the 1st of each month."
+    },
+    {
+      question: "Are my snippets stored locally or in the cloud?",
+      answer: "All your data is stored locally in your browser by default. If you sign in with an account (Pro feature), your data syncs across devices through our secure cloud."
+    },
+    {
+      question: "How do I organize my snippets?",
+      answer: "Use categories, tags, and search. Free: Add tags to snippets. Pro: Create unlimited categories, use advanced search with filters, and sort by usage frequency."
+    },
+    {
+      question: "How do I export/import my snippets?",
+      answer: "Go to Settings tab, click 'Export Data' to download all snippets as JSON. To import, click 'Import Data' and select your JSON file. Great for backups or migrating to a new computer."
+    },
+    {
+      question: "How do I search for snippets quickly?",
+      answer: "Press Ctrl/Cmd+Shift+Space to open the menu, then start typing to search through your snippets. Results update in real-time. You can search by snippet name, content, or tags."
+    },
+    {
+      question: "How do I upgrade to Pro?",
+      answer: "Click 'Upgrade to Pro' in the extension popup or visit autoflow.app/upgrade. Pro is $9/month or $79/year. All payments are processed securely through Stripe."
+    }
+  ]
 
   const currentFAQs = selectedProduct === 'sightline'
     ? sightlineFAQs 
@@ -404,440 +413,163 @@ const autoflowFAQs = [
     ? cleanReadFAQs
     : autoflowFAQs
 
-  const productInfo = {
-    'sightline': {
-      name: 'Sightline',
-      description: 'Smart screenshot capture & annotation tool',
-      color: 'from-emerald-400 to-[#00FF95]',
-      icon: '📸',
-      helpUrl: 'https://sightline.help/'
-    },
-    'notion-highlights': {
-      name: 'Notion Highlights',
-      description: 'Highlight & save web content directly to Notion',
-      color: 'from-[#ffd700] to-[#ffed4e]',
-      icon: '✨',
-      helpUrl: 'https://notionhighlightshelp.tawk.help/'
-    },
-    'focus-dock': {
-      name: 'Focus Dock',
-      description: 'Universal Chrome launcher for tabs, notes, and bookmarks',
-      color: 'from-red-400 to-red-300',
-      icon: '⚡',
-      helpUrl: 'https://focusdock.help/'
-    },
-    'clean-read': {
-      name: 'CleanRead',
-      description: 'Distraction-free reading for any webpage',
-      color: 'from-yellow-400 to-yellow-300',
-      icon: '📖',
-      helpUrl: 'https://cleanread.help/'
-    },
-    'autoflow': {
-      name: 'AutoFlow',
-      description: 'Think → Text → Instantly. Text automation for power users',
-      color: 'from-blue-400 to-blue-300',
-      icon: '⚡',
-      helpUrl: 'https://autoflow.help/'
-    }
-  }
-
-  const productTips = {
-    'sightline': [
-      "• Visible capture: Click extension icon → 'Capture Visible' or use ⌘+.S",
-      "• Region select: Click extension icon → 'Select Region' or use ⌘+.R",
-      "• Crop tool: Click extension icon → 'Crop Tool' or use ⌘+.C",
-      "• Editor shortcuts: V=Select, A=Arrow, R=Rectangle, T=Text, N=Step, B=Blur, X=Crop",
-      "• Quick copy: After editing, click Copy button to copy to clipboard",
-      "• Undo/Redo: ⌘Z to undo, ⌘⇧Z to redo any action",
-      "• Free quota: 20 screenshots/month, resets on 1st of each month",
-      "• Pro benefits: Unlimited screenshots, no watermark, priority support",
-      "• Color picker: Click color button to choose from 10 preset colors",
-      "• Stroke width: Adjust from thin (2px) to thick (6px)",
-      "• Export options: PNG (lossless) or JPEG (compressed)",
-      "• Watermark: Free version adds watermark, Pro exports clean"
-    ],
-    'notion-highlights': [
-      "• YouTube saving: Right-click videos (not fullscreen) → 'Save YouTube Video to Notion'",
-      "• Zero-OAuth mode: Open Notion page → Find in dropdown → Select → Turn on highlight mode",
-      "• Activate first: Open popup and turn on highlight mode after connecting",
-      "• Cursor placement: Highlights append where cursor is positioned",
-      "• Page selection issues: Deselect and reselect page in dropdown",
-      "• Faster clipping: New pipeline reduces wait times significantly",
-      "• Pro users: Sign in with your purchase email in the extension",
-      "• Floating button: Drag it anywhere for optimal positioning",
-      "• All new features: YouTube saving & zero-OAuth mode available in free plan",
-      "• Right-click method: Select text → Right-click → 'Save to Notion'",
-      "• Improved accuracy: Cleaner selection detection with tighter bounding boxes",
-      "• Destination pages: YouTube videos use same dropdown as highlights"
-    ],
-    'focus-dock': [
-      "• Quick launcher: Press ⌘+. (Cmd+Period) from anywhere",
-      "• Quick notes: Type /note followed by your text",
-      "• Due dates: Use /note @today Call mom or /note @tomorrow Submit report",
-      "• Reading list: Press ⌘+Shift+S on any page to save for later",
-      "• Tab groups: Type /groups to manage or /group ProjectName to create",
-      "• Multi-select: Click checkboxes next to tabs, then press Enter for bulk actions",
-      "• Workspaces: Type /save ProjectName then /ProjectName to restore",
-      "• Domain search: Type /github.com to see all GitHub tabs",
-      "• Clipboard: Type /clip to see recent copies",
-      "• Fuzzy search: Works even with typos and partial matches",
-      "• Keyboard navigation: Use ↑↓ arrows, Tab for actions, Enter to execute",
-      "• Free limits: 5 notes, 1 workspace, 10 reading list items, 3 clipboard items"
-    ],
-    'clean-read': [
-      "• Activate: Click extension icon or press Cmd/Ctrl+R",
-      "• Social media: Works on Twitter, Facebook, LinkedIn, Reddit",
-      "• AI chats: Extracts last response from ChatGPT, Claude, Gemini",
-      "• Documents: Clean reading for Notion and Google Docs",
-      "• Vision Mode: High contrast, enhanced readability (Pro feature)",
-      "• Auto-scroll: Hands-free reading at adjustable speed (Pro feature)",
-      "• Save articles: Bookmark icon in reader (Free: 3, Pro: unlimited)",
-      "• PDF export: Export clean versions to share (Pro feature)",
-      "• Edit mode: Make articles editable with formatting toolbar",
-      "• Themes: Dark, Gold, or create custom color themes",
-      "• Font size: Adjust from 14px to 28px for comfortable reading",
-      "• Column width: Choose narrow, normal, wide, or full width"
-    ],
-   'autoflow': [
-    "• Main shortcut: Press Ctrl/Cmd+Shift+Space anywhere to open snippet menu",
-    "• Variables: Use {{name}}, {{email}}, {{company}}, {{date}} in snippets",
-    "• AI chats: Works perfectly in ChatGPT, Claude, Gemini, and all AI interfaces",
-    "• Quick save: Select text → Right-click → 'Save Selection as Snippet'",
-    "• Categories: Organize snippets by purpose (Email, Code, Social, etc.)",
-    "• Quick search: Type in menu to filter snippets in real-time",
-    "• Clipboard history: Reuse recently copied text (Free: 10, Pro: 100 items)",
-    "• Usage stats: See which snippets you use most frequently",
-    "• Import/export: Backup all snippets as JSON file",
-    "• Sync: Pro users get cross-device sync through secure cloud",
-    "• Custom variables: Create your own {{variables}} (Pro feature)",
-    "• Keyboard shortcuts: Customize in chrome://extensions/shortcuts"
-  ]
-  }
-
   return (
     <Layout>
-      <div className="min-h-screen py-20 px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Header with Product Selector */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Support for
-              <span className={`text-transparent bg-clip-text bg-gradient-to-r ${productInfo[selectedProduct].color} block`}>
-                {productInfo[selectedProduct].name}
-              </span>
+      {/* Base Background from index.tsx */}
+      <div className="min-h-screen bg-[#030303] pt-32 pb-20 px-6">
+        
+        {/* Dynamic Glow synced with Home Page gradients */}
+        <div className="fixed inset-0 pointer-events-none -z-10">
+          <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b ${products[selectedProduct].color} blur-[160px] opacity-40 transition-all duration-1000`} />
+        </div>
+
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h1 className="text-6xl md:text-8xl font-black text-white tracking-tighter mb-6">
+              Support <span className="text-white/20">Center</span>
             </h1>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-              {productInfo[selectedProduct].description}
+            <p className="text-white/40 text-lg max-w-xl mx-auto font-light">
+              Get the most out of your productivity suite. Select an app to begin.
             </p>
-            
-            {/* Product Selector */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <div className="glass-card p-2 flex flex-wrap justify-center gap-2 rounded-xl">
-                <button
-                  onClick={() => setSelectedProduct('sightline')}
-                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'sightline' 
-                    ? 'bg-gradient-to-r from-emerald-500/20 to-[#00FF95]/20 text-white border border-emerald-500/30' 
-                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span>📸</span>
-                    <span>Sightline</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setSelectedProduct('notion-highlights')}
-                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'notion-highlights' 
-                    ? 'bg-gradient-to-r from-[#ffd700]/20 to-[#ffed4e]/20 text-white border border-[#ffd700]/30' 
-                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span>✨</span>
-                    <span>Notion Highlights</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setSelectedProduct('focus-dock')}
-                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'focus-dock' 
-                    ? 'bg-gradient-to-r from-red-500/20 to-red-400/20 text-white border border-red-500/30' 
-                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span>⚡</span>
-                    <span>Focus Dock</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setSelectedProduct('clean-read')}
-                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'clean-read' 
-                    ? 'bg-gradient-to-r from-yellow-500/20 to-yellow-400/20 text-white border border-yellow-500/30' 
-                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span>📖</span>
-                    <span>CleanRead</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setSelectedProduct('autoflow')}
-                  className={`px-6 py-3 rounded-lg transition-all ${selectedProduct === 'autoflow' 
-                    ? 'bg-gradient-to-r from-blue-500/20 to-blue-400/20 text-white border border-blue-500/30' 
-                    : 'text-white/60 hover:text-white/90 hover:bg-white/5'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span>⚡</span>
-                    <span>AutoFlow</span>
-                  </div>
-                </button>
-              </div>
-            </div>
           </div>
 
-          {/* Navigation Tabs */}
-          <div className="flex justify-center mb-12">
-            <div className="glass-card p-1 flex rounded-xl">
+          {/* Product Pill Selector */}
+          <div className="flex flex-wrap justify-center gap-2 mb-20">
+            {Object.entries(products).map(([id, info]) => (
               <button
-                onClick={() => setActiveSection('faq')}
-                className={`px-8 py-3 rounded-lg transition-all ${activeSection === 'faq' 
-                  ? 'bg-gradient-to-r from-red-500 to-red-600 text-white' 
-                  : 'text-white/60 hover:text-white/90'
+                key={id}
+                onClick={() => { 
+                  setSelectedProduct(id as any); 
+                  setActiveFAQ(null);
+                  gaEvent('product_selected', { product: id });
+                }}
+                className={`flex items-center gap-3 px-6 py-3 rounded-full border transition-all duration-500 ${
+                  selectedProduct === id 
+                  ? 'bg-white text-black border-white shadow-[0_0_40px_rgba(255,255,255,0.15)]' 
+                  : 'bg-white/[0.03] border-white/10 text-white/40 hover:border-white/20'
                 }`}
               >
-                <div className="flex items-center gap-2">
-                  <span>❓</span>
-                  <span>FAQs & Help</span>
-                </div>
+                <span className="font-bold text-xs uppercase tracking-widest">{info.name}</span>
               </button>
-              <button
-                onClick={() => setActiveSection('contact')}
-                className={`px-8 py-3 rounded-lg transition-all ${activeSection === 'contact' 
-                  ? 'bg-gradient-to-r from-red-500 to-red-600 text-white' 
-                  : 'text-white/60 hover:text-white/90'
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <span>📧</span>
-                  <span>Contact Support</span>
-                </div>
-              </button>
-            </div>
+            ))}
           </div>
 
-          {/* FAQ Section */}
-          {activeSection === 'faq' && (
-            <>
-              {/* Knowledge Base CTA */}
-              <div className="text-center mb-12">
-                <h3 className="text-2xl font-bold text-white mb-4">📚 Self-Service Help Center</h3>
-                <p className="text-white/70 mb-6 max-w-2xl mx-auto">
-                  Find detailed guides, tutorials, and troubleshooting tips for {productInfo[selectedProduct].name}.
-                </p>
-                <button 
-                  onClick={() => {
-                    gaEvent('help_center_click', { product: selectedProduct })
-                    const helpUrl = productInfo[selectedProduct].helpUrl
-                    window.open(helpUrl, '_blank')
-                  }}
-                  className="gradient-button text-lg py-3 px-8"
-                >
-                  Visit {productInfo[selectedProduct].name} Help Center
-                </button>
-              </div>
-
-              {/* FAQ Section */}
-              <div className="glass-card p-8 mb-12">
-                <h2 className="text-3xl font-bold text-white mb-8 text-center">
-                  Frequently Asked Questions
-                </h2>
-                
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Contact Card - Glass style from index.tsx */}
+            <div className="space-y-6">
+              <div className="glass-card-chrome p-8 rounded-[2.5rem] border border-white/10">
+                <h3 className="text-white font-black text-xl mb-6">Need human help?</h3>
                 <div className="space-y-4">
-                  {currentFAQs.map((faq, index) => (
-                    <div key={index} className="border-b border-white/10 pb-4">
-                      <button
-                        onClick={() => {
-                          if (activeFAQ !== index) {
-                            gaEvent('faq_opened', { 
-                              product: selectedProduct, 
-                              question: faq.question.substring(0, 50) 
-                            })
-                          }
-                          setActiveFAQ(activeFAQ === index ? null : index)
-                        }}
-                        className="flex justify-between items-center w-full text-left"
-                      >
-                        <h3 className="text-lg font-semibold text-white pr-4">
-                          {faq.question}
-                        </h3>
-                        <span className={`text-xl flex-shrink-0 ${
-                          selectedProduct === 'sightline' ? 'text-emerald-400' : 
-                          selectedProduct === 'notion-highlights' ? 'text-[#ffd700]' : 
-                          selectedProduct === 'focus-dock' ? 'text-red-400' : 
-                          selectedProduct === 'clean-read' ? 'text-yellow-400' :
-                          'text-blue-400'
-                        }`}>
-                          {activeFAQ === index ? '−' : '+'}
-                        </span>
-                      </button>
-                      
-                      {activeFAQ === index && (
-                        <div className="mt-3 text-white/70 whitespace-pre-line">
-                          {faq.answer}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                  <button 
+                    onClick={contactMethods[0].onClick}
+                    className="w-full py-5 bg-white text-black font-black rounded-2xl hover:scale-105 transition-all text-sm uppercase tracking-widest"
+                  >
+                    {contactMethods[0].action}
+                  </button>
+                  <button 
+                    onClick={contactMethods[1].onClick}
+                    className="w-full py-5 bg-white/5 text-white font-bold border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-sm uppercase tracking-widest"
+                  >
+                    {contactMethods[1].action}
+                  </button>
+                  <button 
+                    onClick={contactMethods[2].onClick}
+                    className="w-full py-5 bg-white/5 text-white font-bold border border-white/10 rounded-2xl hover:bg-white/10 transition-all text-sm uppercase tracking-widest"
+                  >
+                    {contactMethods[2].action}
+                  </button>
                 </div>
-              </div>
-
-              {/* Quick Tips */}
-              <div className="glass-card p-6">
-                <h3 className="text-xl font-bold text-white mb-4 text-center">
-                  💡 Quick Tips for {productInfo[selectedProduct].name}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  {productTips[selectedProduct].map((tip, index) => (
-                    <div key={index} className="text-white/70">
-                      {tip}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* Contact Section */}
-          {activeSection === 'contact' && (
-            <>
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-white mb-4">
-                  Contact {productInfo[selectedProduct].name} Support
-                </h2>
-                <p className="text-white/70 max-w-2xl mx-auto">
-                  Our team is here to help you with {
-                    selectedProduct === 'sightline'
-                      ? 'screenshot capture and editing'
+                <div className="mt-8 pt-6 border-t border-white/10">
+                  <p className="text-white/40 text-sm font-light mb-2">Direct email for {products[selectedProduct].name}:</p>
+                  <a 
+                    href={`mailto:${selectedProduct === 'sightline' 
+                      ? 'sightline@notionhighlights.com' 
                       : selectedProduct === 'notion-highlights' 
-                      ? 'highlighting and saving to Notion'
+                      ? 'support@notionhighlights.com' 
                       : selectedProduct === 'focus-dock'
-                      ? 'launcher setup and features'
+                      ? 'focusdock@notionhighlights.com'
                       : selectedProduct === 'clean-read'
-                      ? 'clean reading and article management'
-                      : 'text automation and snippet management'
-                  }. We typically respond within 24 hours.
-                </p>
+                      ? 'cleanread@notionhighlights.com'
+                      : 'autoflow@notionhighlights.com'
+                    }`}
+                    className="text-white font-medium hover:text-white/80 transition-colors text-sm"
+                  >
+                    {selectedProduct === 'sightline' 
+                      ? 'sightline@notionhighlights.com' 
+                      : selectedProduct === 'notion-highlights' 
+                      ? 'support@notionhighlights.com' 
+                      : selectedProduct === 'focus-dock'
+                      ? 'focusdock@notionhighlights.com'
+                      : selectedProduct === 'clean-read'
+                      ? 'cleanread@notionhighlights.com'
+                      : 'autoflow@notionhighlights.com'
+                    }
+                  </a>
+                </div>
               </div>
+            </div>
 
-              {/* Contact Methods */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                {contactMethods.map((method, index) => (
-                  <div key={index} className="glass-card p-6 text-center">
-                    <div className="text-3xl mb-4">{method.icon}</div>
-                    <h3 className="text-xl font-bold text-white mb-2">{method.title}</h3>
-                    <p className="text-white/70 mb-4">{method.description}</p>
+            {/* Knowledge Base */}
+            <div className="lg:col-span-2 space-y-4">
+              <AnimatePresence mode="wait">
+                {currentFAQs.map((faq, i) => (
+                  <motion.div
+                    key={`${selectedProduct}-${i}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="glass-card-chrome rounded-[2rem] border border-white/5 overflow-hidden"
+                  >
                     <button 
-                      onClick={method.onClick}
-                      className="gradient-button w-full py-2"
+                      onClick={() => {
+                        if (activeFAQ !== i) {
+                          gaEvent('faq_opened', { 
+                            product: selectedProduct, 
+                            question: faq.question.substring(0, 50) 
+                          })
+                        }
+                        setActiveFAQ(activeFAQ === i ? null : i)
+                      }}
+                      className="w-full p-8 text-left flex items-center justify-between group"
                     >
-                      {method.action}
+                      <span className="text-white/80 group-hover:text-white font-bold text-lg transition-colors">{faq.question}</span>
+                      <span className={`text-white/20 transition-transform ${activeFAQ === i ? 'rotate-180' : ''}`}>▼</span>
                     </button>
-                  </div>
+                    <AnimatePresence>
+                      {activeFAQ === i && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="px-8 pb-8 text-white/40 leading-relaxed font-light border-t border-white/5 pt-4">
+                            {faq.answer}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
                 ))}
-              </div>
-
-              {/* Support Email Display */}
-              <div className="glass-card p-6 text-center mb-12">
-                <h3 className="text-xl font-bold text-white mb-4">Direct Email</h3>
-                <p className="text-white/70 mb-4">
-                  For {productInfo[selectedProduct].name} support, email us at:
-                </p>
-                <a 
-                  href={`mailto:${selectedProduct === 'sightline' 
-                    ? 'support@sightline.app' 
-                    : selectedProduct === 'notion-highlights' 
-                    ? 'support@notionhighlights.com' 
-                    : selectedProduct === 'focus-dock'
-                    ? 'focusdock@notionhighlights.com'
-                    : selectedProduct === 'clean-read'
-                    ? 'cleanread@notionhighlights.com'
-                    : 'autoflow@notionhighlights.com'
-                  }`}
-                  className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-300 hover:from-red-300 hover:to-red-200 transition-all"
-                >
-                  {selectedProduct === 'sightline' 
-                    ? 'support@sightline.app' 
-                    : selectedProduct === 'notion-highlights' 
-                    ? 'support@notionhighlights.com' 
-                    : selectedProduct === 'focus-dock'
-                    ? 'focusdock@notionhighlights.com'
-                    : selectedProduct === 'clean-read'
-                    ? 'cleanread@notionhighlights.com'
-                    : 'autoflow@notionhighlights.com'
-                  }
-                </a>
-              </div>
+              </AnimatePresence>
 
               {/* Response Time Notice */}
-              <div className="bg-gradient-to-r from-red-900/20 to-red-800/10 border border-red-500/20 rounded-xl p-6 text-center">
-                <h3 className="text-lg font-bold text-white mb-2">📅 Response Time</h3>
-                <p className="text-white/70">
-                  We strive to respond to all emails within <strong>24 hours</strong> on weekdays.
-                  For faster responses, use the live chat during business hours (9AM-5PM EST).
+              <div className="mt-8 glass-card-chrome p-6 rounded-2xl border border-white/10">
+                <p className="text-white/40 text-sm font-light">
+                  <span className="text-white font-medium">📅 Response Time:</span> We strive to respond to all emails within <strong>24 hours</strong> on weekdays. For faster responses, use the live chat during business hours (9AM-5PM EST).
                 </p>
               </div>
-            </>
-          )}
-
-          {/* Switch Product Notice */}
-          <div className="text-center mt-12 p-6 border border-white/10 rounded-xl">
-            <p className="text-white/70 mb-4">
-              Need help with a different extension?
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              {Object.entries(productInfo).map(([key, info]) => {
-                if (key === selectedProduct) return null;
-                return (
-                  <button
-                    key={key}
-                    onClick={() => {
-                      setSelectedProduct(key as any)
-                      setActiveFAQ(null)
-                    }}
-                    className="text-white/70 hover:text-white font-semibold transition-colors flex items-center gap-1"
-                  >
-                    {info.icon} {info.name}
-                  </button>
-                );
-              }).filter(Boolean)}
             </div>
           </div>
         </div>
       </div>
 
-      <style jsx>{`
-        .gradient-button {
-          background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-          color: white;
-          border: none;
-          border-radius: 10px;
-          padding: 12px 24px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-        .gradient-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
-        }
-        .glass-card {
-          background: rgba(30, 41, 59, 0.5);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 16px;
+      <style jsx global>{`
+        body { background: #030303; }
+        .glass-card-chrome {
+          background: rgba(255, 255, 255, 0.01);
+          backdrop-filter: blur(40px) saturate(200%);
+          -webkit-backdrop-filter: blur(40px) saturate(200%);
         }
       `}</style>
     </Layout>
