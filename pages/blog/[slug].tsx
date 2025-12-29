@@ -1,4 +1,4 @@
-// pages/blog/[slug].tsx
+// pages/blog/[slug].tsx - UPDATED VERSION
 import { GetStaticProps, GetStaticPaths } from "next";
 import { getAllSlugs, getPostBySlug } from "../../lib/posts";
 import Head from "next/head";
@@ -16,6 +16,20 @@ type Props = {
   frontMatter: any;
   content: string;
   slug: string;
+};
+
+// Helper to get post category
+const getPostCategory = (frontMatter: any): string => {
+  return frontMatter?.category || frontMatter?.tags?.[0] || "Article";
+};
+
+// Helper to calculate read time
+const getReadTime = (content: string, frontMatter: any): string => {
+  if (frontMatter?.readTime) return frontMatter.readTime;
+  
+  const wordCount = content?.split(/\s+/).length || 0;
+  const minutes = Math.max(1, Math.ceil(wordCount / 200));
+  return `${minutes} min read`;
 };
 
 export default function BlogPost({ frontMatter, content, slug }: Props) {
@@ -44,15 +58,13 @@ export default function BlogPost({ frontMatter, content, slug }: Props) {
   }
 
   const {
-    title,
+    title = "Untitled Article",
     excerpt,
     description,
-    date,
-    keywords,
+    date = "",
+    keywords = "",
     image,
-    category,
-    tags = [],
-    readTime
+    tags = []
   } = frontMatter;
 
   const metaDescription = excerpt || description || "";
@@ -61,15 +73,8 @@ export default function BlogPost({ frontMatter, content, slug }: Props) {
     : `${SITE_URL}/default-og.png`;
   const canonicalUrl = `${SITE_URL}/blog/${slug}`;
 
-  // Calculate read time if not provided
-  const calculatedReadTime = readTime || (() => {
-    const wordCount = content.split(/\s+/).length;
-    const minutes = Math.ceil(wordCount / 200);
-    return `${minutes} min read`;
-  })();
-
-  // Get category or first tag as category
-  const postCategory = category || (tags?.[0] || "Article");
+  const calculatedReadTime = getReadTime(content, frontMatter);
+  const postCategory = getPostCategory(frontMatter);
 
   return (
     <Layout>
@@ -77,7 +82,7 @@ export default function BlogPost({ frontMatter, content, slug }: Props) {
         {/* Primary SEO */}
         <title>{title} — Notion Highlights Blog</title>
         <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={keywords || ""} />
+        <meta name="keywords" content={keywords} />
         <link rel="canonical" href={canonicalUrl} />
 
         {/* OpenGraph */}
@@ -157,7 +162,7 @@ export default function BlogPost({ frontMatter, content, slug }: Props) {
                 {postCategory}
               </span>
               <span className="text-white/40 text-sm font-light">
-                {date || "No date provided"}
+                {date}
               </span>
               <span className="text-white/40 text-sm font-light">
                 • {calculatedReadTime}
@@ -173,7 +178,7 @@ export default function BlogPost({ frontMatter, content, slug }: Props) {
             </p>
 
             {/* Tags */}
-            {tags && tags.length > 0 && (
+            {tags && Array.isArray(tags) && tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {tags.map((tag: string, index: number) => (
                   <span 

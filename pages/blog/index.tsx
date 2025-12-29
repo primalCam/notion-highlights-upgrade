@@ -1,4 +1,4 @@
-// pages/blog/index.tsx
+// pages/blog/index.tsx - UPDATED VERSION
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "../../components/Layout";
@@ -13,6 +13,20 @@ interface BlogIndexProps {
   posts: Post[];
 }
 
+// Helper to safely get category from frontMatter
+const getPostCategory = (frontMatter: any): string => {
+  return frontMatter?.category || frontMatter?.tags?.[0] || "General";
+};
+
+// Helper to estimate read time
+const getReadTime = (content: string, frontMatter: any): string => {
+  if (frontMatter?.readTime) return frontMatter.readTime;
+  
+  const wordCount = content?.split(/\s+/).length || 0;
+  const minutes = Math.max(1, Math.ceil(wordCount / 200));
+  return `${minutes} min read`;
+};
+
 export default function BlogIndex({ posts = [] }: BlogIndexProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -21,10 +35,10 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
     gaEvent('page_view', { page: 'blog', post_count: posts.length })
   }, [posts.length]);
 
-  // Extract unique categories from posts (fallback to default if none)
+  // Extract unique categories from posts
   const categories = useMemo(() => {
     const cats = posts
-      .map(post => post.frontMatter?.category || post.frontMatter?.tags?.[0] || "General")
+      .map(post => getPostCategory(post.frontMatter))
       .filter(Boolean)
       .filter((value, index, self) => self.indexOf(value) === index);
     return cats as string[];
@@ -34,11 +48,11 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
   const filteredPosts = useMemo(() => {
     return posts.filter(post => {
       const matchesSearch = searchQuery === "" || 
-        post.frontMatter?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.frontMatter?.excerpt?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.frontMatter?.description?.toLowerCase().includes(searchQuery.toLowerCase());
+        (post.frontMatter?.title?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (post.frontMatter?.excerpt?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+        (post.frontMatter?.description?.toLowerCase() || '').includes(searchQuery.toLowerCase());
       
-      const postCategory = post.frontMatter?.category || post.frontMatter?.tags?.[0] || "General";
+      const postCategory = getPostCategory(post.frontMatter);
       const matchesCategory = selectedCategory === null || 
         postCategory === selectedCategory;
       
@@ -55,22 +69,6 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
     "Read high-quality guides on Notion productivity, web clipping, AI workflows, research automation, and creator tools.";
   const canonicalUrl = `${SITE_URL}/blog`;
   const ogImage = `${SITE_URL}/default-og.png`;
-
-  // Helper function to get post category with fallback
-  const getPostCategory = (post: Post) => {
-    return post.frontMatter?.category || post.frontMatter?.tags?.[0] || "Article";
-  };
-
-  // Helper function to get read time estimate
-  const getReadTime = (post: Post) => {
-    if (post.frontMatter?.readTime) return post.frontMatter.readTime;
-    
-    // Estimate read time based on word count (average 200 words per minute)
-    const content = post.content || "";
-    const wordCount = content.split(/\s+/).length;
-    const minutes = Math.ceil(wordCount / 200);
-    return `${minutes} min read`;
-  };
 
   return (
     <Layout>
@@ -222,7 +220,10 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
             >
               <Link 
                 href={`/blog/${featuredPost.slug}`}
-                onClick={() => gaEvent('featured_post_click', { slug: featuredPost.slug, title: featuredPost.frontMatter?.title?.substring(0, 50) || '' })}
+                onClick={() => gaEvent('featured_post_click', { 
+                  slug: featuredPost.slug, 
+                  title: (featuredPost.frontMatter?.title?.substring(0, 50) || '') 
+                })}
               >
                 <div className="glass-card-chrome rounded-[2.5rem] border border-yellow-500/30 overflow-hidden hover:scale-[1.01] transition-all duration-500 bg-gradient-to-br from-yellow-500/10 to-transparent group">
                   <div className="p-12">
@@ -234,7 +235,7 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
                         {featuredPost.frontMatter?.date || "Latest"}
                       </span>
                       <span className="px-3 py-1 bg-white/5 text-white/60 rounded-full text-xs font-medium">
-                        {getPostCategory(featuredPost)}
+                        {getPostCategory(featuredPost.frontMatter)}
                       </span>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight group-hover:text-yellow-400 transition-colors">
@@ -271,7 +272,10 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     className="glass-card-chrome rounded-[2rem] border border-white/10 p-8 hover:border-yellow-500/30 transition-all duration-500 hover:scale-[1.02] group cursor-pointer"
                     onClick={() => {
-                      gaEvent('blog_post_click', { slug: post.slug, title: post.frontMatter?.title?.substring(0, 50) || '' })
+                      gaEvent('blog_post_click', { 
+                        slug: post.slug, 
+                        title: (post.frontMatter?.title?.substring(0, 50) || '') 
+                      })
                       window.location.href = `/blog/${post.slug}`
                     }}
                   >
@@ -284,7 +288,7 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
                           {post.frontMatter?.date || "No date provided"}
                         </span>
                         <span className="px-3 py-1 bg-white/5 text-white/60 rounded-full text-xs font-medium">
-                          {getPostCategory(post)}
+                          {getPostCategory(post.frontMatter)}
                         </span>
                       </div>
                       
@@ -302,7 +306,7 @@ export default function BlogIndex({ posts = [] }: BlogIndexProps) {
                           <span className="group-hover:translate-x-2 transition-transform duration-300">→</span>
                         </div>
                         <div className="text-white/30 text-xs font-light ml-auto">
-                          {getReadTime(post)}
+                          {getReadTime(post.content || '', post.frontMatter)}
                         </div>
                       </div>
                     </Link>
