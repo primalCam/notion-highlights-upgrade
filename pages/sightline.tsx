@@ -72,7 +72,7 @@ export default function SightlinePage() {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <button 
-              onClick={() => window.open('https://chromewebstore.google.com/detail/sightline/addpdkeebbfpcgificcaojjkbpddjhka', '_blank')}
+              onClick={() => window.open('https://chromewebstore.google.com/detail/sightline/hceoajmjljfmmehcdfecckjkmphkjnof?authuser=0&hl=en', '_blank')}
               className="bg-white text-black font-black py-6 px-14 rounded-2xl hover:scale-105 transition-all shadow-[0_20px_40px_rgba(0,255,149,0.2)]"
             >
               Add to Chrome — It's Free
@@ -131,7 +131,7 @@ export default function SightlinePage() {
             <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-8 leading-none">Precision is<br/>everything.</h2>
             <p className="text-white/40 text-xl max-w-2xl mx-auto mb-12">Stop sending confusing screenshots. Start sending clarity with Sightline’s precision annotation engine.</p>
             <button 
-              onClick={() => window.open('https://chromewebstore.google.com/detail/sightline/addpdkeebbfpcgificcaojjkbpddjhka', '_blank')}
+              onClick={() => window.open('https://chromewebstore.google.com/detail/sightline/hceoajmjljfmmehcdfecckjkmphkjnof?authuser=0&hl=en', '_blank')}
               className="bg-emerald-500 text-white font-black py-6 px-20 rounded-full text-xl shadow-[0_0_50px_rgba(16,185,129,0.3)] hover:scale-110 transition-all active:scale-95"
             >
               Get Sightline Free
