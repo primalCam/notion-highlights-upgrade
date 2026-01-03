@@ -73,7 +73,7 @@ export default function AutoFlowPage() {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <button 
-              onClick={() => window.open('https://chromewebstore.google.com/detail/autoflow/addpdkeebbfpcgificcaojjkbpddjhka', '_blank')}
+              onClick={() => window.open('https://chromewebstore.google.com/detail/autoflow/iceccbiiencaflhbgpbnianlegncpchj?authuser=0&hl=en', '_blank')}
               className="bg-white text-black font-black py-6 px-14 rounded-2xl hover:scale-105 transition-all shadow-[0_20px_40px_rgba(59,130,246,0.2)]"
             >
               Get AutoFlow — It's Free
@@ -137,7 +137,7 @@ export default function AutoFlowPage() {
             <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-8 leading-none">Speed is a<br/>Habit.</h2>
             <p className="text-white/40 text-xl max-w-2xl mx-auto mb-12">Stop typing the same thing twice. Start flowing with AutoFlow's universal expansion engine.</p>
             <button 
-              onClick={() => window.open('https://chromewebstore.google.com/detail/autoflow/addpdkeebbfpcgificcaojjkbpddjhka', '_blank')}
+              onClick={() => window.open('https://chromewebstore.google.com/detail/autoflow/iceccbiiencaflhbgpbnianlegncpchj?authuser=0&hl=en', '_blank')}
               className="bg-blue-600 text-white font-black py-6 px-20 rounded-full text-xl shadow-[0_0_50px_rgba(59,130,246,0.3)] hover:scale-110 transition-all active:scale-95"
             >
               Get AutoFlow Free
