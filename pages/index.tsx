@@ -2,7 +2,7 @@
 import Layout from '../components/Layout'
 import Image from 'next/image'
 import Head from 'next/head'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { gaEvent } from '../lib/ga'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
@@ -10,9 +10,14 @@ export default function Home() {
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 0.1], [1, 0.98])
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, 100])
+  const [isMascotVisible, setIsMascotVisible] = useState(false)
 
   useEffect(() => {
     gaEvent('page_view', { page: 'home' })
+    // Show mascot after initial page load
+    const timer = setTimeout(() => setIsMascotVisible(true), 1500)
+    return () => clearTimeout(timer)
   }, [])
 
   const NOTION_HIGHLIGHTS_URL = "https://chromewebstore.google.com/detail/notion-highlights/addpdkeebbfpcgificcaojjkbpddjhka?authuser=1&hl=en&pli=1";
@@ -71,6 +76,40 @@ export default function Home() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-500/5 rounded-full blur-[140px]" />
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 contrast-150 mix-blend-overlay" />
       </div>
+
+      {/* --- MASCOT: FLUX --- */}
+      {isMascotVisible && (
+        <>
+          {/* Original subtle background fox */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.15 }}
+            transition={{ duration: 1.5, delay: 1 }}
+            className="fixed top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 pointer-events-none z-0"
+          >
+            <img
+              src="https://assets.masco.dev/9c3baa/flux-4422/data-pounce-3c885951.png"
+              alt="Flux Glow"
+              className="w-full h-full object-contain opacity-40"
+            />
+          </motion.div>
+          
+          {/* New: Hero background fox with parallax */}
+          <motion.div 
+            style={{ y: parallaxY }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.03 }}
+            transition={{ duration: 2, delay: 1.5 }}
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none z-0"
+          >
+            <img
+              src="https://assets.masco.dev/9c3baa/flux-4422/data-pounce-3c885951.png"
+              alt="Flux Background"
+              className="w-full h-full object-contain"
+            />
+          </motion.div>
+        </>
+      )}
 
       {/* --- HERO --- */}
       <motion.section style={{ opacity, scale }} className="min-h-screen flex flex-col items-center justify-center px-6 pt-20">
@@ -170,7 +209,7 @@ export default function Home() {
                   },
                   {
                     title: "Exponential Speed",
-                    desc: "Combine AutoFlow’s automation with Focus Dock’s command center to reduce 10-minute tasks into 3-second shortcuts.",
+                    desc: "Combine AutoFlow's automation with Focus Dock's command center to reduce 10-minute tasks into 3-second shortcuts.",
                     icon: "🚀"
                   },
                   {
@@ -214,7 +253,12 @@ export default function Home() {
       </section>
 
       <style jsx global>{`
-        body { background: #030303; color: white; overflow-x: hidden; font-family: 'Inter', sans-serif; }
+        body { 
+          background: #030303; 
+          color: white; 
+          overflow-x: hidden; 
+          font-family: 'Inter', sans-serif; 
+        }
         .glass-card-chrome {
           background: rgba(255, 255, 255, 0.01);
           backdrop-filter: blur(40px) saturate(200%);
